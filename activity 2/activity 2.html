@@ -38,7 +38,11 @@
 
   <div class="section">
     <h2>1. Introduction</h2>
-    <p>Provide a brief overview of your program. What's the goal? Why did you choose this idea?</p>
+    <p>
+      O objetivo principal deste código em JavaScript é simular uma versão simplificada do jogo Angry Birds, focando na mecânica de lançar um objeto (representado pelo cálculo de uma trajetória balística) para atingir porcos posicionados em um cenário. <br>
+      O código também implementa um sistema de pontuação basado na quantidade de porcos atingidos, e utiliza uma estrutura de dados para armazenar informações sobre os porcos e suas posicoes. <br>
+      Foi implementada a função de aleatoriedade para automatizar e acelerar os testes de colisões.
+    </p>
   </div>
 
   <div class="section">
@@ -64,7 +68,19 @@
         velocidade: velocidade inicial que o pássaro terá ao ser lançado;
       </li>
       <li>
-        porcos: array com a quantidade de porcos com seu tamanho;
+        posição: posição da trajetoria do pássaro;
+      </li>
+      <li>
+        porcos: array com a quantidade de porcos;
+      </li>
+      <li>
+        pontuação: pontuação do jogador;
+      </li>
+      <li>
+        gravidade: gravidade do jogo;
+      </li>
+      <li>
+        variação do tempo: variacao do tempo para alterar a posição da trajetória do pássaro;
       </li>
     </ul>
   </div>
@@ -73,10 +89,10 @@
     <h2>4. Functions</h2>
     <ul>
       <li>
-        Calcular a trajetoria do pássaro: recebe um ângulo e uma velocidade inicial, retorna componentes da velocidade de lançamento;
+        Calcular componentes da velocidade: recebe um ângulo e uma velocidade inicial, retorna componentes da velocidade de lançamento;
       </li>
       <li>
-        Verificar acerto: recebe as componentes da velocidade de lançamento, retorna true se o pássaro atingir o porco senão false;	
+        Verificar colisão: recebe as componentes da velocidade de lançamento, calcula a trajetoria do pássaro e retorna o porco atingido senão null;	
       </li>
       <li>
         Pontuação dos porcos: recebe o tamanho do porco (pequeno, médio ou grande), retorna qual é a pontuação por derrotar ele;
@@ -101,4 +117,13 @@
   <div class="section">
     <h2>7. System Requirements</h2>
     <ul>
-      <li>Language: [e.g., Python, JavaScript]</li
+      <li>Language: [e.g., Python, JavaScript]</li>
+      <li>Operating System: [e.g., Windows, Linux, macOS]</li>
+      <li>Hardware Requirements: [e.g., CPU, RAM, GPU, etc.]</li>
+    </ul>
+  </div>
+  <h3>Console do jogo</h3>
+  <div id="output"></div>
+  <script src="activity 2.js"></script>
+</body>
+</html>
