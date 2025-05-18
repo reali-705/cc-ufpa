@@ -5,5 +5,5 @@ As atividades buscam por em prática o que foi ministrado em sala de aula atrav�
 Criando uma página com HTML e JavaScript.  
 Adicionando uma foto e uma descrição do jogo escolhido.
 ## ATIVIDADE 2
-Utilizando variáveis, funções e classe que estão conectadas com o jogo Angrys Birds.  
-A página HTML contem a descrição dos elementos utilizados no JS.
+Utilizando variáveis, funções, objetos e classe que estão conectadas com o jogo Angrys Birds.  
+A página HTML contem a descrição dos elementos utilizados no JS e mostra o teste de 10 lançamentos.
