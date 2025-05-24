@@ -1,3 +1,5 @@
+// funcoes auxiliares
+
 export function getRandomInt(max: number, min: number = 0): number {
     min = Math.ceil(min);
     max = Math.floor(max);

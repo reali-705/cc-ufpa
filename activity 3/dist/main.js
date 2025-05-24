@@ -1,4 +1,5 @@
-import { Porco, Passaro } from './classes.js';
+import { Porco } from "./classes/porco.js";
+import { Passaro } from './classes/passaro.js';
 import { getRandomInt, gerarTamanho } from './funcoes.js';
 // Constantes
 const TELA = { x: 1200, y: 600 };

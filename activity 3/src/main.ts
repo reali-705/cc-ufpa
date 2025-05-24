@@ -1,5 +1,7 @@
-import { Porco, Passaro } from './classes.js';
+import { Porco } from "./classes/porco.js";
+import { Passaro } from './classes/passaro.js';
 import { getRandomInt, gerarTamanho } from './funcoes.js';
+import { Level } from './classes/level.js';
 
 // Constantes
 const TELA: {x: number, y: number} = {x: 1200, y: 600};
@@ -15,12 +17,6 @@ let resposta: HTMLElement;
 let pontuacao: HTMLElement;
 let canvas: HTMLCanvasElement;
 let ctx: CanvasRenderingContext2D;
-
-interface Level {
-    porcos: Porco[];
-    passaros: Passaro[];
-    pontuacao: number;
-}
 
 function criarLevel(inimigos_max: number = 10): Level {
     let porcos: Porco[] = [];
