@@ -3,6 +3,7 @@
     "files": [],
     "references": [ // diretorios para automatizar a compilacao/transpilacao
         { "path": "./activity 3" },
+        { "path": "./activity 4" },
         // add mais path's conforme necessario
     ]
 }

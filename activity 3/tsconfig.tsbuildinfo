@@ -1,12 +1,1 @@
-{
-    "root":[
-        "./src/funcoes.ts",
-        "./src/main.ts",
-        "./src/classes/level.ts",
-        "./src/classes/passaro.ts",
-        "./src/classes/personagem.ts",
-        "./src/classes/porco.ts",
-        "./src/classes/tamanho.ts"
-        ],
-    "version":"5.8.3"
-}
+{"root":["./src/funcoes.ts","./src/main.ts","./src/classes/level.ts","./src/classes/passaro.ts","./src/classes/personagem.ts","./src/classes/porco.ts","./src/classes/tamanho.ts"],"version":"5.8.3"}
