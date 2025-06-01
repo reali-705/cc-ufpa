@@ -1,3 +1,5 @@
+import { LevelConfig } from "./interfaces.js";
+
 export function enumAleatorio<T extends object>(enumObj: T): T[keyof T] {
     const chaves = Object.keys(enumObj).filter(chave => isNaN(Number(chave)));
     if (chaves.length === 0) {
@@ -13,9 +15,9 @@ export function getRandomInt(max: number, min: number = 0): number {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-export async function CarregarNiveis(): Promise<any[]> {
+export async function CarregarNiveis(): Promise<LevelConfig[]> {
     try {
-        const response = await fetch('../niveis.json');
+        const response = await fetch('niveis.json');
         if (!response.ok) {
             throw new Error('Erro ao carregar os niveis');
         }

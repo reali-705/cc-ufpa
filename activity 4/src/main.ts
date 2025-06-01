@@ -2,6 +2,7 @@ import { Level } from "./classes/level.js";
 import { Passaro } from "./classes/passaro.js";
 import { Porco } from "./classes/porco.js";
 import { Tamanho, Dificuldade } from "./classes/enums.js";
+import { LevelConfig } from "./interfaces.js";
 import { enumAleatorio, CarregarNiveis } from "./funcoes.js";
 
 let level: Level;
@@ -11,20 +12,31 @@ let lastTime: number = 0;
 let angulo: HTMLInputElement;
 let velocidade: HTMLInputElement;
 let lancarBotao: HTMLButtonElement;
+let botaoAleatorio: HTMLButtonElement;
+let botaoFacil: HTMLButtonElement;
+let botaoMedio: HTMLButtonElement;
+let botaoDificil: HTMLButtonElement;
 let resposta: HTMLElement;
 let pontuacao: HTMLElement;
 let canvas: HTMLCanvasElement;
 let ctx: CanvasRenderingContext2D;
 let listaPassaros: HTMLElement;
 
-function initGame() {
-    const niveis = CarregarNiveis();
-    console.log(niveis);
-    level = new Level(enumAleatorio(Dificuldade));
+async function initGame() {
+    const niveis = await CarregarNiveis();
+
+    if (niveis.length === 0) {
+        console.error("Nenhum nivel carregado");
+        return;
+    }
 
     angulo = document.getElementById("angulo") as HTMLInputElement;
     velocidade = document.getElementById("velocidade") as HTMLInputElement;
     lancarBotao = document.getElementById("lancarBotao") as HTMLButtonElement;
+    botaoAleatorio = document.getElementById("botaoAleatorio") as HTMLButtonElement;
+    botaoFacil = document.getElementById("botaoFacil") as HTMLButtonElement;
+    botaoMedio = document.getElementById("botaoMedio") as HTMLButtonElement;
+    botaoDificil = document.getElementById("botaoDificil") as HTMLButtonElement;
     resposta = document.getElementById("resposta") as HTMLElement;
     pontuacao = document.getElementById("pontuacao") as HTMLElement;
     listaPassaros = document.getElementById("passaros") as HTMLElement;
@@ -33,8 +45,13 @@ function initGame() {
     ctx = canvas.getContext("2d")!;
 
     lancarBotao.addEventListener("click", lancarPassaro);
+    botaoAleatorio.addEventListener("click", () => selecionarNivel(niveis[0]));
+    botaoFacil.addEventListener("click", () => selecionarNivel(niveis[1]));
+    botaoMedio.addEventListener("click", () => selecionarNivel(niveis[2]));
+    botaoDificil.addEventListener("click", () => selecionarNivel(niveis[3]));
 
-    draw();
+    selecionarNivel(niveis[0]); // comecando o jogo em nivel aleatorio
+
     requestAnimationFrame(gameLoop);
 }
 
@@ -76,7 +93,7 @@ function gameLoop(timestamp: number) {
     const DeltaTime = (timestamp - lastTime) / 1000;
     lastTime = timestamp;
 
-    if (!passaro || !passaro.vivo && level.passaros.length > 0) {
+    if (!passaro.vivo && level.passaros.length > 0) {
         passaro = level.pegarProximoPassaro();
         listaPassaros.textContent = `Passaros restantes: ${level.passaros.length}`
         resposta.textContent = "Pássaro pronto para ser lancado";
@@ -97,6 +114,19 @@ function gameLoop(timestamp: number) {
     }
 
     draw();
+    requestAnimationFrame(gameLoop);
+}
+
+function selecionarNivel(nivel: LevelConfig) {
+    level = new Level(nivel);
+    if (level.passaros.length > 0) {
+        passaro = level.passaros.shift()!;
+        listaPassaros.textContent = `Passaros restantes: ${level.passaros.length}`
+        resposta.textContent = "Passaro pronto para ser lancado";
+    } else {
+        resposta.textContent = "Nenhum passaro pronto para ser lancado";
+    }
+    
     requestAnimationFrame(gameLoop);
 }
 

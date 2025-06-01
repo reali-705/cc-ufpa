@@ -23,7 +23,7 @@ export function getRandomInt(max, min = 0) {
 export function CarregarNiveis() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const response = yield fetch('../niveis.json');
+            const response = yield fetch('niveis.json');
             if (!response.ok) {
                 throw new Error('Erro ao carregar os niveis');
             }

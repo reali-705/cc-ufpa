@@ -1,8 +1,9 @@
 import { Personagem } from "./personagem.ts";
 import { Tamanho } from "./enums.ts";
+import { Posicao } from "../interfaces.ts";
 
 export class Passaro extends Personagem {
-    private velocidade = {x: 0, y: 0};
+    private velocidade: Posicao = {x: 0, y: 0};
     private dano: number;
     public voando: boolean;
 

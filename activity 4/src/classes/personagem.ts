@@ -1,7 +1,8 @@
 import { Tamanho } from "./enums.js";
+import { Posicao } from "../interfaces.js";
 
 export class Personagem {
-    public posicao: {x: number, y: number} = {x: 0, y: 0};
+    public posicao: Posicao = {x: 0, y: 0};
     public tamanho: Tamanho;
     public raio: number;
     public vivo: boolean;

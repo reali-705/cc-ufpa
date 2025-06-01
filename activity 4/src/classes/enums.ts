@@ -7,5 +7,6 @@ export enum Tamanho {
 export enum Dificuldade {
     FACIL = 'facil',
     MEDIO = 'medio',
-    DIFICIL = 'dificil'
+    DIFICIL = 'dificil',
+    ALEATORIA = 'aleatoria'
 }

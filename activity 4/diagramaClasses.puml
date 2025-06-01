@@ -26,6 +26,12 @@ interface Position {
     y: number
 }
 
+interface LevelConfig {
+    dificuldade: Dificuldade;
+    porcos: number | null;
+    passaros: number | null;
+}
+
 ' <<========================================================================>>
 ' <<                             CLASSES                                    >>
 ' <<========================================================================>>
@@ -42,7 +48,7 @@ class Level {
     + passarosDisponiveis: Passaro[]
     + porcosNoNivel: Porco[]
     --
-    + Level(dificuldade: Dificuldade)
+    + Level(nivel: LevelConfig)
     + pegarProximoPassaro(): Passaro
     + lancarPassaro(passaro: Passaro, angulo: number, velocidade: number): void
     + voarPassaro(passaro: Passaro, deltaTime: number): void
@@ -87,6 +93,7 @@ Personagem <|-- Passaro
 ' Relações de Uso (Associações) - Indicam que uma classe usa o ENUM como tipo
 Personagem -- Tamanho : usa
 Level -- Dificuldade : usa
+LevelConfig -- Dificuldade: usa
 
 ' Relações de Agregação/Composição (Level contem Porcos e Pássaros)
 Level o-- Porco : contem
@@ -96,5 +103,6 @@ Level o-- Passaro : contem
 Personagem -- Position : em posicao
 Passaro -- Position : em velocidade
 Level -- Position : em tela e em estilingue
+Level -- LevelConfig : em constructor
 
 @enduml

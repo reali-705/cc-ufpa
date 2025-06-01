@@ -1,47 +1,52 @@
 import { Dificuldade, Tamanho } from "./enums.js";
+import { LevelConfig, Posicao } from "../interfaces.js";
 import { Passaro } from "./passaro.js"
 import { Porco } from "./porco.js";
 import { enumAleatorio, getRandomInt } from "../funcoes.js";
 
 export class Level {
-    public tela = {x: 1200, y: 600};
-    private posicaoEstilingue = {x: 50, y: this.tela.y - 75};
+    public tela: Posicao = {x: 1200, y: 600};
+    private posicaoEstilingue: Posicao = {x: 50, y: this.tela.y - 75};
     private gravidade: number = 25;
     private vetorVelocidade: number = 200;
     private maxRaioPersonagem: number = 20;
-    private maxInimigos: number;
+    private numPorcos: number;
+    private numPassaros: number;
     public dificuldade: Dificuldade;
     public pontuacaoAtual: number = 0;
     public porcos: Porco[] = [];
     public passaros: Passaro[] = [];
 
-    constructor(dificuldade: Dificuldade) {
-        this.dificuldade = dificuldade;
-        switch (dificuldade) {
+    constructor(nivel: LevelConfig) {
+        switch (nivel.dificuldade) {
+            case Dificuldade.ALEATORIA:
+                this.dificuldade = nivel.dificuldade;
+                this.numPorcos = getRandomInt(10, 4);
+                this.numPassaros = getRandomInt(10, this.numPorcos);
+                break;
             case Dificuldade.FACIL:
-                this.maxInimigos = 5;
-                break;
             case Dificuldade.MEDIO:
-                this.maxInimigos = 10;
-                break;
             case Dificuldade.DIFICIL:
-                this.maxInimigos = 15;
+                this.dificuldade = nivel.dificuldade;
+                this.numPorcos = nivel.porcos!;
+                this.numPassaros = nivel.passaros!;
                 break;
             default:
-                this.maxInimigos = 5;
-                break;
+                throw new Error(`Dificuldade ${nivel.dificuldade} não encontrada.`);
         }
-        for (let i=0; i < this.maxInimigos; i++) {
+        for (let i = 0; i < this.numPorcos; i++) {
             this.porcos.push(new Porco(
                 enumAleatorio(Tamanho),
                 getRandomInt(this.tela.x - this.maxRaioPersonagem, this.tela.x * 0.2),
-                getRandomInt(this.tela.y / 2, this.tela.y - this.maxRaioPersonagem)
-            ))
+                getRandomInt(this.tela.y - this.maxRaioPersonagem, this.tela.y / 2)
+            ));
+        }
+        for (let i = 0; i < this.numPassaros; i++) {
             this.passaros.push(new Passaro(
                 enumAleatorio(Tamanho),
                 this.posicaoEstilingue.x,
-                this.posicaoEstilingue.y,
-            ))
+                this.posicaoEstilingue.y
+            ));
         }
         console.log(`level ${this.dificuldade} criado com ${this.passaros.length} passaros e ${this.porcos.length} porcos`);
     }
@@ -56,7 +61,7 @@ export class Level {
 
     voarPassaro(passaro: Passaro, deltaTempo: number): void {
         if (
-            passaro.posicao.x + passaro.raio > this.tela.x || passaro.posicao.x - passaro.raio < 0 || // Verifica se o passaro saiu da tela pela esquerda ou direita)
+            passaro.posicao.x + passaro.raio > this.tela.x || passaro.posicao.x - passaro.raio < 0 || // Verifica se o passaro saiu da tela pela esquerda ou direita
             passaro.posicao.y + passaro.raio > this.tela.y || passaro.posicao.y - passaro.raio < 0 // Verifica se o passaro saiu da tela por cima ou por baixo
         ) {
             passaro.voando = false; // Passaro para de voar

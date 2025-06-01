@@ -9,4 +9,5 @@ export var Dificuldade;
     Dificuldade["FACIL"] = "facil";
     Dificuldade["MEDIO"] = "medio";
     Dificuldade["DIFICIL"] = "dificil";
+    Dificuldade["ALEATORIA"] = "aleatoria";
 })(Dificuldade || (Dificuldade = {}));

@@ -1,83 +1,22 @@
 [
     {
+        "dificuldade": "aleatoria",
+        "porcos": null,
+        "passaros": null
+    },
+    {
         "dificuldade": "facil",
-        "porcos": [
-            {
-                "tamanho": "medio",
-                "quantidade": 3
-            },
-            {
-                "tamanho": "grande",
-                "quantidade": 2
-            }
-        ],
-        "passaros": [
-            {
-                "tamanho": "medio",
-                "quantidade": 2
-            },
-            {
-                "tamanho": "grande",
-                "quantidade": 3
-            }
-        ]
+        "porcos": 5,
+        "passaros": 7
     },
     {
         "dificuldade": "medio",
-        "porcos": [
-            {
-                "tamanho": "pequeno",
-                "quantidade": 1
-            },
-            {
-                "tamanho": "medio",
-                "quantidade": 4
-            },
-            {
-                "tamanho": "grande",
-                "quantidade": 3
-            }
-        ],
-        "passaros": [
-            {
-                "tamanho": "medio",
-                "quantidade": 5
-            },
-            {
-                "tamanho": "grande",
-                "quantidade": 3
-            }
-        ]
+        "porcos": 8,
+        "passaros": 8
     },
     {
         "dificuldade": "dificil",
-        "porcos": [
-            {
-                "tamanho": "pequeno",
-                "quantidade": 2
-            },
-            {
-                "tamanho": "medio",
-                "quantidade": 5
-            },
-            {
-                "tamanho": "grande",
-                "quantidade": 3
-            }
-        ],
-        "passaros": [
-            {
-                "tamanho": "pequeno",
-                "quantidade": 1
-            },
-            {
-                "tamanho": "medio",
-                "quantidade": 6
-            },
-            {
-                "tamanho": "grande",
-                "quantidade": 3
-            }
-        ]
+        "porcos": 10,
+        "passaros": 10
     }
 ]
