@@ -10,3 +10,7 @@ export interface Posicao {
     x: number;
     y: number;
 }
+
+export interface Pontuacao {
+    Dificuldade.Aleatorio
+}
