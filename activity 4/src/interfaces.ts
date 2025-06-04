@@ -12,5 +12,8 @@ export interface Posicao {
 }
 
 export interface Pontuacao {
-    Dificuldade.Aleatorio
+    Dificuldade.ALEATORIA: number[];
+    Dificuldade.FACIL: number[];
+    Dificuldade.MEDIO: number[];
+    Dificuldade.DIFICIL: number[];
 }
