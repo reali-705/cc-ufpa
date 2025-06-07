@@ -28,3 +28,5 @@ export async function CarregarNiveis(): Promise<LevelConfig[]> {
         return [];
     }
 }
+
+export function mergeSort() {}

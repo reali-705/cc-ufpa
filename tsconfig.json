@@ -3,8 +3,8 @@
     "files": [],
     "references": [ // diretorios para automatizar a compilacao/transpilacao
         { "path": "./activity 3" },
-        { "path": "./activity 4" },
+        { "path": "./jogo" },
         // add mais path's conforme necessario
     ]
 }
-// comando para transpilar todos os arquivos: tsc -b
+// comando para transpilar todos os arquivos atrraves da raiz do projeto: tsc -b
