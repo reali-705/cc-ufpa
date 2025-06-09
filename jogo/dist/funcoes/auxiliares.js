@@ -20,7 +20,7 @@ export function getRandomInt(max, min = 0) {
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
-export function CarregarNiveis() {
+export function carregarNiveis() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const response = yield fetch('niveis.json');

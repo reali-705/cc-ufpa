@@ -1,7 +1,7 @@
 import { Dificuldade, Tamanho } from "./enums.js";
 import { Passaro } from "./passaro.js";
 import { Porco } from "./porco.js";
-import { enumAleatorio, getRandomInt } from "../funcoes.js";
+import { enumAleatorio, getRandomInt } from "../funcoes/auxiliares.js";
 export class Level {
     constructor(nivel) {
         this.tela = { x: 1200, y: 600 };
@@ -34,7 +34,6 @@ export class Level {
         for (let i = 0; i < this.numPassaros; i++) {
             this.passaros.push(new Passaro(enumAleatorio(Tamanho), this.posicaoEstilingue.x, this.posicaoEstilingue.y));
         }
-        console.log(`level ${this.dificuldade} criado com ${this.passaros.length} passaros e ${this.porcos.length} porcos`);
     }
     pegarProximoPassaro() {
         return this.passaros.shift();

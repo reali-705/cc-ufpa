@@ -1,9 +1,7 @@
 import { Level } from "./classes/level.js";
 import { Passaro } from "./classes/passaro.js";
-import { Porco } from "./classes/porco.js";
-import { Tamanho, Dificuldade } from "./classes/enums.js";
 import { LevelConfig } from "./interfaces.js";
-import { enumAleatorio, CarregarNiveis } from "./funcoes.js";
+import { carregarNiveis } from "./funcoes/auxiliares.js";
 
 let level: Level;
 let passaro: Passaro;
@@ -23,7 +21,7 @@ let ctx: CanvasRenderingContext2D;
 let listaPassaros: HTMLElement;
 
 async function initGame() {
-    const niveis = await CarregarNiveis();
+    const niveis = await carregarNiveis();
 
     if (niveis.length === 0) {
         console.error("Nenhum nivel carregado");
@@ -74,6 +72,11 @@ function draw() {
             ctx.strokeStyle = "black";
             ctx.lineWidth = 1;
             ctx.stroke();
+            ctx.fillStyle = "white";
+            ctx.font = "12px Arial";
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.fillText(`${porco.vida}`, porco.posicao.x, porco.posicao.y);
         }
     });
     if (passaro) {
@@ -106,11 +109,13 @@ function gameLoop(timestamp: number) {
     }
 
     if (!passaro.vivo && level.passaros.length <= 0 && level.porcos.length > 0) {
-        resposta.textContent = "GAMER OVER"
+        resposta.textContent = "GAMER OVER";
+        return;
     }
 
     if (passaro.vivo && level.porcos.length <= 0) {
         resposta.textContent = "PARABENS";
+        return;
     }
 
     draw();
@@ -120,7 +125,7 @@ function gameLoop(timestamp: number) {
 function selecionarNivel(nivel: LevelConfig) {
     level = new Level(nivel);
     if (level.passaros.length > 0) {
-        passaro = level.passaros.shift()!;
+        passaro = level.pegarProximoPassaro();
         listaPassaros.textContent = `Passaros restantes: ${level.passaros.length}`
         resposta.textContent = "Passaro pronto para ser lancado";
     } else {

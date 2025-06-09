@@ -11,3 +11,10 @@ export interface Posicao {
     x: number;
     y: number;
 }
+
+export interface Pontuacoes {
+    aleatoria: number[];
+    facil: number[];
+    medio: number[];
+    dificil: number[];
+}

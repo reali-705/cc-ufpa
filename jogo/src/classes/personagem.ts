@@ -6,7 +6,7 @@ export class Personagem {
     public tamanho: Tamanho;
     public raio: number;
     public vivo: boolean;
-    protected vida: number;
+    public vida: number;
 
     constructor(tamanho: Tamanho, posicao_x: number, posicao_y: number) {
         this.vivo = true;

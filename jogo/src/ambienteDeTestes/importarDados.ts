@@ -1,0 +1,20 @@
+import * as fs from "fs";
+import * as path from "path";
+
+export function importarDados<T>(arquivo: string): T | null {
+    try {
+        const fullPath = path.join(".", arquivo);
+        const data = fs.readFileSync(fullPath, "utf-8");
+        return JSON.parse(data) as T;
+    } catch (error) {
+        if (error instanceof Error) {
+            console.error(`Ocorreu um erro ao ler o arquivo ${arquivo}: ${error.message}`);
+            if ((error as NodeJS.ErrnoException).code === "ENOENT") {
+                console.error(`O arquivo ${arquivo} nao foi encontrado.`);
+            }
+        } else {
+            console.error(`Erro desconhecido ao carregar o arquivo ${arquivo}: ${error}`);
+        }
+        return null;
+    }
+}

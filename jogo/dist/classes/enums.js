@@ -4,6 +4,11 @@ export var Tamanho;
     Tamanho["MEDIO"] = "medio";
     Tamanho["GRANDE"] = "grande";
 })(Tamanho || (Tamanho = {}));
+export const ordemTamanho = {
+    [Tamanho.PEQUENO]: 0,
+    [Tamanho.MEDIO]: 1,
+    [Tamanho.GRANDE]: 3,
+};
 export var Dificuldade;
 (function (Dificuldade) {
     Dificuldade["FACIL"] = "facil";

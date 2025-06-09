@@ -2,7 +2,7 @@ import { Dificuldade, Tamanho } from "./enums.js";
 import { LevelConfig, Posicao } from "../interfaces.js";
 import { Passaro } from "./passaro.js"
 import { Porco } from "./porco.js";
-import { enumAleatorio, getRandomInt } from "../funcoes.js";
+import { enumAleatorio, getRandomInt } from "../funcoes/auxiliares.js";
 
 export class Level {
     public tela: Posicao = {x: 1200, y: 600};
@@ -48,7 +48,6 @@ export class Level {
                 this.posicaoEstilingue.y
             ));
         }
-        console.log(`level ${this.dificuldade} criado com ${this.passaros.length} passaros e ${this.porcos.length} porcos`);
     }
     
     pegarProximoPassaro(): Passaro {
