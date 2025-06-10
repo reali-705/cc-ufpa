@@ -3,7 +3,7 @@ import * as path from "path";
 
 export function importarDados<T>(arquivo: string): T | null {
     try {
-        const fullPath = path.join(".", arquivo);
+        const fullPath = path.join("./jogo/dist/ambienteDeTestes", arquivo);
         const data = fs.readFileSync(fullPath, "utf-8");
         return JSON.parse(data) as T;
     } catch (error) {

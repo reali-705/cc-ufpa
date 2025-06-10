@@ -1,0 +1,20 @@
+[
+    {
+        "dificuldade": "facil",
+        "porcos": 10000,
+        "passaros": 5000,
+        "pontuacao": []
+    },
+    {
+        "dificuldade": "medio",
+        "porcos": 100000,
+        "passaros": 50000,
+        "pontuacao": []
+    },
+    {
+        "dificuldade": "dificil",
+        "porcos": 1000000,
+        "passaros": 500000,
+        "pontuacao": []
+    }
+]
