@@ -1,0 +1,22 @@
+import { CircularLinkedList } from "../estruturas/CircularlinkedList.js";
+
+const circularLinkedList = new CircularLinkedList<number>();
+circularLinkedList.insert(1);
+circularLinkedList.insert(2);
+circularLinkedList.insert(3);
+circularLinkedList.insert(4);
+circularLinkedList.insert(5);
+circularLinkedList.insert(6);
+circularLinkedList.insert(7);
+circularLinkedList.insert(8);
+circularLinkedList.insert(9);
+circularLinkedList.insert(10);
+circularLinkedList.print();
+console.log(circularLinkedList.getAt(5));
+circularLinkedList.removeAt(5);
+circularLinkedList.print();
+console.log(circularLinkedList.getAt(9));
+circularLinkedList.removeAt(9);
+circularLinkedList.print();
+console.log(circularLinkedList.getAt(3));
+circularLinkedList.removeAt(3);
