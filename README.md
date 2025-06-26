@@ -75,7 +75,3 @@ Adicionando um **JSON** para guardar array e utilizá-lo no código a partir da 
 
 ## ATIVIDADE 5
 Foi implementado um algoritmo de ordenação para o array de pontuação do jogo, para poder mostrar na tela do jogo as melhores pontuações, e uma pesquisa para o array de Passaros, para que o usuário possa selecionar qual pássaro ele pretende lançar. Para melhor descrição e organização dessa etapa do projeto, utilizarei o [Notion](https://www.notion.so/Angrys-Birds-Reali-208cabdba61180d68539e6b41af037a4). Para testar os algoritmos de ordenação e pesquisa foi feito um diretório `ambienteDeTestes` que contem a estrutura lógica e observa a diferença de tempo em *ms* de uma operação exibindo no terminal os valores para cada *array*.
-
-
-## ATIVIDADE 6
-Adicionar 
