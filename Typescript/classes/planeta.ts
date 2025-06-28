@@ -9,7 +9,7 @@ export class Planeta {
     private nome: string;
     private areas: ListaVinculadaCircular<AreaExploravel>;
     private indiceAreaAtual: number;
-    private areaAtual: AreaExploravel | null;
+    private areaAtual: AreaExploravel;
     constructor(id: string, nome: string, areas: Areas[]) {
         this.id = id;
         this.nome = nome;
@@ -18,12 +18,19 @@ export class Planeta {
             this.areas.insert(new AreaExploravel(area.id, area.tipo, area.porcentagemElementos));
         }
         this.indiceAreaAtual = this.areas.getSize() > 0 ? 0 : -1;
-        this.areaAtual = this.areas.getAt(this.indiceAreaAtual);
+        this.areaAtual = this.areas.getAt(this.indiceAreaAtual)!;
+    }
+    public print(): void {
+        console.log(this.id + " - " + this.nome);
+        console.log("Elementos: ");
+        this.getElementos()!.print()
+        console.log("Areas: ");
+        this.getAreas()!.print();
     }
     public getNome(): string {
         return this.id + " - " + this.nome;
     }
-    public getAreaAtual(): AreaExploravel | null {
+    public getAreaAtual(): AreaExploravel {
         return this.areaAtual;
     }
     public getSizeAreas(): number {
@@ -53,7 +60,7 @@ export class Planeta {
             return;
         }
         this.indiceAreaAtual = (this.indiceAreaAtual + 1) % this.areas.getSize();
-        this.areaAtual = this.areas.getAt(this.indiceAreaAtual);
+        this.areaAtual = this.areas.getAt(this.indiceAreaAtual)!;
     }
     public irOeste(): void {
         if (this.areas.getSize() === 0) {
@@ -61,6 +68,6 @@ export class Planeta {
             return;
         }
         this.indiceAreaAtual = (this.indiceAreaAtual - 1 + this.areas.getSize()) % this.areas.getSize();
-        this.areaAtual = this.areas.getAt(this.indiceAreaAtual);
+        this.areaAtual = this.areas.getAt(this.indiceAreaAtual)!;
     }
 }

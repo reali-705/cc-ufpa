@@ -19,6 +19,11 @@ export class AreaExploravel {
             this.elementos.add(elemento);
         }
     };
+    public print(): void {
+        console.log(this.getArea());
+        console.log("Elementos: ");
+        this.elementos.print();
+    }
     public getArea(): string {
         return this.id + " - " + this.tipo;
     }

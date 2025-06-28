@@ -1,7 +1,7 @@
 import { Planeta } from "../classes/planeta";
 import { Elementos, TipoAreas } from "../enums";
 
-const planeta = new Planeta(
+export const planeta = new Planeta(
     "01",
     "Terra",
     [ {
@@ -34,24 +34,14 @@ const planeta = new Planeta(
     } ]
 );
 
-console.log("Nome Planeta: " + planeta.getNome());
-console.log("Elementos do Planeta: " + planeta.getElementos()?.print());
-console.log("Areas do Planeta: " + planeta.getAreas()?.print())
-console.log("Area Atual: " + planeta.getAreaAtual()?.getArea());
-console.log("Elementos da Area Atual: ");
-planeta.getAreaAtual()?.getElementos()?.print();
-console.log("Indo para Oeste...")
+planeta.print();
+
+console.log("\nIndo para Oeste...")
 planeta.irOeste();
-console.log("Area Atual: " + planeta.getAreaAtual()?.getArea());
-console.log("Elementos da Area Atual: ");
-planeta.getAreaAtual()?.getElementos()?.print();
-console.log("Indo para Oeste...")
+planeta.getAreaAtual()?.print();
+console.log("\nIndo para Oeste...")
 planeta.irOeste();
-console.log("Area Atual: " + planeta.getAreaAtual()?.getArea());
-console.log("Elementos da Area Atual: ");
-planeta.getAreaAtual()?.getElementos()?.print();
-console.log("Indo para Leste...")
+planeta.getAreaAtual()?.print();
+console.log("\nIndo para Leste...")
 planeta.irLeste();
-console.log("Area Atual: " + planeta.getAreaAtual()?.getArea());
-console.log("Elementos da Area Atual: ");
-planeta.getAreaAtual()?.getElementos()?.print();
+planeta.getAreaAtual()?.print();
