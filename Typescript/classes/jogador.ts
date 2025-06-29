@@ -56,4 +56,15 @@ export class Jogador {
         if (elementosMinerados > 0) return true;
         return false;
     }
+    public salvarObjeto(): any {
+        return {
+            id: this.id,
+            nome: this.nome,
+            inventario: this.inventario.salvarObjeto(),
+            planetaAtual: this.planetaAtual.salvarObjeto(),
+        }
+    }
+    static carregarObjeto(objeto: any): Jogador {
+        return new Jogador(objeto.nome, Planeta.carregarObjeto(objeto.planetaAtual), AreaExploravel.carregarObjeto(objeto.areaAtual));
+    }
 }
