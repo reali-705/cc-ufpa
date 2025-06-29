@@ -7,19 +7,19 @@ planeta.print();
 console.log("\nTESTANDO JOGADOR");
 jogador.print();
 
-console.log("Movendo para Leste...");
+console.log("\nMovendo para Leste...");
 jogador.irLeste();
 console.log("Minerando...");
 jogador.minerar();
 jogador.print();
 
-console.log("Movendo para Leste...");
+console.log("\nMovendo para Leste...");
 jogador.irLeste();
 console.log("Minerando...");
 jogador.minerar();
 jogador.print();
 
-console.log("Movendo para Oeste...");
+console.log("\nMovendo para Oeste...");
 jogador.irOeste();
 console.log("Minerando...");
 jogador.minerar();
