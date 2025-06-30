@@ -9,5 +9,8 @@
   },
   "author": "Ale-Reali-705",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "@types/node": "^24.0.7"
+  }
 }

@@ -1,5 +1,5 @@
-import { Elementos, TipoAreas } from "../enums";
-import { Conjunto } from "../elements/set";
+import { Elementos, TipoAreas } from "../enums.ts";
+import { Conjunto } from "../elements/set.ts";
 
 export class AreaExploravel {
     private id: string;

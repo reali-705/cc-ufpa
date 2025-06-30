@@ -1,7 +1,6 @@
-import { Elementos } from "../enums";
-import { AreaExploravel } from "./areaExplorravel";
-import { Inventario } from "./inventario";
-import { Planeta } from "./planeta";
+import { AreaExploravel } from "./areaExplorravel.ts";
+import { Inventario } from "./inventario.ts";
+import { Planeta } from "./planeta.ts";
 
 export class Jogador {
     private id: string;
@@ -43,28 +42,28 @@ export class Jogador {
         this.planetaAtual.irOeste();
         this.novaArea();
     }
-    public minerar(): boolean {
-        if (!this.areaAtual) return false;
-        const elementosPorcentagem = this.areaAtual.getElementosPorcentagem();
-        if (!elementosPorcentagem) return false;
-        let elementosMinerados = 0;
-        for (const [elemento, porcentagem] of elementosPorcentagem.entries()) {
-            const quantidade = Math.floor(porcentagem / 10);
-            if (quantidade <= 0) continue;
-            if (this.inventario.addItem(elemento, quantidade)) elementosMinerados += quantidade;
-        }
-        if (elementosMinerados > 0) return true;
-        return false;
-    }
+    // public minerar(): boolean {
+    //     if (!this.areaAtual) return false;
+    //     const elementosPorcentagem = this.areaAtual.getElementosPorcentagem();
+    //     if (!elementosPorcentagem) return false;
+    //     let elementosMinerados = 0;
+    //     for (const [elemento, porcentagem] of elementosPorcentagem.entries()) {
+    //         const quantidade = Math.floor(porcentagem / 10);
+    //         if (quantidade <= 0) continue;
+    //         if (this.inventario.addItem(elemento, quantidade)) elementosMinerados += quantidade;
+    //     }
+    //     if (elementosMinerados > 0) return true;
+    //     return false;
+    // }
     public salvarObjeto(): any {
         return {
             id: this.id,
             nome: this.nome,
-            inventario: this.inventario.salvarObjeto(),
-            planetaAtual: this.planetaAtual.salvarObjeto(),
+            // inventario: this.inventario.salvarObjeto(),
+            // planetaAtual: this.planetaAtual.salvarObjeto(),
         }
     }
-    static carregarObjeto(objeto: any): Jogador {
-        return new Jogador(objeto.nome, Planeta.carregarObjeto(objeto.planetaAtual), AreaExploravel.carregarObjeto(objeto.areaAtual));
-    }
+    // static carregarObjeto(objeto: any): Jogador {
+        // return new Jogador(objeto.nome, Planeta.carregarObjeto(objeto.planetaAtual), AreaExploravel.carregarObjeto(objeto.areaAtual));
+    // }
 }

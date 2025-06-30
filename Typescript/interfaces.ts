@@ -1,4 +1,4 @@
-import { Elementos, TipoAreas } from "./enums";
+import { Elementos, TipoAreas } from "./enums.ts";
 
 export interface Materiais {
     [key: string]: number;

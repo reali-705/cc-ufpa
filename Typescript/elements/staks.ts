@@ -1,4 +1,4 @@
-import { Node } from "./node";
+import { Node } from "./node.ts";
 
 export class Pilha<T> {
     private top: Node<T> | null = null;
