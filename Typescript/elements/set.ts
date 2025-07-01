@@ -1,10 +1,10 @@
-export class Conjunto<T> {
+export class Conjunto<T extends { id: string }> {
     private items: { [key: string]: T };
     constructor() {
         this.items = Object.create(null);
     }
     has(element: T): boolean {
-        return Object.prototype.hasOwnProperty.call(this.items, String(element));
+        return Object.prototype.hasOwnProperty.call(this.items, element.id);
     }
     clear(): void {
         this.items = Object.create(null);
@@ -27,14 +27,14 @@ export class Conjunto<T> {
     }
     add(element: T): boolean {
         if (!this.has(element)) {
-            this.items[String(element)] = element;
+            this.items[element.id] = element;
             return true;
         }
         return false;
     }
-    delete(element: T): boolean {
+    remove(element: T): boolean {
         if (this.has(element)) {
-            delete this.items[String(element)];
+            delete this.items[element.id];
             return true;
         }
         return false;
@@ -42,8 +42,8 @@ export class Conjunto<T> {
     get(element: T): T | undefined {
         let respost: T | undefined = undefined;
         if (this.has(element)) {
-            respost = this.items[String(element)];
-            this.delete(element);
+            respost = this.items[element.id];
+            this.remove(element);
         }
         return respost;
     }

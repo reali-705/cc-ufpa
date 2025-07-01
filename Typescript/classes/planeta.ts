@@ -1,73 +1,75 @@
-import { ListaVinculadaCircular } from "../elements/circularLinkedList";
-import { AreaExploravel } from "./areaExplorravel";
-import { Areas } from "../interfaces";
-import { Conjunto } from "../elements/set";
-import { Elementos, TipoAreas } from "../enums";
+import { AreaExploravel } from "./areaExploravel.ts";
+import { ListaVinculadaCircular } from "../elements/circularLinkedList.ts";
+import { Conjunto } from "../elements/set.ts";
+import { Item } from "./item.ts";
 
 export class Planeta {
-    private id: string;
-    private nome: string;
-    private areas: ListaVinculadaCircular<AreaExploravel>;
-    private indiceAreaAtual: number;
-    private areaAtual: AreaExploravel;
-    constructor(id: string, nome: string, areas: Areas[]) {
-        this.id = id;
+    public readonly id: string;
+    public nome: string;
+    public areas: ListaVinculadaCircular<AreaExploravel>;
+    constructor(
+        nome: string,
+        areas: AreaExploravel[] | ListaVinculadaCircular<AreaExploravel> = new ListaVinculadaCircular<AreaExploravel>(),
+        id?: string
+    ) {
+        this.id = id || this.gerarIdUnico();
         this.nome = nome;
-        this.areas = new ListaVinculadaCircular<AreaExploravel>();
-        for (const area of areas) {
-            this.areas.insert(new AreaExploravel(area.id, area.tipo, area.porcentagemElementos));
+        if (Array.isArray(areas)) {
+            this.areas = new ListaVinculadaCircular<AreaExploravel>();
+            areas.forEach((area) => this.areas.insert(area));
+        } else {
+            this.areas = areas;
         }
-        this.indiceAreaAtual = this.areas.getSize() > 0 ? 0 : -1;
-        this.areaAtual = this.areas.getAt(this.indiceAreaAtual)!;
+    }
+    private gerarIdUnico(): string {
+        return Math.random().toString(36).substring(2, 4);
+    }
+    public addArea(area: AreaExploravel): boolean {
+        return this.areas.insert(area);
+    }
+    public removeArea(area: AreaExploravel): boolean {
+        return this.areas.removeAt(this.areas.toArray().indexOf(area));
+    }
+    public getArea(id: string): AreaExploravel | null {
+        let current = this.areas["head"];
+        for (let i = 0; i < this.areas.getSize(); i++) {
+            if (current && current.data.id === id) return current.data;
+            current = current!.next;
+        }
+        return null;
+    }
+    public recurosDoMundo(): Conjunto<Item> {
+        let recursos = new Conjunto<Item>();
+        this.areas.toArray().forEach((area) => recursos = recursos.union(area.recursos));
+        return recursos;
     }
     public print(): void {
-        console.log(this.id + " - " + this.nome);
-        console.log("Elementos: ");
-        this.getElementos()!.print()
-        console.log("Areas: ");
-        this.getAreas()!.print();
+        console.log(`\n=== Planeta: ${this.nome} (ID: ${this.id}) ===`);
+        console.log(`Número de áreas: ${this.areas.getSize()}`);
+        console.log("--- Áreas ---");
+        this.areas.print();
+        console.log("---------------------------------------");
     }
-    public getNome(): string {
-        return this.id + " - " + this.nome;
-    }
-    public getAreaAtual(): AreaExploravel {
-        return this.areaAtual;
-    }
-    public getSizeAreas(): number {
-        return this.areas.getSize();
-    }
-    public getAreas(): Conjunto<TipoAreas> | null {
-        if (this.getSizeAreas() === 0) return null;
-        const AREAS = new Conjunto<TipoAreas>();
-        for (let i = 0; i < this.areas.getSize(); i++) {
-            const area = this.areas.getAt(i);
-            if (area) AREAS.add(area.getTipo());
+    public salvarObjeto(): any {
+        return {
+            tipo: (this.constructor as any).name,
+            id: this.id,
+            nome: this.nome,
+            areas: this.areas.toArray().map((area) => area.salvarObjeto()),
         }
-        return AREAS;
     }
-    public getElementos(): Conjunto<Elementos> | null {
-        if (this.getSizeAreas() === 0) return null;
-        let elementos = new Conjunto<Elementos>();
-        for (let i = 0; i < this.areas.getSize(); i++) {
-            const area = this.areas.getAt(i);
-            if (area) elementos = elementos.union(area.getElementos());
+    public static carregarObjeto(data: any): Planeta {
+        const areas = new ListaVinculadaCircular<AreaExploravel>();
+        if (data.areas) {
+            data.areas.forEach((areaData: any) => {
+                try {
+                    const area = AreaExploravel.carregarObjeto(areaData);
+                    areas.insert(area);
+                } catch (error) {
+                    console.warn(error);
+                }
+            });
         }
-        return elementos;
-    }
-    public irLeste(): void {
-        if (this.areas.getSize() === 0) {
-            console.log("Planeta sem areas");
-            return;
-        }
-        this.indiceAreaAtual = (this.indiceAreaAtual + 1) % this.areas.getSize();
-        this.areaAtual = this.areas.getAt(this.indiceAreaAtual)!;
-    }
-    public irOeste(): void {
-        if (this.areas.getSize() === 0) {
-            console.log("Planeta sem areas");
-            return;
-        }
-        this.indiceAreaAtual = (this.indiceAreaAtual - 1 + this.areas.getSize()) % this.areas.getSize();
-        this.areaAtual = this.areas.getAt(this.indiceAreaAtual)!;
+        return new this(data.nome, areas, data.id);
     }
 }

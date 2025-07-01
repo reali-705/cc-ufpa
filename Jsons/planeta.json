@@ -1,0 +1,57 @@
+{
+  "tipo": "Planeta",
+  "id": "planeta-aBcDeF",
+  "nome": "Terra Nova",
+  "areas": [
+    {
+      "tipo": "AreaExploravel",
+      "id": "area-qWeRtY",
+      "nome": "Floresta Serena",
+      "descricao": "Uma floresta vasta e pacífica, com vegetação exuberante.",
+      "explorada": false,
+      "recursos": [
+        {
+          "tipo": "Item",
+          "id": "item-zXcVbN",
+          "nome": "Madeira Élfica",
+          "descricao": "Madeira leve e resistente, ideal para arcos.",
+          "quantidade": 1,
+          "pilhaMax": 50
+        },
+        {
+          "tipo": "Item",
+          "id": "item-aSdFgH",
+          "nome": "Bagas Brilhantes",
+          "descricao": "Bagas que emitem um brilho suave no escuro.",
+          "quantidade": 5,
+          "pilhaMax": 20
+        }
+      ]
+    },
+    {
+      "tipo": "AreaExploravel",
+      "id": "area-uIoPaS",
+      "nome": "Deserto Escaldante",
+      "descricao": "Vastas dunas de areia sob um sol impiedoso.",
+      "explorada": false,
+      "recursos": []
+    },
+    {
+      "tipo": "AreaExploravel",
+      "id": "area-jKlMzX",
+      "nome": "Ruínas Antigas",
+      "descricao": "Restos de uma civilização perdida, com segredos a desvendar.",
+      "explorada": true,
+      "recursos": [
+        {
+          "tipo": "Item",
+          "id": "item-qWeR12",
+          "nome": "Fragmento Rúnico",
+          "descricao": "Pedaço de pedra com inscrições mágicas.",
+          "quantidade": 1,
+          "pilhaMax": 1
+        }
+      ]
+    }
+  ]
+}

@@ -3,8 +3,16 @@ import { Node } from "./node.ts";
 export class Pilha<T> {
     private top: Node<T> | null = null;
     private size: number = 0;
+    getData(): T | null {
+        if (this.top === null) {
+            console.log("A pilha esta vazia.");
+            return null;
+        }
+        return this.top.data;
+    }
     push(data: T): void {
         const newNode = new Node(data);
+        newNode.next = this.top
         this.top = newNode;
         this.size++;
     }
