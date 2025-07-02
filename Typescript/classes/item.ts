@@ -22,7 +22,6 @@ export class Item {
         this.raridade = raridade;
         this.tamanho = tamanho;
     }
-    // método temporário para gerar ID aleatório
     private gerarIdUnico(): string {
         return (this.constructor as any).name + Math.random().toString(36).substring(2, 4);
     }

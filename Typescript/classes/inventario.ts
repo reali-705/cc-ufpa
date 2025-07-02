@@ -24,7 +24,7 @@ export class Inventario {
             const pilha = pilhasOcupadas[i];
             if (pilha.getData()!.id === itens.item.id && pilha.getSize() < maxItensNessaPilha) {
                 const quantidadeAdd = Math.min(quantidadeRestante, maxItensNessaPilha - pilha.getSize());
-                pilha.push(itens.item);
+                for (let j = 0; j < quantidadeAdd; j++) pilha.push(itens.item);
                 quantidadeRestante -= quantidadeAdd;
                 if (!quantidadeRestante) return true;
             }
@@ -34,7 +34,7 @@ export class Inventario {
             const pilha = pilhasVazias[i];
             if (pilha.getSize() < maxItensNessaPilha) {
                 const quantidadeAdd = Math.min(quantidadeRestante, maxItensNessaPilha - pilha.getSize());
-                pilha.push(itens.item);
+                for (let j = 0; j < quantidadeAdd; j++) pilha.push(itens.item);
                 quantidadeRestante -= quantidadeAdd;
                 if (!quantidadeRestante) return true;
             }
@@ -60,6 +60,9 @@ export class Inventario {
         }
         return false;
     }
+    public isFull(): boolean {
+        return this.maxPilhas === this.pilhas.filter((pilha) => pilha.getData()).length;
+    }
     public getItens(): Itens[] {
         return this.pilhas.map((pilha) => ({ item: pilha.getData()!, quantidade: pilha.getSize() }));
     }
@@ -80,7 +83,7 @@ export class Inventario {
         if (data.itens) {
             data.itens.forEach((itemData: any) => {
                 try {
-                    const item = Item.carregarObjeto(itemData);
+                    const item = Item.carregarObjeto(itemData.item);
                     itens.push({ item: item, quantidade: itemData.quantidade });
                 } catch (error) {
                     console.warn(error);
@@ -90,10 +93,13 @@ export class Inventario {
         return new this(data.maxItensPorPilha, data.maxPilhas, itens);
     }
     public print(): void {
-        console.log("===== Inventário =====");
+        console.log("------ Inventário ------");
         const pilhasOcupadas = this.pilhas.filter((pilha) => pilha.getData());
         console.log(`Pilhas Ocupadas: ${pilhasOcupadas.length}/${this.maxPilhas}`);
-        pilhasOcupadas.forEach((pilha) => pilha.print());
-        console.log("======================");
+        pilhasOcupadas.forEach((pilha) => {
+            const item = pilha.getData()!;
+            console.log(`Item: ${item.id} - ${item.nome} (${item.raridade})\nQuantidade: ${pilha.getSize()}`);
+        });
+        console.log("------------------------");
     }
 }

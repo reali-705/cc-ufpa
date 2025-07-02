@@ -8,7 +8,7 @@ export class Planeta {
     public readonly id: string;
     public readonly nome: string;
     public areas: ListaVinculadaCircular<AreaExploravel>;
-    public areaAtual: Node<AreaExploravel> | undefined;
+    public areaAtual: Node<AreaExploravel>;
     constructor(
         nome: string,
         areas: AreaExploravel[] | ListaVinculadaCircular<AreaExploravel> = new ListaVinculadaCircular<AreaExploravel>(),
@@ -18,28 +18,27 @@ export class Planeta {
         this.id = id || this.gerarIdUnico();
         this.nome = nome;
         if (Array.isArray(areas)) {
+            if (!areas.length) throw new Error("Lista de areas vazia");
             this.areas = new ListaVinculadaCircular<AreaExploravel>();
             areas.forEach((area) => this.areas.insert(area));
         } else {
+            if (!areas.getSize()) throw new Error("Lista de areas vazia");
             this.areas = areas;
         }
         if (idAreaAtual && idAreaAtual !== this.areas.getHead()?.data.id) {
             const node = this.getNodeArea(idAreaAtual);
             if (node) this.areas.alterarHead(node);
         }
-        this.areaAtual = this.areas.getHead();
-        this.areaAtual?.data.explorar();
+        this.areaAtual = this.areas.getHead()!;
     }
     private gerarIdUnico(): string {
         return (this.constructor as any).name + Math.random().toString(36).substring(2, 4);
     }
     public irLeste(): void {
-        if (this.areas.next()) this.areaAtual = this.areas.getHead();
-        this.areaAtual?.data.explorar();
+        if (this.areas.next()) this.areaAtual = this.areas.getHead()!;
     }
     public irOeste(): void {
-        if (this.areas.prev()) this.areaAtual = this.areas.getHead();
-        this.areaAtual?.data.explorar();
+        if (this.areas.prev()) this.areaAtual = this.areas.getHead()!;
     }
     public getNodeArea(id: string): Node<AreaExploravel> | undefined {
         let current = this.areas.getHead();

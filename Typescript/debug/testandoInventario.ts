@@ -1,6 +1,6 @@
 import { Inventario } from "../classes/inventario.ts";
 import { Item } from "../classes/item.ts";
-import { carregarDados, salvarDados } from "../functions/dadosLerEscrever.ts";
+import { carregarDados, salvarDados } from "../functions/salvarCarregar.ts";
 
 const arquivo = "inventario.json";
 const dados = carregarDados(arquivo);

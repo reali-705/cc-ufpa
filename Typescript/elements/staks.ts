@@ -5,7 +5,6 @@ export class Pilha<T> {
     private size: number = 0;
     getData(): T | null {
         if (this.top === null) {
-            console.log("A pilha esta vazia.");
             return null;
         }
         return this.top.data;
@@ -18,7 +17,6 @@ export class Pilha<T> {
     }
     pop(): T | null {
         if (this.top === null) {
-            console.log("A pilha esta vazia.");
             return null;
         }
         const data = this.top.data;
@@ -28,7 +26,6 @@ export class Pilha<T> {
     }
     peek(): T | null {
         if (this.top === null) {
-            console.log("A pilha esta vazia.");
             return null;
         }
         return this.top.data;

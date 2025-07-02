@@ -37,7 +37,7 @@ export class AreaExploravel {
     public removerRecursos(item: Item): boolean {
         return this.recursos.remove(item);
     }
-    public minerar(): Itens {
+    public extrairMinerio(): Itens {
         return {
             item: this.recursos.values()[Math.floor(Math.random() * this.recursos.size())],
             quantidade: Math.ceil(Math.random() * 10)

@@ -1,5 +1,5 @@
 import { AreaExploravel } from "../classes/areaExploravel.ts";
-import { carregarDados } from "../functions/dadosLerEscrever.ts";
+import { carregarDados } from "../functions/salvarCarregar.ts";
 
 const arquivo = "areaExploravel.json";
 const dados = carregarDados(arquivo);
