@@ -1,11 +1,11 @@
 import { Conjunto } from "../elements/set.ts";
-import { Item } from "./item.ts";
+import { Item, Itens } from "./item.ts";
 
 export class AreaExploravel {
     public readonly id: string;
-    public nome: string;
-    public descricao: string;
-    public recursos: Conjunto<Item>;
+    public readonly nome: string;
+    public readonly descricao: string;
+    public readonly recursos: Conjunto<Item>;
     public explorada: boolean;
     constructor(
         nome: string,
@@ -26,7 +26,7 @@ export class AreaExploravel {
         }
     };
     private gerarIdUnico(): string {
-        return Math.random().toString(36).substring(2, 4);
+        return (this.constructor as any).name + Math.random().toString(36).substring(2, 4);
     }
     public explorar(): void {
         if (!this.explorada) this.explorada = true;
@@ -36,6 +36,12 @@ export class AreaExploravel {
     }
     public removerRecursos(item: Item): boolean {
         return this.recursos.remove(item);
+    }
+    public minerar(): Itens {
+        return {
+            item: this.recursos.values()[Math.floor(Math.random() * this.recursos.size())],
+            quantidade: Math.ceil(Math.random() * 10)
+        };
     }
     public salvarObjeto(): any {
         return {
@@ -63,8 +69,14 @@ export class AreaExploravel {
     }
     public print(): void {
         console.log(this.id + " - " + this.nome);
-        console.log(this.descricao);
+        console.log("Explorada: " + this.explorada);
+        if (this.explorada) console.log(this.descricao);
         console.log("Recursos:");
-        this.recursos.print();
+        const recursos = this.recursos.values();
+        if (!recursos) console.log("Nenhum recurso");
+        else for (let i = 0; i < recursos.length; i++) {
+            console.log(recursos[i].id + " - " + recursos[i].nome + " (" + recursos[i].raridade + ")");
+        }
+        console.log("---------------------------------------");
     }
 }

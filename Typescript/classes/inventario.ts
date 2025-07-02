@@ -1,10 +1,5 @@
 import { Pilha } from "../elements/staks.ts";
-import { Item } from "./item.ts";
-
-interface Itens {
-    item: Item;
-    quantidade: number;
-}
+import { Item, Itens } from "./item.ts";
 
 export class Inventario {
     private maxItensPorPilha: number;
@@ -14,6 +9,9 @@ export class Inventario {
         this.maxItensPorPilha = maxItensPorPilha;
         this.maxPilhas = maxPilhas;
         this.pilhas = new Array<Pilha<Item>>(maxPilhas);
+        for (let i = 0; i < maxPilhas; i++) {
+            this.pilhas[i] = new Pilha<Item>();
+        }
         for (let i = 0; i < itens.length; i++) {
             this.addItem(itens[i]);
         }

@@ -1,15 +1,18 @@
 import { AreaExploravel } from "./areaExploravel.ts";
+import { Item } from "./item.ts";
 import { ListaVinculadaCircular } from "../elements/circularLinkedList.ts";
 import { Conjunto } from "../elements/set.ts";
-import { Item } from "./item.ts";
+import { Node } from "../elements/node.ts";
 
 export class Planeta {
     public readonly id: string;
-    public nome: string;
+    public readonly nome: string;
     public areas: ListaVinculadaCircular<AreaExploravel>;
+    public areaAtual: Node<AreaExploravel> | undefined;
     constructor(
         nome: string,
         areas: AreaExploravel[] | ListaVinculadaCircular<AreaExploravel> = new ListaVinculadaCircular<AreaExploravel>(),
+        idAreaAtual: string | undefined = undefined,
         id?: string
     ) {
         this.id = id || this.gerarIdUnico();
@@ -20,35 +23,49 @@ export class Planeta {
         } else {
             this.areas = areas;
         }
+        if (idAreaAtual && idAreaAtual !== this.areas.getHead()?.data.id) {
+            const node = this.getNodeArea(idAreaAtual);
+            if (node) this.areas.alterarHead(node);
+        }
+        this.areaAtual = this.areas.getHead();
+        this.areaAtual?.data.explorar();
     }
     private gerarIdUnico(): string {
-        return Math.random().toString(36).substring(2, 4);
+        return (this.constructor as any).name + Math.random().toString(36).substring(2, 4);
     }
-    public addArea(area: AreaExploravel): boolean {
-        return this.areas.insert(area);
+    public irLeste(): void {
+        if (this.areas.next()) this.areaAtual = this.areas.getHead();
+        this.areaAtual?.data.explorar();
     }
-    public removeArea(area: AreaExploravel): boolean {
-        return this.areas.removeAt(this.areas.toArray().indexOf(area));
+    public irOeste(): void {
+        if (this.areas.prev()) this.areaAtual = this.areas.getHead();
+        this.areaAtual?.data.explorar();
     }
-    public getArea(id: string): AreaExploravel | null {
-        let current = this.areas["head"];
+    public getNodeArea(id: string): Node<AreaExploravel> | undefined {
+        let current = this.areas.getHead();
+        if (!current) return undefined;
         for (let i = 0; i < this.areas.getSize(); i++) {
-            if (current && current.data.id === id) return current.data;
-            current = current!.next;
+            if (current && current.data.id === id) return current;
+            current = current.next!;
         }
-        return null;
+        return undefined;
     }
     public recurosDoMundo(): Conjunto<Item> {
         let recursos = new Conjunto<Item>();
-        this.areas.toArray().forEach((area) => recursos = recursos.union(area.recursos));
+        this.areas.forEach((area) => recursos = recursos.union(area.recursos));
         return recursos;
     }
     public print(): void {
         console.log(`\n=== Planeta: ${this.nome} (ID: ${this.id}) ===`);
+        console.log(`Recursos do Mundo:`);
+        const recursos = this.recurosDoMundo();
+        if (recursos.isEmpty()) console.log("\tNenhum recurso");
+        else recursos.values().forEach((item) => console.log(item.id + " - " + item.nome + " (" + item.raridade + ")"));
+        console.log(`\nÁrea atual: ${this.areaAtual?.data.nome}`);
         console.log(`Número de áreas: ${this.areas.getSize()}`);
-        console.log("--- Áreas ---");
-        this.areas.print();
-        console.log("---------------------------------------");
+        console.log("------ Áreas ------");
+        this.areas.forEach((area) => area.print());
+        console.log("=================================================");
     }
     public salvarObjeto(): any {
         return {
@@ -56,6 +73,7 @@ export class Planeta {
             id: this.id,
             nome: this.nome,
             areas: this.areas.toArray().map((area) => area.salvarObjeto()),
+            idAreaAtual: this.areaAtual?.data.id
         }
     }
     public static carregarObjeto(data: any): Planeta {
@@ -70,6 +88,6 @@ export class Planeta {
                 }
             });
         }
-        return new this(data.nome, areas, data.id);
+        return new this(data.nome, areas, data.idAreaAtual, data.id);
     }
 }

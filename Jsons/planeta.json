@@ -1,57 +1,115 @@
 {
   "tipo": "Planeta",
-  "id": "planeta-aBcDeF",
-  "nome": "Terra Nova",
+  "id": "PlanetaAethel",
+  "nome": "Aethel",
   "areas": [
     {
       "tipo": "AreaExploravel",
-      "id": "area-qWeRtY",
-      "nome": "Floresta Serena",
-      "descricao": "Uma floresta vasta e pacífica, com vegetação exuberante.",
-      "explorada": false,
+      "id": "MinasAntigas",
+      "nome": "Minas Antigas",
+      "descricao": "Um complexo de minas abandonadas, ecoando histórias.",
       "recursos": [
         {
           "tipo": "Item",
-          "id": "item-zXcVbN",
-          "nome": "Madeira Élfica",
-          "descricao": "Madeira leve e resistente, ideal para arcos.",
-          "quantidade": 1,
-          "pilhaMax": 50
+          "id": "Min_Ouro",
+          "nome": "Minério de Ouro",
+          "descricao": "Metal precioso, altamente valorizado.",
+          "tamanho": 2,
+          "raridade": "Muito Raro"
         },
         {
           "tipo": "Item",
-          "id": "item-aSdFgH",
-          "nome": "Bagas Brilhantes",
-          "descricao": "Bagas que emitem um brilho suave no escuro.",
-          "quantidade": 5,
-          "pilhaMax": 20
+          "id": "GemaVerde",
+          "nome": "Gema Verde",
+          "descricao": "Uma pequena pedra preciosa de cor esmeralda.",
+          "tamanho": 1,
+          "raridade": "Incomum"
+        },
+        {
+          "tipo": "Item",
+          "id": "CarvaoMineral",
+          "nome": "Carvão Mineral",
+          "descricao": "Fonte de energia rudimentar.",
+          "tamanho": 3,
+          "raridade": "Comum"
         }
-      ]
+      ],
+      "explorada": true
     },
     {
       "tipo": "AreaExploravel",
-      "id": "area-uIoPaS",
-      "nome": "Deserto Escaldante",
-      "descricao": "Vastas dunas de areia sob um sol impiedoso.",
-      "explorada": false,
-      "recursos": []
-    },
-    {
-      "tipo": "AreaExploravel",
-      "id": "area-jKlMzX",
+      "id": "RuinasAntigas",
       "nome": "Ruínas Antigas",
-      "descricao": "Restos de uma civilização perdida, com segredos a desvendar.",
-      "explorada": true,
+      "descricao": "Restos de uma civilização esquecida, com artefatos únicos.",
       "recursos": [
         {
           "tipo": "Item",
-          "id": "item-qWeR12",
-          "nome": "Fragmento Rúnico",
-          "descricao": "Pedaço de pedra com inscrições mágicas.",
-          "quantidade": 1,
-          "pilhaMax": 1
+          "id": "CacoAntigo",
+          "nome": "Caco Antigo",
+          "descricao": "Fragmento de cerâmica com símbolos estranhos.",
+          "tamanho": 1,
+          "raridade": "Comum"
+        },
+        {
+          "tipo": "Item",
+          "id": "MapaVelho",
+          "nome": "Mapa Velho",
+          "descricao": "Um mapa parcialmente ilegível, indicando algo distante.",
+          "tamanho": 1,
+          "raridade": "Raro"
+        },
+        {
+          "tipo": "Item",
+          "id": "MadeiraExotica",
+          "nome": "Madeira Exótica",
+          "descricao": "Madeira com padrões incomuns, valorizada por artesãos.",
+          "tamanho": 2,
+          "raridade": "Incomum"
         }
-      ]
+      ],
+      "explorada": true
+    },
+    {
+      "tipo": "AreaExploravel",
+      "id": "LagoSereno",
+      "nome": "Lago Sereno",
+      "descricao": "Um lago calmo e cristalino, lar de criaturas aquáticas.",
+      "recursos": [],
+      "explorada": true
+    },
+    {
+      "tipo": "AreaExploravel",
+      "id": "SelvaPerdida",
+      "nome": "Selva Perdida",
+      "descricao": "Uma selva densa e misteriosa, cheia de sons e segredos.",
+      "recursos": [
+        {
+          "tipo": "Item",
+          "id": "MadeiraExotica",
+          "nome": "Madeira Exótica",
+          "descricao": "Madeira com padrões incomuns, valorizada por artesãos.",
+          "tamanho": 2,
+          "raridade": "Incomum"
+        },
+        {
+          "tipo": "Item",
+          "id": "FrutaRara",
+          "nome": "Fruta Rara",
+          "descricao": "Fruta de sabor peculiar, com propriedades revigorantes.",
+          "tamanho": 1,
+          "raridade": "Raro"
+        },
+        {
+          "tipo": "Item",
+          "id": "GemaVerde",
+          "nome": "Gema Verde",
+          "descricao": "Uma pequena pedra preciosa de cor esmeralda.",
+          "tamanho": 1,
+          "raridade": "Incomum"
+        }
+      ],
+      "explorada": true
     }
-  ]
+  ],
+  "idAreaAtual": "MinasAntigas"
 }

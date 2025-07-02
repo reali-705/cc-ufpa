@@ -1,20 +1,23 @@
 import { Node } from "./node.ts";
 
 export class ListaVinculadaCircular<T> {
-    private head: Node<T> | null;
+    private head: Node<T> | undefined;
     private size: number;
     constructor() {
-        this.head = null;
+        this.head = undefined;
         this.size = 0;
     }
     clear(): void {
-        this.head = null;
+        this.head = undefined;
         this.size = 0;
     }
     getSize(): number {
         return this.size;
     }
-    public toArray(): T[] {
+    getHead(): Node<T> | undefined {
+        return this.head;
+    }
+    toArray(): T[] {
         const result: T[] = [];
         if (!this.size) return result;
         let current = this.head!;
@@ -23,6 +26,38 @@ export class ListaVinculadaCircular<T> {
             current = current.next!;
         }
         return result;
+    }
+    forEach(funcao: (item: T) => void): void {
+        if (!this.size) return;
+        let current = this.head!;
+        for (let i = 0; i < this.size; i++) {
+            funcao(current.data);
+            current = current.next!;
+        }
+    }
+    next(): boolean {
+        if (!this.head || this.size === 1) {
+            return false;
+        } else {
+            this.head = this.head.next!;
+            return true;
+        }
+    }
+    prev(): boolean {
+        if (!this.head || this.size === 1) {
+            return false;
+        } else {
+            this.head = this.head.prev!;
+            return true;
+        }
+    }
+    alterarHead(node: Node<T>): boolean {
+        if (!this.head) {
+            return this.insert(node.data);
+        } else {
+            this.head = node;
+            return true;
+        }
     }
     print(): void {
         if (this.size === 0) {
@@ -57,9 +92,9 @@ export class ListaVinculadaCircular<T> {
         result += ")"
         console.log(result);
     }
-    getAt(index: number): T | null {
+    getAt(index: number): T | undefined {
         if (index >= this.size || index < 0 || this.size === 0) {
-            return null;
+            return undefined;
         }
         let current = this.head!;
         for (let i = 0; i < index; i++) {
@@ -111,5 +146,17 @@ export class ListaVinculadaCircular<T> {
         if (index === 0) this.head = nextNode;
         this.size--;
         return true;
+    }
+    removeBy(data: T): boolean {
+        if (!this.size) return false;
+        let current = this.head!;
+        for (let i = 0; i < this.size; i++) {
+            if (current.data === data) {
+                this.removeAt(i);
+                return true;
+            }
+            current = current.next!;
+        }
+        return false;
     }
 }
