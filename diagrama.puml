@@ -252,6 +252,7 @@ Nave "1" --> "1" Node : <<localização>> nodePlaneta
 Nave "1" --> "1" Node : <<localização>> nodeArea
 
 Inventario *-- "N" Pilha : contém
+Inventario .right.> Itens : <<usa>>
 
 Pilha *-- "1" Item : <<armazenam>>
 
