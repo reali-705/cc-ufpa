@@ -1,0 +1,227 @@
+{
+  "id": "SS_Alfa",
+  "nome": "Sistema Solar Alfa",
+  "explorado": false,
+  "planetas": [
+    {
+      "id": "PL_Terra",
+      "nome": "Terra",
+      "explorado": false,
+      "areas": [
+        {
+          "id": "AR_FlorestaEsmeralda",
+          "nome": "Floresta Esmeralda",
+          "descricao": "Uma vasta floresta com árvores milenares e vida abundante.",
+          "recursos": [
+            {
+              "id": "REC_Madeira",
+              "nome": "Madeira Rústica",
+              "descricao": "Madeira forte e densa, boa para construção.",
+              "tamanho": 1,
+              "raridade": "Comum"
+            },
+            {
+              "id": "REC_ErvaCurativa",
+              "nome": "Erva Curativa",
+              "descricao": "Planta com propriedades medicinais.",
+              "tamanho": 1,
+              "raridade": "Raro"
+            }
+          ],
+          "explorada": false
+        },
+        {
+          "id": "AR_MontanhasAco",
+          "nome": "Montanhas de Aço",
+          "descricao": "Picos rochosos ricos em minerais ferrosos.",
+          "recursos": [
+            {
+              "id": "REC_Ferro",
+              "nome": "Minério de Ferro",
+              "descricao": "Minério bruto de ferro.",
+              "tamanho": 2,
+              "raridade": "Comum"
+            },
+            {
+              "id": "REC_Carvao",
+              "nome": "Carvão Mineral",
+              "descricao": "Combustível fóssil de alta energia.",
+              "tamanho": 1,
+              "raridade": "Comum"
+            }
+          ],
+          "explorada": false
+        },
+        {
+          "id": "AR_RiosCristal",
+          "nome": "Rios de Cristal",
+          "descricao": "Rios de águas translúcidas, com depósitos de cristais.",
+          "recursos": [
+            {
+              "id": "REC_CristalPuro",
+              "nome": "Cristal Puro",
+              "descricao": "Cristal de alta pureza, usado em tecnologia.",
+              "tamanho": 1,
+              "raridade": "Épico"
+            }
+          ],
+          "explorada": false
+        },
+        {
+          "id": "AR_CavernaSombria",
+          "nome": "Caverna Sombria",
+          "descricao": "Uma caverna profunda e escura, lar de criaturas desconhecidas.",
+          "recursos": [],
+          "explorada": false
+        },
+        {
+          "id": "AR_DesertoAreiasVermelhas",
+          "nome": "Deserto das Areias Vermelhas",
+          "descricao": "Vastas dunas de areia de cor avermelhada, formadas por óxidos metálicos.",
+          "recursos": [
+            {
+              "id": "REC_AreiaSilica",
+              "nome": "Areia de Sílica",
+              "descricao": "Areia com alto teor de sílica, ideal para vidro.",
+              "tamanho": 1,
+              "raridade": "Comum"
+            }
+          ],
+          "explorada": false
+        }
+      ]
+    },
+    {
+      "id": "PL_Aurora",
+      "nome": "Aurora",
+      "explorado": false,
+      "areas": [
+        {
+          "id": "AR_PlanicieEterea",
+          "nome": "Planície Etérea",
+          "descricao": "Planície coberta por vegetação bioluminescente.",
+          "recursos": [
+            {
+              "id": "REC_GlowBerries",
+              "nome": "Bagas Luminosas",
+              "descricao": "Frutas que emitem luz fraca.",
+              "tamanho": 1,
+              "raridade": "Incomum"
+            }
+          ],
+          "explorada": false
+        },
+        {
+          "id": "AR_VulcõesRadioativos",
+          "nome": "Vulcões Radioativos",
+          "descricao": "Região com vulcões ativos, emitindo radiação estranha.",
+          "recursos": [
+            {
+              "id": "REC_Uranio",
+              "nome": "Urânio Bruto",
+              "descricao": "Minério radioativo, fonte de energia.",
+              "tamanho": 3,
+              "raridade": "Raro"
+            }
+          ],
+          "explorada": false
+        },
+        {
+          "id": "AR_MarGelado",
+          "nome": "Mar Gelado",
+          "descricao": "Oceano congelado com formações de gelo exóticas.",
+          "recursos": [],
+          "explorada": false
+        },
+        {
+          "id": "AR_PenhascosVentosos",
+          "nome": "Penhascos Ventosos",
+          "descricao": "Grandes penhascos esculpidos pelo vento, com pouca vegetação.",
+          "recursos": [],
+          "explorada": false
+        }
+      ]
+    },
+    {
+      "id": "PL_Cromus",
+      "nome": "Cromus",
+      "explorado": false,
+      "areas": [
+        {
+          "id": "AR_CamposColoridos",
+          "nome": "Campos Coloridos",
+          "descricao": "Campos com flores de cores vibrantes e solo fértil.",
+          "recursos": [
+            {
+              "id": "REC_FrutaCromatica",
+              "nome": "Fruta Cromática",
+              "descricao": "Fruta que muda de cor e sabor.",
+              "tamanho": 1,
+              "raridade": "Incomum"
+            }
+          ],
+          "explorada": false
+        },
+        {
+          "id": "AR_DesfiladeiroEco",
+          "nome": "Desfiladeiro do Eco",
+          "descricao": "Um desfiladeiro profundo onde os sons ecoam infinitamente.",
+          "recursos": [],
+          "explorada": false
+        },
+        {
+          "id": "AR_BosqueSussurrante",
+          "nome": "Bosque Sussurrante",
+          "descricao": "Um bosque onde as árvores parecem sussurrar segredos antigos.",
+          "recursos": [
+            {
+              "id": "REC_MadeiraEcho",
+              "nome": "Madeira Ecoante",
+              "descricao": "Madeira com propriedades acústicas especiais.",
+              "tamanho": 2,
+              "raridade": "Raro"
+            }
+          ],
+          "explorada": false
+        },
+        {
+          "id": "AR_RuinasAntigas",
+          "nome": "Ruínas Antigas",
+          "descricao": "Vestígios de uma civilização esquecida, com artefatos valiosos.",
+          "recursos": [
+            {
+              "id": "REC_ArtefatoAntigo",
+              "nome": "Artefato Antigo",
+              "descricao": "Um objeto de grande valor histórico e cultural.",
+              "tamanho": 1,
+              "raridade": "Lendário"
+            }
+          ],
+          "explorada": false
+        },
+        {
+          "id": "AR_FonteDaVida",
+          "nome": "Fonte da Vida",
+          "descricao": "Uma nascente de água cristalina com propriedades regenerativas.",
+          "recursos": [],
+          "explorada": false
+        },
+        {
+          "id": "AR_CumesNebulosos",
+          "nome": "Cumes Nebulosos",
+          "descricao": "Montanhas altas sempre envoltas em névoa, lar de fauna peculiar.",
+          "recursos": [
+            {
+              "id": "REC_NuvemCondensada",
+              "nome": "Nuvem Condensada",
+              "descricao": "Fragmento de nuvem que pode ser usado em filtros de ar.",
+              "tamanho": 1,
+              "raridade": "Comum"
+            }
+          ],
+          "explorada": false
+        }
+      ]
+    }
+  ]
+}

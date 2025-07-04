@@ -1,10 +1,12 @@
 import { GameMaster } from "../classes/gameMaster.ts";
+import { Jogador } from "../classes/jogador.ts";
+import { Nave } from "../classes/nave.ts";
+import { SistemaSolar } from "../classes/sistemaSolar.ts";
+import { dataNave } from "../contract/interfaces.ts";
 import { carregarDados } from "../functions/salvarCarregar.ts";
 
-function extrair(): GameMaster {
-    const arquivo = "gameMaster.json";
-    const dados = carregarDados(arquivo);
-    if (!dados) process.exit(1);
+function extrairGM(): GameMaster {
+    const dados = carregarDados("gameMaster.json");
     try {
         const gameMaster = GameMaster.carregarJogo(dados);
         if (!gameMaster) process.exit(1);
@@ -13,6 +15,19 @@ function extrair(): GameMaster {
         console.error("Erro ao carregar o gameMaster:", error, "\n");
     }
     process.exit(1);
+}
+
+function extrair(): GameMaster {
+    const dadosSistemaSolar = carregarDados("sistemaSolar.json");
+    const dadosJogador = carregarDados("jogador.json");
+    const dadosNaves = carregarDados("Naves.json");
+    if (dadosSistemaSolar && dadosJogador && dadosNaves) {
+        const sistemaSolar = SistemaSolar.carregarObjeto(dadosSistemaSolar);
+        const jogador = Jogador.carregarObjeto(dadosJogador, sistemaSolar);
+        const naves = dadosNaves.map((naveData: dataNave) => Nave.carregarObjeto(naveData, sistemaSolar));
+        return new GameMaster("gameMaster-001", sistemaSolar, jogador, naves);
+    }
+    return extrairGM();
 }
 
 function main(): void {

@@ -1,0 +1,91 @@
+[
+  {
+    "id": "NV_Explorador",
+    "nome": "Nave Exploradora X1",
+    "inventario": {
+      "maxItensPorPilha": 64,
+      "maxPilhas": 20,
+      "itens": [
+        {
+          "item": {
+            "id": "REC_CombustivelPadrao",
+            "nome": "Combustível Padrão",
+            "descricao": "Combustível básico para naves.",
+            "tamanho": 1,
+            "raridade": "Comum"
+          },
+          "quantidade": 100
+        },
+        {
+          "item": {
+            "id": "REC_KitReparo",
+            "nome": "Kit de Reparo Avançado",
+            "descricao": "Kit completo para reparos complexos em naves.",
+            "tamanho": 3,
+            "raridade": "Épico"
+          },
+          "quantidade": 5
+        }
+      ]
+    },
+    "idSistema": "SS_Alfa",
+    "idPlaneta": "PL_Terra",
+    "idArea": "AR_FlorestaEsmeralda"
+  },
+  {
+    "id": "NV_Cargueiro",
+    "nome": "Cargueiro Galáctico M-5",
+    "inventario": {
+      "maxItensPorPilha": 64,
+      "maxPilhas": 50,
+      "itens": [
+        {
+          "item": {
+            "id": "REC_Ferro",
+            "nome": "Minério de Ferro",
+            "descricao": "Minério bruto de ferro.",
+            "tamanho": 2,
+            "raridade": "Comum"
+          },
+          "quantidade": 200
+        },
+        {
+          "item": {
+            "id": "REC_Carvao",
+            "nome": "Carvão Mineral",
+            "descricao": "Combustível fóssil de alta energia.",
+            "tamanho": 1,
+            "raridade": "Comum"
+          },
+          "quantidade": 300
+        }
+      ]
+    },
+    "idSistema": "SS_Alfa",
+    "idPlaneta": "PL_Aurora",
+    "idArea": "AR_PlanicieEterea"
+  },
+  {
+    "id": "NV_Interceptor",
+    "nome": "Interceptor Rápido Z-9",
+    "inventario": {
+      "maxItensPorPilha": 64,
+      "maxPilhas": 5,
+      "itens": [
+        {
+          "item": {
+            "id": "REC_CristalPuro",
+            "nome": "Cristal Puro",
+            "descricao": "Cristal de alta pureza, usado em tecnologia avançada.",
+            "tamanho": 1,
+            "raridade": "Épico"
+          },
+          "quantidade": 10
+        }
+      ]
+    },
+    "idSistema": "SS_Alfa",
+    "idPlaneta": "PL_Cromus",
+    "idArea": "AR_CamposColoridos"
+  }
+]

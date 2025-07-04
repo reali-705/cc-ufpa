@@ -1,159 +1,34 @@
 {
-  "tipo": "Jogador",
-  "id": "Jogador_A-Alpha",
-  "nome": "Aventureiro Alpha",
+  "id": "J_Player1",
+  "nome": "Capitão Estelar",
   "inventario": {
     "maxItensPorPilha": 64,
     "maxPilhas": 10,
     "itens": [
       {
         "item": {
-          "tipo": "Item",
-          "id": "MadeiraComum",
-          "nome": "Madeira Comum",
-          "descricao": "Madeira resistente para construções.",
-          "tamanho": 2,
-          "raridade": "Comum"
-        },
-        "quantidade": 15
-      },
-      {
-        "item": {
-          "tipo": "Item",
-          "id": "Min_Ferro",
-          "nome": "Minério de Ferro Bruto",
-          "descricao": "Um minério básico, essencial para ligas.",
-          "tamanho": 3,
-          "raridade": "Comum"
-        },
-        "quantidade": 5
-      },
-      {
-        "item": {
-          "tipo": "Item",
-          "id": "ErvaCurativa",
-          "nome": "Erva Curativa",
-          "descricao": "Usada para curar pequenos ferimentos.",
+          "id": "REC_CombustivelPadrao",
+          "nome": "Combustível Padrão",
+          "descricao": "Combustível básico para naves.",
           "tamanho": 1,
+          "raridade": "Comum"
+        },
+        "quantidade": 50
+      },
+      {
+        "item": {
+          "id": "REC_KitReparo",
+          "nome": "Kit de Reparo",
+          "descricao": "Contém ferramentas para reparos rápidos.",
+          "tamanho": 2,
           "raridade": "Incomum"
         },
-        "quantidade": 3
+        "quantidade": 2
       }
     ]
   },
-  "planeta": {
-    "tipo": "Planeta",
-    "id": "PlanetaXylos",
-    "nome": "Xylos",
-    "areas": [
-      {
-        "tipo": "AreaExploravel",
-        "id": "FlorestaAntiga",
-        "nome": "Floresta Antiga",
-        "descricao": "Uma floresta densa e cheia de vida selvagem.",
-        "recursos": [
-          {
-            "tipo": "Item",
-            "id": "MadeiraComum",
-            "nome": "Madeira Comum",
-            "descricao": "Madeira resistente para construções.",
-            "tamanho": 2,
-            "raridade": "Comum"
-          },
-          {
-            "tipo": "Item",
-            "id": "ErvaCurativa",
-            "nome": "Erva Curativa",
-            "descricao": "Usada para curar pequenos ferimentos.",
-            "tamanho": 1,
-            "raridade": "Incomum"
-          },
-          {
-            "tipo": "Item",
-            "id": "Min_Ferro",
-            "nome": "Minério de Ferro Bruto",
-            "descricao": "Um minério básico, essencial para ligas.",
-            "tamanho": 3,
-            "raridade": "Comum"
-          }
-        ],
-        "explorada": false
-      },
-      {
-        "tipo": "AreaExploravel",
-        "id": "CavernaCristalina",
-        "nome": "Caverna Cristalina",
-        "descricao": "Uma caverna escura com formações cristalinas.",
-        "recursos": [
-          {
-            "tipo": "Item",
-            "id": "CristalBrilhante",
-            "nome": "Cristal Brilhante",
-            "descricao": "Cristal raro que emite uma luz suave.",
-            "tamanho": 1,
-            "raridade": "Raro"
-          },
-          {
-            "tipo": "Item",
-            "id": "AguaPura",
-            "nome": "Água Pura",
-            "descricao": "Fonte de água limpa e potável.",
-            "tamanho": 1,
-            "raridade": "Comum"
-          },
-          {
-            "tipo": "Item",
-            "id": "Min_Ferro",
-            "nome": "Minério de Ferro Bruto",
-            "descricao": "Um minério básico, essencial para ligas.",
-            "tamanho": 3,
-            "raridade": "Comum"
-          }
-        ],
-        "explorada": false
-      },
-      {
-        "tipo": "AreaExploravel",
-        "id": "DesertoRochoso",
-        "nome": "Deserto Rochoso",
-        "descricao": "Uma vasta extensão de rochas e areia sob um sol escaldante.",
-        "recursos": [
-          {
-            "tipo": "Item",
-            "id": "AreiaQuartz",
-            "nome": "Areia de Quartzo",
-            "descricao": "Areia fina com pequenos grãos de quartzo.",
-            "tamanho": 1,
-            "raridade": "Comum"
-          },
-          {
-            "tipo": "Item",
-            "id": "Min_Cobre",
-            "nome": "Minério de Cobre Puro",
-            "descricao": "Bom condutor, usado em eletrônicos.",
-            "tamanho": 2,
-            "raridade": "Incomum"
-          },
-          {
-            "tipo": "Item",
-            "id": "ErvaCurativa",
-            "nome": "Erva Curativa",
-            "descricao": "Usada para curar pequenos ferimentos.",
-            "tamanho": 1,
-            "raridade": "Incomum"
-          }
-        ],
-        "explorada": false
-      },
-      {
-        "tipo": "AreaExploravel",
-        "id": "PlanicieVazia",
-        "nome": "Planície Vazia",
-        "descricao": "Uma planície aberta, sem muitos recursos visíveis.",
-        "recursos": [],
-        "explorada": false
-      }
-    ],
-    "idAreaAtual": "CavernaCristalina"
-  }
+  "idSistema": "SS_Alfa",
+  "idPlaneta": "PL_Terra",
+  "idArea": "AR_FlorestaEsmeralda",
+  "idNave": "NV_Explorador"
 }
