@@ -14,7 +14,7 @@ export class GameMaster {
         this.jogador = jogador;
         this.naves = naves;
     }
-    public static async carregarJogo(dados: dataGameMaster): Promise<GameMaster | null> {
+    public static carregarJogo(dados: dataGameMaster): GameMaster | null {
         try {
             const sistemaSolarCarregado = SistemaSolar.carregarObjeto(dados.sistemaSolar);
             const navesCarregadas = dados.naves.map((naveData: dataNave) =>

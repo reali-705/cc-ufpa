@@ -1,6 +1,7 @@
 # Typescript/
 ## classes/
 ### gameMaster.ts
+```
 import { dataGameMaster, dataJogador, dataNave, dataSistemaSolar } from "../contract/interfaces.ts";
 import { Jogador } from "./jogador.ts";
 import { Nave } from "./nave.ts";
@@ -17,7 +18,7 @@ export class GameMaster {
         this.jogador = jogador;
         this.naves = naves;
     }
-    public static async carregarJogo(dados: dataGameMaster): Promise<GameMaster | null> {
+    public static carregarJogo(dados: dataGameMaster): GameMaster | null {
         try {
             const sistemaSolarCarregado = SistemaSolar.carregarObjeto(dados.sistemaSolar);
             const navesCarregadas = dados.naves.map((naveData: dataNave) =>
@@ -40,9 +41,11 @@ export class GameMaster {
         }
     }
 }
+```
 ---
 
 ### item.ts
+```
 import { dataItem, IDClass } from "../contract/interfaces.ts";
 
 export class Item implements IDClass {
@@ -83,9 +86,11 @@ export class Item implements IDClass {
         console.log(`${this.id} - ${this.nome}\nRaridade: ${this.raridade}\nTamanho: ${this.tamanho}\n${this.descricao}`);
     }
 }
+```
 ---
 
 ### areaExploravel
+```
 import { Conjunto } from "../components/set.ts";
 import { dataAreaExploravel, dataItem, IDClass } from "../contract/interfaces.ts";
 import { Item } from "./item.ts";
@@ -157,9 +162,11 @@ export class AreaExploravel implements IDClass {
         console.log("---------------------------------------");
     }
 }
+```
 ---
 
 ### planeta.ts
+```
 import { AreaExploravel } from "./areaExploravel.ts";
 import { Item } from "./item.ts";
 import { ListaVinculadaCircular } from "../components/circularLinkedList.ts";
@@ -245,9 +252,11 @@ export class Planeta implements IDClass {
         return new this(data.nome, areas, data.explorado, data.id);
     }
 }
+```
 ---
 
 ### sistemaSolar.ts
+```
 import { ListaVinculadaCircular } from "../components/circularLinkedList.ts";
 import { Node } from "../components/node.ts";
 import { Conjunto } from "../components/set.ts";
@@ -333,9 +342,11 @@ export class SistemaSolar implements IDClass {
         return new this(data.nome, planetas, data.explorado, data.id);
     }
 }
+```
 ---
 
 ### inventario.ts
+```
 import { Pilha } from "../components/staks.ts";
 import { dataInventario, IDClass, Itens } from "../contract/interfaces.ts";
 import { Item } from "./item.ts";
@@ -441,9 +452,11 @@ export class Inventario {
         console.log("------------------------");
     }
 }
+```
 ---
 
 ### jogador.ts
+```
 import { Node } from "../components/node.ts";
 import { dataJogador, IDClass } from "../contract/interfaces.ts";
 import { AreaExploravel } from "./areaExploravel.ts";
@@ -456,7 +469,8 @@ export class Jogador implements IDClass {
     public readonly id: string;
     public readonly nome: string;
     public readonly inventario: Inventario;
-    public nave: Nave | undefined;
+    public nave: Nave | null;
+    public emNave: boolean;
     public sistemaAtual: SistemaSolar;
     public nodePlaneta: Node<Planeta>;
     public nodeArea: Node<AreaExploravel>;
@@ -478,7 +492,8 @@ export class Jogador implements IDClass {
         this.nodePlaneta.data.explorar();
         this.nodeArea = this.nodePlaneta.data.getNodeArea(idArea);
         this.nodeArea.data.explorar();
-        this.nave = nave;
+        this.nave = nave || null;
+        this.emNave = !!nave;
     }
     private gerarIdUnico(): string {
         return (this.constructor as any).name + Math.random().toString(36).substring(2, 4);
@@ -486,9 +501,11 @@ export class Jogador implements IDClass {
     public print(): void {
         console.log(`Jogador: ${this.nome} (ID: ${this.id})`);
         this.inventario.print();
-        // if (this.nave) this.nave.print();
-        console.log("Area atual:");
-        this.nodeArea.data.print();
+        if (this.emNave) this.nave!.print();
+        else {
+            console.log("Area atual:");
+            this.nodeArea.data.print();
+        }
     }
     public irOeste(): void {
         if (this.nave) return console.log("Você está na nave. Use os controles da nave para se mover.");
@@ -501,40 +518,37 @@ export class Jogador implements IDClass {
         this.nodeArea.data.explorar();
     }
     public minerar(): void {
+        if (this.emNave) return console.log("Voce está numa Nave. Saia da nave para minerar.");
         const minerios = this.nodeArea.data.recursos.values();
+        if (!minerios.length) return console.log("Não há recursos nessa área.");
         const itens = {
             item: minerios[Math.floor(Math.random() * minerios.length)],
-            quantidade: Math.floor(Math.random() * 10)
+            quantidade: Math.floor(Math.random() * 10) + 1
         };
-        const resto = this.inventario.addItem(itens);
-        console.log(`Elemento minerado: ${itens.item} (${itens.quantidade})`);
-        if (resto.quantidade) console.log(`Não foi possível armazenar: ${resto.item} (${resto.quantidade})`);
+        const itemRestante = this.inventario.addItem(itens);
+        console.log(`Você minerou ${itens.quantidade} quantidades de ${itens.item.nome}.`);
+        if (itemRestante.quantidade) console.log(`Não há espaço suficiente no seu inventário para armazenar ${itemRestante.quantidade} quantidades de ${itemRestante.item.nome}.`);
     }
     public entrarNave(nave: Nave): void {
-        if (this.nave) return console.log("Voce ja esta em uma nave!");
-        const posicaoAtual = {
-            area: this.nodeArea.data.id,
-            planeta: this.nodePlaneta.data.id,
-            sistema: this.sistemaAtual.id
-        };
-        const posicaoNave = {
-            area: nave.nodeArea.data.id,
-            planeta: nave.nodePlaneta.data.id,
-            sistema: nave.sistemaAtual.id
-        };
-        if (posicaoAtual !== posicaoNave) return console.log("Voce nao esta no mesmo local da nave!");
+        if (this.emNave) return console.log("Voce ja esta em uma nave!");
+        if (this.nodeArea.data.id !== nave.nodeArea.data.id ||
+            this.nodePlaneta.data.id !== nave.nodePlaneta.data.id ||
+            this.sistemaAtual.id !== nave.sistemaAtual.id
+        ) return console.log("Voce nao esta no mesmo local da nave!");
         this.nave = nave;
+        this.emNave = true;
         console.log("Entrou na nave!");
     }
     public sairNave(): void {
-        if (!this.nave) return console.log("Voce nao esta em uma nave!");
-        this.sistemaAtual = this.nave.sistemaAtual;
+        if (!this.emNave) return console.log("Voce nao esta em uma nave!");
+        this.sistemaAtual = this.nave!.sistemaAtual;
         this.sistemaAtual.explorar();
-        this.nodePlaneta = this.nave.nodePlaneta;
+        this.nodePlaneta = this.nave!.nodePlaneta;
         this.nodePlaneta.data.explorar();
-        this.nodeArea = this.nave.nodeArea;
+        this.nodeArea = this.nave!.nodeArea;
         this.nodeArea.data.explorar();
-        this.nave = undefined;
+        this.nave = null;
+        this.emNave = false;
         console.log("Saiu da nave!");
     }
     public salvarObjeto(): dataJogador {
@@ -560,9 +574,11 @@ export class Jogador implements IDClass {
         );
     }
 }
+```
 ---
 
 ### nave.ts
+```
 import { Node } from "../components/node.ts";
 import { dataNave, IDClass } from "../contract/interfaces.ts";
 import { AreaExploravel } from "./areaExploravel.ts";
@@ -634,9 +650,11 @@ export class Nave implements IDClass {
         );
     }
 }
+```
 ---
 ## contract/
 ### interfaces.ts
+```
 import { Item } from "../classes/item.ts";
 
 export interface IDClass {
@@ -709,3 +727,4 @@ export interface dataJogador {
     idArea: string;
     idNave?: string;
 }
+```

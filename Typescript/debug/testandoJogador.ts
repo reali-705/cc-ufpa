@@ -1,5 +1,6 @@
 import { Jogador } from "../classes/jogador.ts";
 import { Planeta } from "../classes/planeta.ts";
+import { SistemaSolar } from "../classes/sistemaSolar.ts";
 import { carregarDados, salvarDados } from "../functions/salvarCarregar.ts";
 
 const arquivo = "jogador.json";
@@ -9,7 +10,7 @@ let jogador: Jogador | null = null;
 if (!dados) console.warn("Arquivo de jogador nao encontrado. Criando novo jogador...");
 else {
     try {
-        jogador = Jogador.carregarObjeto(dados);
+        jogador = Jogador.carregarObjeto(dados, new SistemaSolar("Sistema Solar"));
     } catch (error) {
         console.error("Erro ao carregar o jogador:", error, "\n");
     }

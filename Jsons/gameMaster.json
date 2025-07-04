@@ -1,0 +1,147 @@
+{
+  "id": "GM_Teste_001",
+  "sistemaSolar": {
+    "id": "SistemaSolar_Alpha",
+    "nome": "Sistema Alpha",
+    "explorado": true,
+    "planetas": [
+      {
+        "id": "Planeta_Terra_01",
+        "nome": "Terra",
+        "explorado": true,
+        "areas": [
+          {
+            "id": "Area_Floresta_01",
+            "nome": "Floresta Élfica",
+            "descricao": "Uma vasta floresta com árvores antigas.",
+            "recursos": [
+              {
+                "id": "Item_Madeira_01",
+                "nome": "Madeira Rara",
+                "descricao": "Madeira de alta qualidade, resistente e leve.",
+                "tamanho": 1,
+                "raridade": "Rara"
+              },
+              {
+                "id": "Item_Erva_01",
+                "nome": "Erva Curativa",
+                "descricao": "Erva medicinal com propriedades de cura.",
+                "tamanho": 0.1,
+                "raridade": "Comum"
+              }
+            ],
+            "explorada": true
+          },
+          {
+            "id": "Area_Montanha_01",
+            "nome": "Pico Nebuloso",
+            "descricao": "Altas montanhas, com depósitos minerais.",
+            "recursos": [
+              {
+                "id": "Item_Ferro_01",
+                "nome": "Minério de Ferro",
+                "descricao": "Minério bruto de ferro.",
+                "tamanho": 2,
+                "raridade": "Comum"
+              }
+            ],
+            "explorada": false
+          }
+        ]
+      },
+      {
+        "id": "Planeta_Marte_01",
+        "nome": "Marte",
+        "explorado": false,
+        "areas": [
+          {
+            "id": "Area_Cratera_01",
+            "nome": "Cratera de Gelo",
+            "descricao": "Uma cratera com vastas reservas de gelo.",
+            "recursos": [
+              {
+                "id": "Item_Gelo_01",
+                "nome": "Gelo Puro",
+                "descricao": "Cristais de gelo de alta pureza.",
+                "tamanho": 0.5,
+                "raridade": "Comum"
+              }
+            ],
+            "explorada": false
+          }
+        ]
+      }
+    ]
+  },
+  "jogador": {
+    "id": "Jogador_Heroi_001",
+    "nome": "Aventureiro",
+    "inventario": {
+      "maxItensPorPilha": 64,
+      "maxPilhas": 5,
+      "itens": [
+        {
+          "item": {
+            "id": "Item_Pedra_01",
+            "nome": "Pedra Bruta",
+            "descricao": "Uma pedra comum, pode ser usada para artesanato.",
+            "tamanho": 0.5,
+            "raridade": "Comum"
+          },
+          "quantidade": 30
+        },
+        {
+          "item": {
+            "id": "Item_Combustivel_01",
+            "nome": "Combustível",
+            "descricao": "Combustível para naves espaciais.",
+            "tamanho": 10,
+            "raridade": "Incomum"
+          },
+          "quantidade": 2
+        }
+      ]
+    },
+    "idSistema": "SistemaSolar_Alpha",
+    "idPlaneta": "Planeta_Terra_01",
+    "idArea": "Area_Floresta_01",
+    "idNave": "Nave_Exploradora_01"
+  },
+  "naves": [
+    {
+      "id": "Nave_Exploradora_01",
+      "nome": "Estrela Cadente",
+      "inventario": {
+        "maxItensPorPilha": 128,
+        "maxPilhas": 20,
+        "itens": [
+          {
+            "item": {
+              "id": "Item_Reparo_01",
+              "nome": "Kit de Reparo",
+              "descricao": "Kit básico para reparos em naves.",
+              "tamanho": 5,
+              "raridade": "Comum"
+            },
+            "quantidade": 5
+          }
+        ]
+      },
+      "idSistema": "SistemaSolar_Alpha",
+      "idPlaneta": "Planeta_Terra_01",
+      "idArea": "Area_Floresta_01"
+    },
+    {
+      "id": "Nave_Cargueiro_01",
+      "nome": "Peso Pesado",
+      "inventario": {
+        "maxItensPorPilha": 256,
+        "maxPilhas": 50,
+        "itens": []
+      },
+      "idSistema": "SistemaSolar_Alpha",
+      "idPlaneta": "Planeta_Marte_01",
+      "idArea": "Area_Cratera_01"
+    }
+  ]
+}

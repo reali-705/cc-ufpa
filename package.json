@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "b": "tsc && find Javascript -type f -name '*.js.map' -exec mv {} Javascript/mappings \\; && find Javascript -mindepth 1 -type d -empty -delete",
+    "b-l": "tsc && mkdir -p Javascript/mappings && find Javascript -name '*.js.map' -exec mv {} Javascript/mappings \\;",
     "b-w": "tsc && ( if not exist Javascript\\mappings\\ mkdir Javascript\\mappings ) && for /r Javascript %f in (*.js.map) do move \"%f\" Javascript\\mappings\\",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
