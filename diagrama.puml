@@ -1,0 +1,280 @@
+@startuml diagrama
+' Configurações globais
+skinparam classAttributeIconSize 0
+hide empty members
+
+' Definição das interfaces
+interface IDClass {
+    + id: string
+    + nome: string
+    + salvarObjeto(): any
+}
+
+interface Itens {
+    + item: Item
+    + quantidade: number
+}
+
+interface dataItem {
+    + id: string
+    + nome: string
+    + descricao: string
+    + tamanho: number
+    + raridade: string
+}
+
+interface dataAreaExploravel {
+    + id: string
+    + nome: string
+    + descricao: string
+    + recursos: dataItem[]
+    + explorada: boolean
+}
+
+interface dataPlaneta {
+    + id: string
+    + nome: string
+    + explorado: boolean
+    + areas: dataAreaExploravel[]
+}
+
+interface dataSistemaSolar {
+    + id: string
+    + nome: string
+    + planetas: dataPlaneta[]
+    + explorado: boolean
+}
+
+interface dataInventario {
+    + maxItensPorPilha: number
+    + maxPilhas: number
+    + itens: dataItens[]
+}
+
+interface dataNave {
+    + id: string
+    + nome: string
+    + inventario: dataInventario
+    + idSistema: string
+    + idPlaneta: string
+    + idArea: string
+}
+
+interface dataJogador {
+    + id: string
+    + nome: string
+    + inventario: dataInventario
+    + idSistema: string
+    + idPlaneta: string
+    + idArea: string
+    + idNave?: string
+}
+
+interface dataItens {
+    + item: dataItem
+    + quantidade: number
+}
+
+
+' Definição das classes
+class GameMaster {
+    + readonly id: string
+    + readonly sistemaSolar: SistemaSolar
+    + readonly jogador: Jogador
+    + readonly naves: Nave[]
+    + carregarJogo(dados: dataGameMaster): GameMaster | null {static}
+    + salvarJogo(): dataGameMaster
+}
+
+class Item {
+    + readonly id: string
+    + readonly nome: string
+    + readonly descricao: string
+    + readonly tamanho: number
+    + readonly raridade: string
+    - gerarIdUnico(): string
+    + salvarObjeto(): dataItem
+    + carregarObjeto(data: dataItem): Item {static}
+    + print(): void
+}
+
+class AreaExploravel {
+    + readonly id: string
+    + readonly nome: string
+    + readonly descricao: string
+    + readonly recursos: Conjunto<Item>
+    - explorada: boolean
+    - gerarIdUnico(): string
+    + explorar(): void
+    + salvarObjeto(): dataAreaExploravel
+    + carregarObjeto(data: dataAreaExploravel): AreaExploravel {static}
+    + print(): void
+}
+
+class Planeta {
+    + readonly id: string
+    + readonly nome: string
+    + readonly areas: ListaVinculadaCircular<AreaExploravel>
+    - explorado: boolean
+    - gerarIdUnico(): string
+    + explorar(): void
+    + getNodeArea(id?: string): Node<AreaExploravel>
+    + recurosDoMundo(): Conjunto<Item>
+    + print(): void
+    + salvarObjeto(): dataPlaneta
+    + carregarObjeto(data: dataPlaneta): Planeta {static}
+}
+
+class SistemaSolar {
+    + readonly id: string
+    + readonly nome: string
+    + readonly planetas: ListaVinculadaCircular<Planeta>
+    - explorado: boolean
+    - gerarIdUnico(): string
+    + explorar(): void
+    + getNodePlaneta(id?: string): Node<Planeta>
+    + recurosDoSistema(): Conjunto<Item>
+    + print(): void
+    + salvarObjeto(): dataSistemaSolar
+    + carregarObjeto(data: dataSistemaSolar): SistemaSolar {static}
+}
+
+class Inventario {
+    - maxItensPorPilha: number
+    - maxPilhas: number
+    - pilhas: Pilha<Item>[]
+    + addItem(itens: Itens): Itens
+    + removeItem(itens: Itens): boolean
+    + isFull(): boolean
+    + getItens(): Itens[]
+    + salvarObjeto(): dataInventario
+    + carregarObjeto(data: dataInventario): Inventario {static}
+    + print(): void
+}
+
+class Jogador {
+    + readonly id: string
+    + readonly nome: string
+    + readonly inventario: Inventario
+    + nave: Nave | null
+    + emNave: boolean
+    + sistemaAtual: SistemaSolar
+    + nodePlaneta: Node<Planeta>
+    + nodeArea: Node<AreaExploravel>
+    - gerarIdUnico(): string
+    + print(): void
+    + irOeste(): void
+    + irLeste(): void
+    + minerar(): void
+    + entrarNave(nave: Nave): void
+    + sairNave(): void
+    + salvarObjeto(): dataJogador
+    + carregarObjeto(data: dataJogador, sistema: SistemaSolar, nave?: Nave): Jogador {static}
+}
+
+class Nave {
+    + readonly id: string
+    + readonly nome: string
+    + readonly inventario: Inventario
+    + sistemaAtual: SistemaSolar
+    + nodePlaneta: Node<Planeta>
+    + nodeArea: Node<AreaExploravel>
+    - gerarIdUnico(): string
+    + print(): void
+    + proximoPlaneta(): void
+    + voltarPlaneta(): void
+    + proximaArea(): void
+    + voltarArea(): void
+    + salvarObjeto(): dataNave
+    + carregarObjeto(data: dataNave, sistema: SistemaSolar): Nave {static}
+}
+
+' Classes de componentes (não fornecidas, mas inferidas pelas importações)
+class Conjunto<T> {
+    + add(item: T): void
+    + values(): T[]
+    + isEmpty(): boolean
+    + union(other: Conjunto<T>): Conjunto<T>
+}
+
+class ListaVinculadaCircular<T> {
+    + insert(data: T): void
+    + getSize(): number
+    + getHead(): Node<T>
+    + getID(id: string): Node<T>
+    + toArray(): T[]
+    + forEach(callback: (data: T) => void): void
+}
+
+class Pilha<T> {
+    + push(item: T): void
+    + pop(): T | undefined
+    + getSize(): number
+    + getData(): T | undefined
+    + isEmpty(): boolean
+    + clear(): void
+}
+
+class Node<T> {
+    + data: T
+    + prev: Node<T>
+    + next: Node<T>
+}
+
+' Relacionamentos
+
+' Herança (Classes implementam interfaces)
+IDClass <|-- Item
+IDClass <|-- AreaExploravel
+IDClass <|-- Planeta
+IDClass <|-- SistemaSolar
+IDClass <|-- Jogador
+IDClass <|-- Nave
+
+' Composições e Associações
+GameMaster *-- "1" SistemaSolar
+GameMaster *-- "1" Jogador
+GameMaster *-- "N" Nave
+
+SistemaSolar *-- "N" Planeta : possui
+Planeta *-- "N" AreaExploravel : contém
+AreaExploravel *-- "N" Item : contém
+
+Jogador *-- "1" Inventario
+Jogador "1" --> "0..1" Nave : <<associa>> nave
+Jogador "1" --> "1" SistemaSolar : <<localização>> sistemaAtual
+Jogador "1" --> "1" Node : <<localização>> nodePlaneta
+Jogador "1" --> "1" Node : <<localização>> nodeArea
+
+Nave *-- "1" Inventario
+Nave "1" --> "1" SistemaSolar : <<localização>> sistemaAtual
+Nave "1" --> "1" Node : <<localização>> nodePlaneta
+Nave "1" --> "1" Node : <<localização>> nodeArea
+
+Inventario *-- "N" Pilha : contém
+
+Pilha *-- "1" Item : <<armazenam>>
+
+AreaExploravel *-- "1" Conjunto : <<contém>> recursos
+Planeta *-- "1" Conjunto : <<contém>> recursosDoMundo
+SistemaSolar *-- "1" Conjunto : <<contém>> recursosDoSistema
+
+Planeta *-- "1" ListaVinculadaCircular : <<contém>> areas
+SistemaSolar *-- "1" ListaVinculadaCircular : <<contém>> planetas
+
+ListaVinculadaCircular *-- "N" Node : <<contém>>
+
+Node *-- "*" Node : <<prev/next>>
+
+' Relacionamentos entre interfaces e classes de dados
+Item ..> dataItem
+AreaExploravel ..> dataAreaExploravel
+Planeta ..> dataPlaneta
+SistemaSolar ..> dataSistemaSolar
+Inventario ..> dataInventario
+Nave ..> dataNave
+Jogador ..> dataJogador
+
+dataItens --> dataItem : <<contém>> item
+
+@enduml
