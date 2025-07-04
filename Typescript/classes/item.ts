@@ -1,9 +1,6 @@
-export interface Itens {
-    item: Item;
-    quantidade: number;
-}
+import { dataItem, IDClass } from "../contract/interfaces.ts";
 
-export class Item {
+export class Item implements IDClass {
     public readonly id: string;
     public readonly nome: string;
     public readonly descricao: string;
@@ -25,9 +22,8 @@ export class Item {
     private gerarIdUnico(): string {
         return (this.constructor as any).name + Math.random().toString(36).substring(2, 4);
     }
-    public salvarObjeto(): any {
+    public salvarObjeto(): dataItem {
         return {
-            tipo: (this.constructor as any).name,
             id: this.id,
             nome: this.nome,
             descricao: this.descricao,
@@ -35,13 +31,10 @@ export class Item {
             raridade: this.raridade
         };
     }
-    public static carregarObjeto(data: any): Item {
+    public static carregarObjeto(data: dataItem): Item {
         return new this(data.nome, data.descricao, data.tamanho, data.raridade, data.id); 
     }
     public print(): void {
-        console.log(this.id + " - " + this.nome);
-        console.log("Raridade: " + this.raridade);
-        console.log("Tamanho: " + this.tamanho);
-        console.log(this.descricao);
+        console.log(`${this.id} - ${this.nome}\nRaridade: ${this.raridade}\nTamanho: ${this.tamanho}\n${this.descricao}`);
     }
 }

@@ -1,12 +1,13 @@
-import { Conjunto } from "../elements/set.ts";
-import { Item, Itens } from "./item.ts";
+import { Conjunto } from "../components/set.ts";
+import { dataAreaExploravel, dataItem, IDClass } from "../contract/interfaces.ts";
+import { Item } from "./item.ts";
 
-export class AreaExploravel {
+export class AreaExploravel implements IDClass {
     public readonly id: string;
     public readonly nome: string;
     public readonly descricao: string;
     public readonly recursos: Conjunto<Item>;
-    public explorada: boolean;
+    private explorada: boolean;
     constructor(
         nome: string,
         descricao: string,
@@ -31,21 +32,8 @@ export class AreaExploravel {
     public explorar(): void {
         if (!this.explorada) this.explorada = true;
     }
-    public addRecursos(item: Item): boolean {
-        return this.recursos.add(item);
-    }
-    public removerRecursos(item: Item): boolean {
-        return this.recursos.remove(item);
-    }
-    public extrairMinerio(): Itens {
+    public salvarObjeto(): dataAreaExploravel {
         return {
-            item: this.recursos.values()[Math.floor(Math.random() * this.recursos.size())],
-            quantidade: Math.ceil(Math.random() * 10)
-        };
-    }
-    public salvarObjeto(): any {
-        return {
-            tipo: (this.constructor as any).name,
             id: this.id,
             nome: this.nome,
             descricao: this.descricao,
@@ -53,10 +41,10 @@ export class AreaExploravel {
             explorada: this.explorada
         };
     }
-    public static carregarObjeto(data: any): AreaExploravel {
+    public static carregarObjeto(data: dataAreaExploravel): AreaExploravel {
         const recursos = new Conjunto<Item>();
         if (data.recursos) {
-            data.recursos.forEach((itemData: any) => {
+            data.recursos.forEach((itemData: dataItem) => {
                 try {
                     const item = Item.carregarObjeto(itemData);
                     recursos.add(item);
@@ -68,14 +56,15 @@ export class AreaExploravel {
         return new this(data.nome, data.descricao, recursos, data.explorada, data.id); 
     }
     public print(): void {
-        console.log(this.id + " - " + this.nome);
-        console.log("Explorada: " + this.explorada);
-        if (this.explorada) console.log(this.descricao);
-        console.log("Recursos:");
-        const recursos = this.recursos.values();
-        if (!recursos) console.log("Nenhum recurso");
-        else for (let i = 0; i < recursos.length; i++) {
-            console.log(recursos[i].id + " - " + recursos[i].nome + " (" + recursos[i].raridade + ")");
+        console.log(`------- Area: ${this.nome} (ID: ${this.id}) -------`);
+        if (!this.explorada) console.log("Desconhecida");
+        else {
+            console.log(this.descricao);
+            console.log("Recursos:");
+            // TODO add ordenação dos itens...
+            const recursos = this.recursos.values();
+            if (!recursos) console.log("Area sem recursos.");
+            else recursos.forEach((item) => console.log(`${item.id} - ${item.nome} (${item.raridade})`));
         }
         console.log("---------------------------------------");
     }

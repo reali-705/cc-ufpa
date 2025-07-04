@@ -1,5 +1,6 @@
-import { Pilha } from "../elements/staks.ts";
-import { Item, Itens } from "./item.ts";
+import { Pilha } from "../components/staks.ts";
+import { dataInventario, IDClass, Itens } from "../contract/interfaces.ts";
+import { Item } from "./item.ts";
 
 export class Inventario {
     private maxItensPorPilha: number;
@@ -16,30 +17,29 @@ export class Inventario {
             this.addItem(itens[i]);
         }
     }
-    public addItem(itens: Itens): boolean {
-        let quantidadeRestante = itens.quantidade;
+    public addItem(itens: Itens): Itens {
         const maxItensNessaPilha = Math.floor(this.maxItensPorPilha / itens.item.tamanho);
         const pilhasOcupadas = this.pilhas.filter((pilha) => pilha.getData());
         for (let i = 0; i < pilhasOcupadas.length; i++) {
             const pilha = pilhasOcupadas[i];
             if (pilha.getData()!.id === itens.item.id && pilha.getSize() < maxItensNessaPilha) {
-                const quantidadeAdd = Math.min(quantidadeRestante, maxItensNessaPilha - pilha.getSize());
+                const quantidadeAdd = Math.min(itens.quantidade, maxItensNessaPilha - pilha.getSize());
                 for (let j = 0; j < quantidadeAdd; j++) pilha.push(itens.item);
-                quantidadeRestante -= quantidadeAdd;
-                if (!quantidadeRestante) return true;
+                itens.quantidade -= quantidadeAdd;
+                if (!itens.quantidade) return itens;
             }
         }
         const pilhasVazias = this.pilhas.filter((pilha) => pilha.isEmpty());
         for (let i = 0; i < pilhasVazias.length; i++) {
             const pilha = pilhasVazias[i];
             if (pilha.getSize() < maxItensNessaPilha) {
-                const quantidadeAdd = Math.min(quantidadeRestante, maxItensNessaPilha - pilha.getSize());
+                const quantidadeAdd = Math.min(itens.quantidade, maxItensNessaPilha - pilha.getSize());
                 for (let j = 0; j < quantidadeAdd; j++) pilha.push(itens.item);
-                quantidadeRestante -= quantidadeAdd;
-                if (!quantidadeRestante) return true;
+                itens.quantidade -= quantidadeAdd;
+                if (!itens.quantidade) return itens;
             }
         }
-        return false;
+        return itens;
     }
     public removeItem(itens: Itens): boolean {
         if (!this.pilhas.filter((pilha) => pilha.getData())) return false;
@@ -66,11 +66,11 @@ export class Inventario {
     public getItens(): Itens[] {
         return this.pilhas.map((pilha) => ({ item: pilha.getData()!, quantidade: pilha.getSize() }));
     }
-    public salvarObjeto(): any {
+    public salvarObjeto(): dataInventario {
         return {
             maxItensPorPilha: this.maxItensPorPilha,
             maxPilhas: this.maxPilhas,
-            itens: this.pilhas.map((pilha) => {
+            itens: this.pilhas.filter((pilha) => !pilha.isEmpty()).map((pilha) => {
                 return {
                     item: pilha.getData()!.salvarObjeto(),
                     quantidade: pilha.getSize()
@@ -78,7 +78,7 @@ export class Inventario {
             })
         };
     }
-    public static carregarObjeto(data: any): Inventario {
+    public static carregarObjeto(data: dataInventario): Inventario {
         const itens: Itens[] = [];
         if (data.itens) {
             data.itens.forEach((itemData: any) => {

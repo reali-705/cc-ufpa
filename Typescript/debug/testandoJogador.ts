@@ -15,27 +15,28 @@ else {
     }
 }
 if (!jogador) process.exit(1);
-const planeta = jogador.planetaAtual;
+const planeta = jogador.nodePlaneta.data;
 
 function irLeste(jogador: Jogador): void {
     console.log("\nIndo para o leste...");
     jogador.irLeste();
     console.log("Você chegou em:");
-    jogador.areaAtual?.print();
+    jogador.nodeArea.data.print();
 }
 
 function irOeste(jogador: Jogador): void {
     console.log("\nIndo para o oeste...");
     jogador.irOeste();
     console.log("Você chegou em:");
-    jogador.areaAtual?.print();
+    jogador.nodeArea.data.print();
 }
 
 function minerar(jogador: Jogador): void {
     if (jogador.inventario.isFull()) return console.log("Inventario cheio.");
-    console.log("\nMinerando...");
-    if (jogador.minerar()) jogador.print();
-    else console.log("Nenhum minerio encontrado.");
+    else {
+        console.log("\nMinerando...");
+        jogador.minerar();
+    }
 }
 
 console.log("\nComeçando testes...\n");

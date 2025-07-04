@@ -1,6 +1,6 @@
 import { Node } from "./node.ts";
 
-export class ListaVinculadaCircular<T> {
+export class ListaVinculadaCircular<T extends { id: string }> {
     private head: Node<T> | undefined;
     private size: number;
     constructor() {
@@ -33,22 +33,6 @@ export class ListaVinculadaCircular<T> {
         for (let i = 0; i < this.size; i++) {
             funcao(current.data);
             current = current.next!;
-        }
-    }
-    next(): boolean {
-        if (!this.head || this.size === 1) {
-            return false;
-        } else {
-            this.head = this.head.next!;
-            return true;
-        }
-    }
-    prev(): boolean {
-        if (!this.head || this.size === 1) {
-            return false;
-        } else {
-            this.head = this.head.prev!;
-            return true;
         }
     }
     alterarHead(node: Node<T>): boolean {
@@ -101,6 +85,22 @@ export class ListaVinculadaCircular<T> {
             current = current.next!;
         }
         return current.data;
+    }
+    getID(id: string): Node<T> | undefined {
+        let current = this.head!;
+        for (let i = 0; i < this.size; i++) {
+            if (current.data.id === id) return current;
+            current = current.next!;
+        }
+        return undefined;
+    }
+    has(data: T): boolean {
+        let current = this.head!;
+        for (let i = 0; i < this.size; i++) {
+            if (current.data === data) return true;
+            current = current.next!;
+        }
+        return false;
     }
     insert(data: T, index: number = this.size): boolean {
         if (index > this.size || index < 0) {

@@ -1,22 +1,24 @@
 import { AreaExploravel } from "./areaExploravel.ts";
 import { Item } from "./item.ts";
-import { ListaVinculadaCircular } from "../elements/circularLinkedList.ts";
-import { Conjunto } from "../elements/set.ts";
-import { Node } from "../elements/node.ts";
+import { ListaVinculadaCircular } from "../components/circularLinkedList.ts";
+import { Conjunto } from "../components/set.ts";
+import { Node } from "../components/node.ts";
+import { dataAreaExploravel, dataPlaneta, IDClass } from "../contract/interfaces.ts";
 
-export class Planeta {
+export class Planeta implements IDClass {
     public readonly id: string;
     public readonly nome: string;
-    public areas: ListaVinculadaCircular<AreaExploravel>;
-    public areaAtual: Node<AreaExploravel>;
+    public readonly areas: ListaVinculadaCircular<AreaExploravel>;
+    private explorado: boolean;
     constructor(
         nome: string,
         areas: AreaExploravel[] | ListaVinculadaCircular<AreaExploravel> = new ListaVinculadaCircular<AreaExploravel>(),
-        idAreaAtual: string | undefined = undefined,
+        explorado: boolean = false,
         id?: string
     ) {
         this.id = id || this.gerarIdUnico();
         this.nome = nome;
+        this.explorado = explorado;
         if (Array.isArray(areas)) {
             if (!areas.length) throw new Error("Lista de areas vazia");
             this.areas = new ListaVinculadaCircular<AreaExploravel>();
@@ -25,29 +27,18 @@ export class Planeta {
             if (!areas.getSize()) throw new Error("Lista de areas vazia");
             this.areas = areas;
         }
-        if (idAreaAtual && idAreaAtual !== this.areas.getHead()?.data.id) {
-            const node = this.getNodeArea(idAreaAtual);
-            if (node) this.areas.alterarHead(node);
-        }
-        this.areaAtual = this.areas.getHead()!;
     }
     private gerarIdUnico(): string {
         return (this.constructor as any).name + Math.random().toString(36).substring(2, 4);
     }
-    public irLeste(): void {
-        if (this.areas.next()) this.areaAtual = this.areas.getHead()!;
+    public explorar(): void {
+        if (!this.explorado) this.explorado = true;
     }
-    public irOeste(): void {
-        if (this.areas.prev()) this.areaAtual = this.areas.getHead()!;
-    }
-    public getNodeArea(id: string): Node<AreaExploravel> | undefined {
-        let current = this.areas.getHead();
-        if (!current) return undefined;
-        for (let i = 0; i < this.areas.getSize(); i++) {
-            if (current && current.data.id === id) return current;
-            current = current.next!;
-        }
-        return undefined;
+    public getNodeArea(id?: string): Node<AreaExploravel> {
+        if (!id) return this.areas.getHead()!;
+        const node = this.areas.getID(id);
+        if (!node) return this.areas.getHead()!;
+        else return node;
     }
     public recurosDoMundo(): Conjunto<Item> {
         let recursos = new Conjunto<Item>();
@@ -55,30 +46,32 @@ export class Planeta {
         return recursos;
     }
     public print(): void {
-        console.log(`\n=== Planeta: ${this.nome} (ID: ${this.id}) ===`);
-        console.log(`Recursos do Mundo:`);
-        const recursos = this.recurosDoMundo();
-        if (recursos.isEmpty()) console.log("\tNenhum recurso");
-        else recursos.values().forEach((item) => console.log(item.id + " - " + item.nome + " (" + item.raridade + ")"));
-        console.log(`\nÁrea atual: ${this.areaAtual?.data.nome}`);
-        console.log(`Número de áreas: ${this.areas.getSize()}`);
-        console.log("------ Áreas ------");
-        this.areas.forEach((area) => area.print());
+        console.log(`\n======= Planeta: ${this.nome} (ID: ${this.id}) =======`);
+        if (!this.explorado) console.log("Desconhecido");
+        else {
+            console.log(`Recursos do Mundo:`);
+            // TODO add ordenação dos itens...
+            const recursos = this.recurosDoMundo();
+            if (recursos.isEmpty()) console.log("Nenhum recurso");
+            else recursos.values().forEach((item) => console.log(`${item.id} - ${item.nome} (${item.raridade})`));
+            console.log(`Número de áreas: ${this.areas.getSize()}\n`);
+            console.log("------ Áreas ------");
+            this.areas.forEach((area) => area.print());
+        }
         console.log("=================================================");
     }
-    public salvarObjeto(): any {
+    public salvarObjeto(): dataPlaneta {
         return {
-            tipo: (this.constructor as any).name,
             id: this.id,
             nome: this.nome,
-            areas: this.areas.toArray().map((area) => area.salvarObjeto()),
-            idAreaAtual: this.areaAtual?.data.id
+            explorado: this.explorado,
+            areas: this.areas.toArray().map((area) => area.salvarObjeto())
         }
     }
-    public static carregarObjeto(data: any): Planeta {
+    public static carregarObjeto(data: dataPlaneta): Planeta {
         const areas = new ListaVinculadaCircular<AreaExploravel>();
         if (data.areas) {
-            data.areas.forEach((areaData: any) => {
+            data.areas.forEach((areaData: dataAreaExploravel) => {
                 try {
                     const area = AreaExploravel.carregarObjeto(areaData);
                     areas.insert(area);
@@ -87,6 +80,6 @@ export class Planeta {
                 }
             });
         }
-        return new this(data.nome, areas, data.idAreaAtual, data.id);
+        return new this(data.nome, areas, data.explorado, data.id);
     }
 }

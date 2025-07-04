@@ -1,5 +1,5 @@
 import { Planeta } from "../classes/planeta.ts";
-import { carregarDados, salvarDados } from "../functions/salvarCarregar.ts";
+import { carregarDados } from "../functions/salvarCarregar.ts";
 
 const arquivo = "planeta.json";
 const dados = carregarDados(arquivo);
@@ -16,37 +16,4 @@ if (dados) {
     planeta = new Planeta("Terra");
 }
 
-function irLeste(planeta: Planeta) {
-    console.log("\nIndo para o leste...")
-    planeta.irLeste();
-    planeta.areaAtual?.data.print();
-}
-
-function irOeste(planeta: Planeta) {
-    console.log("\nIndo para o Oeste...")
-    planeta.irOeste();
-    planeta.areaAtual?.data.print();
-}
-
-function minerar(planeta: Planeta) {
-    console.log("\nMinerando...")
-    const minerio = planeta.areaAtual?.data.extrairMinerio();
-    console.log(minerio);
-    minerio?.item.print();
-}
-
-
 planeta.print();
-irLeste(planeta);
-irLeste(planeta);
-irLeste(planeta);
-minerar(planeta);
-minerar(planeta);
-irOeste(planeta);
-irLeste(planeta);
-irLeste(planeta);
-minerar(planeta);
-minerar(planeta);
-minerar(planeta);
-
-salvarDados(planeta.salvarObjeto(), arquivo);
