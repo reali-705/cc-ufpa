@@ -1,120 +1,86 @@
+import { Vetor } from "./array.ts";
 import { Node } from "./node.ts";
 
-export class ListaVinculadaCircular<T extends { id: string }> {
-    private head: Node<T> | undefined;
+export class ListaVinculadaCircular<T> {
+    private head: Node<T> | null;
     private size: number;
     constructor() {
-        this.head = undefined;
+        this.head = null;
         this.size = 0;
     }
     clear(): void {
-        this.head = undefined;
+        this.head = null;
         this.size = 0;
     }
     getSize(): number {
         return this.size;
     }
-    getHead(): Node<T> | undefined {
+    isEmpty(): boolean {
+        return this.size === 0;
+    }
+    getHead(): Node<T> | null {
         return this.head;
     }
-    toArray(): T[] {
-        const result: T[] = [];
-        if (!this.size) return result;
-        let current = this.head!;
+    paraVetor(): Vetor<T> {
+        const result = new Vetor<T>();
+        if (!this.head) return result;
+        let current = this.head;
         for (let i = 0; i < this.size; i++) {
-            result.push(current.data);
+            result.inserir(current.data);
             current = current.next!;
         }
         return result;
     }
     forEach(funcao: (item: T) => void): void {
-        if (!this.size) return;
-        let current = this.head!;
+        if (!this.head) return;
+        let current = this.head;
         for (let i = 0; i < this.size; i++) {
             funcao(current.data);
             current = current.next!;
         }
     }
-    alterarHead(node: Node<T>): boolean {
-        if (!this.head) {
-            return this.insert(node.data);
-        } else {
-            this.head = node;
-            return true;
-        }
-    }
     print(): void {
-        if (this.size === 0) {
-            console.log("Lista vazia");
-            return;
-        }
+        let current = this.head;
+        if (!current) return console.log("Lista vazia");
         let result = "Head -> ";
-        let current = this.head!;
         for (let i = 0; i < this.size; i++) {
-            if (typeof current.data === "object" && current.data) {
-                if ("nome" in current.data) {
-                    result += (current.data as any).nome;
-                } else if ("id" in current.data) {
-                    result += (current.data as any).id.substring(0, 4);
-                }
-            } else {
-                result += current.data;
-            }
-            result += " <-> ";
+            result += current.data;
+            if (i !== this.size - 1) result += " <-> ";
             current = current.next!;
         }
-        result += " (Circular para "
-        if (typeof this.head!.data === 'object' && this.head!.data) {
-            if ('nome' in this.head!.data) {
-                result += (this.head!.data as any).nome;
-            } else if ('id' in this.head!.data) {
-                result += (this.head!.data as any).id.substring(0, 4);
-            }
-        } else {
-            result += this.head!.data;
-        }
-        result += ")"
+        result += " (Circular para Head)";
         console.log(result);
     }
-    getAt(index: number): T | undefined {
-        if (index >= this.size || index < 0 || this.size === 0) {
+    pegarPorIndice(index: number): T | undefined {
+        if (index >= this.size || index < 0 || !this.head) {
             return undefined;
         }
-        let current = this.head!;
+        let current = this.head;
         for (let i = 0; i < index; i++) {
             current = current.next!;
         }
         return current.data;
     }
-    getID(id: string): Node<T> | undefined {
-        let current = this.head!;
-        for (let i = 0; i < this.size; i++) {
-            if (current.data.id === id) return current;
-            current = current.next!;
-        }
-        return undefined;
-    }
-    has(data: T): boolean {
-        let current = this.head!;
+    tem(data: T): boolean {
+        let current = this.head;
+        if (!current) return false;
         for (let i = 0; i < this.size; i++) {
             if (current.data === data) return true;
             current = current.next!;
         }
         return false;
     }
-    insert(data: T, index: number = this.size): boolean {
-        if (index > this.size || index < 0) {
-            return false;
-        }
+    inserir(data: T, index: number = this.size): void {
+        if (index > this.size || index < 0) return;
         const newNode = new Node(data);
-        if (this.size === 0) {
+        if (!this.head) {
             this.head = newNode;
             newNode.next = newNode;
             newNode.prev = newNode;
             this.size++;
-            return true;
+            return;
         }
-        let nextNode = this.head!;
+        let nextNode = this.head;
         for (let i = 0; i < index; i++) {
             nextNode = nextNode.next!;
         }
@@ -125,17 +91,15 @@ export class ListaVinculadaCircular<T extends { id: string }> {
         prevNode.next = newNode;
         if (index === 0) this.head = newNode;
         this.size++;
-        return true;
     }
-    removeAt(index: number): boolean {
-        if (index >= this.size || index < 0 || this.size === 0) {
-            return false;
-        }
+    retirarPorIndice(index: number): T | undefined {
+        if (index >= this.size || index < 0 || !this.head) return undefined;
         if (this.size === 1) {
+            const data = this.head.data;
             this.clear();
-            return true;
+            return data;
         }
-        let removeNode = this.head!;
+        let removeNode = this.head;
         for (let i = 0; i < index; i++) {
             removeNode = removeNode.next!;
         }
@@ -145,17 +109,22 @@ export class ListaVinculadaCircular<T extends { id: string }> {
         nextNode.prev = prevNode;
         if (index === 0) this.head = nextNode;
         this.size--;
-        return true;
+        return removeNode.data;
     }
-    removeBy(data: T): boolean {
-        if (!this.size) return false;
-        let current = this.head!;
+    apagarPorDado(data: T): boolean {
+        if (!this.head) return false;
+        let removeNode = this.head;
         for (let i = 0; i < this.size; i++) {
-            if (current.data === data) {
-                this.removeAt(i);
+            if (removeNode.data === data) {
+                const prevNode = removeNode.prev!;
+                const nextNode = removeNode.next!;
+                prevNode.next = nextNode;
+                nextNode.prev = prevNode;
+                if (i === 0) this.head = nextNode;
+                this.size--;
                 return true;
             }
-            current = current.next!;
+            removeNode = removeNode.next!;
         }
         return false;
     }

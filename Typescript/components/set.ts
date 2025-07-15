@@ -1,19 +1,19 @@
-export class Conjunto<T extends { id: string }> {
-    private items: { [key: string]: T };
+export class Conjunto<T> {
+    private items: Map<T, T>;
     constructor() {
-        this.items = Object.create(null);
+        this.items = new Map<T, T>();
     }
     has(element: T): boolean {
-        return Object.prototype.hasOwnProperty.call(this.items, element.id);
+        return this.items.has(element);
     }
     clear(): void {
-        this.items = Object.create(null);
+        this.items.clear();
     }
     values(): T[] {
-        return Object.values(this.items);
+        return Array.from(this.items.values());
     }
     size(): number {
-        return Object.values(this.items).length;
+        return this.items.size;
     }
     isEmpty(): boolean {
         return this.size() === 0;
@@ -23,29 +23,21 @@ export class Conjunto<T extends { id: string }> {
             console.log("Conjunto vazio");
             return;
         }
-        console.log(Object.keys(this.items));
+        console.log("Elementos do Conjunto:\n", this.values().join("\n"));
     }
     add(element: T): boolean {
-        if (!this.has(element)) {
-            this.items[element.id] = element;
-            return true;
-        }
-        return false;
+        if (this.has(element)) return false;
+        this.items.set(element, element);
+        return true;
     }
     remove(element: T): boolean {
-        if (this.has(element)) {
-            delete this.items[element.id];
-            return true;
-        }
-        return false;
+        return this.items.delete(element);
     }
     get(element: T): T | undefined {
-        let respost: T | undefined = undefined;
-        if (this.has(element)) {
-            respost = this.items[element.id];
-            this.remove(element);
-        }
-        return respost;
+        if (!this.has(element)) return undefined;
+        const value = this.items.get(element);
+        this.items.delete(element);
+        return value;
     }
     union(otherSet: Conjunto<T>): Conjunto<T> {
         const unionSet = new Conjunto<T>();

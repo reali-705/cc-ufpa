@@ -8,15 +8,15 @@ import { Planeta } from "./planeta.ts";
 export class SistemaSolar implements IDClass {
     public readonly id: string;
     public readonly nome: string;
-    public readonly planetas: ListaVinculadaCircular<Planeta>;
     private explorado: boolean;
+    public readonly planetas: ListaVinculadaCircular<Planeta>;
     constructor(
+        id: string,
         nome: string,
-        planetas: Planeta[] | ListaVinculadaCircular<Planeta> = new ListaVinculadaCircular<Planeta>(),
         explorado: boolean = false,
-        id?: string
+        planetas: Planeta[] | ListaVinculadaCircular<Planeta> = new ListaVinculadaCircular<Planeta>()
     ) {
-        this.id = id || this.gerarIdUnico();
+        this.id = id;
         this.nome = nome;
         this.explorado = explorado;
         if (Array.isArray(planetas)) {
@@ -27,9 +27,6 @@ export class SistemaSolar implements IDClass {
             if (!planetas.getSize()) throw new Error("Lista de planetas vazia");
             this.planetas = planetas;
         }
-    }
-    private gerarIdUnico(): string {
-        return (this.constructor as any).name + Math.random().toString(36).substring(2, 4);
     }
     public explorar(): void {
         if (!this.explorado) this.explorado = true;
@@ -80,6 +77,11 @@ export class SistemaSolar implements IDClass {
                 }
             });
         }
-        return new this(data.nome, planetas, data.explorado, data.id);
+        return new this(
+            data.id,
+            data.nome,
+            data.explorado,
+            planetas
+        );
     }
 }

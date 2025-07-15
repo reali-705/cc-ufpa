@@ -4,6 +4,7 @@ export interface IDClass {
     id: string;
     nome: string;
     salvarObjeto(): any;
+    print(): void;
 }
 
 export interface Itens {
@@ -19,7 +20,6 @@ interface dataItens {
 export interface dataItem {
     id: string;
     nome: string;
-    descricao: string;
     tamanho: number;
     raridade: string;
 }
@@ -27,7 +27,6 @@ export interface dataItem {
 export interface dataAreaExploravel {
     id: string;
     nome: string;
-    descricao: string;
     recursos: dataItem[];
     explorada: boolean;
 }

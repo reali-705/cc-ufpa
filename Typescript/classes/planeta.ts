@@ -11,12 +11,12 @@ export class Planeta implements IDClass {
     public readonly areas: ListaVinculadaCircular<AreaExploravel>;
     private explorado: boolean;
     constructor(
+        id: string,
         nome: string,
-        areas: AreaExploravel[] | ListaVinculadaCircular<AreaExploravel> = new ListaVinculadaCircular<AreaExploravel>(),
         explorado: boolean = false,
-        id?: string
+        areas: AreaExploravel[] | ListaVinculadaCircular<AreaExploravel>
     ) {
-        this.id = id || this.gerarIdUnico();
+        this.id = id;
         this.nome = nome;
         this.explorado = explorado;
         if (Array.isArray(areas)) {
@@ -27,9 +27,6 @@ export class Planeta implements IDClass {
             if (!areas.getSize()) throw new Error("Lista de areas vazia");
             this.areas = areas;
         }
-    }
-    private gerarIdUnico(): string {
-        return (this.constructor as any).name + Math.random().toString(36).substring(2, 4);
     }
     public explorar(): void {
         if (!this.explorado) this.explorado = true;
@@ -80,6 +77,11 @@ export class Planeta implements IDClass {
                 }
             });
         }
-        return new this(data.nome, areas, data.explorado, data.id);
+        return new this(
+            data.id,
+            data.nome,
+            data.explorado,
+            areas
+        );
     }
 }

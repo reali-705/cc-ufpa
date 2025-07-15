@@ -1,6 +1,6 @@
 import { Node } from "./node.ts";
 
-export class Fila<T> {
+export class FilaDupla<T> {
     private head: Node<T> | null;
     private tail: Node<T> | null;
     private size: number;
@@ -15,31 +15,64 @@ export class Fila<T> {
         while (current !== null) {
             result += current.data
             if (current.next !== null) {
-                result += " <- ";
+                result += " <-> ";
             }
             current = current.next;
         }
-        result += " Tail";
+        result += " <- Tail";
         console.log(result);
     }
-    inserir(data: T): void {
+    inserirHead(data: T): void {
+        const newNode = new Node(data);
+        if (this.head === null) {
+            this.head = newNode;
+            this.tail = newNode;
+        } else {
+            newNode.next = this.head;
+            this.head.prev = newNode;
+            this.head = newNode;
+        }
+        this.size++;
+    }
+    inserirTail(data: T): void {
         const newNode = new Node(data);
         if (this.tail === null) {
             this.head = newNode;
             this.tail = newNode;
         } else {
+            newNode.prev = this.tail;
             this.tail.next = newNode;
             this.tail = newNode;
         }
         this.size++;
     }
-    retirar(): T | undefined {
+    retirarHead(): T | undefined {
         if (this.head === null) {
             console.log("A fila esta vazia.");
             return undefined;
         }
         const data = this.head.data;
         this.head = this.head.next;
+        if (this.head === null) {
+            this.tail = null;
+        } else {
+            this.head.prev = null;
+        }
+        this.size--;
+        return data;
+    }
+    retirarTail(): T | undefined {
+        if (this.tail === null) {
+            console.log("A fila esta vazia.");
+            return undefined;
+        }
+        const data = this.tail.data;
+        this.tail = this.tail.prev;
+        if (this.tail === null) {
+            this.head = null;
+        } else {
+            this.tail.next = null;
+        }
         this.size--;
         return data;
     }

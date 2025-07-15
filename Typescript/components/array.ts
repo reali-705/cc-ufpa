@@ -1,68 +1,136 @@
-export class MyArray<T> {
-    private items: Array<T>;
-    private count: number;
-    private capacity: number;
-    private multiplier: number = 1.5;
-    constructor(count = 0){
-        if (count < 0) count = 0;
-        this.count = count;
-        this.capacity = Math.floor(this.count * this.multiplier) || 1;
-        this.items = new Array(this.capacity);
-        for (let i = 0; i < count; i++) {
-            this.items[i] = undefined as T;
+export class Vetor<T> {
+    private itens: Array<T>;
+    private contador: number;
+    private capacidade: number;
+    private multiplicador: number = 1.5;
+    constructor(contador = 0){
+        if (contador < 0) {
+            contador = 0;
+        }
+        this.contador = contador;
+        this.capacidade = Math.floor(this.contador * this.multiplicador) || 1;
+        this.itens = new Array(this.capacidade);
+        for (let i = 0; i < contador; i++) {
+            this.itens[i] = undefined as T;
         }
     }
     print(): void {
-        for (let i = 0; i < this.count; i++) {
-            console.log(this.items[i]);
+        for (let i = 0; i < this.contador; i++) {
+            console.log(`(${i}): ${this.itens[i]}`);
         }
     }
-    insert(item: T): void  {
-        if (this.capacity === this.count) {
-            let newCapacity = Math.floor(this.capacity * this.multiplier);
-            if (newCapacity == this.capacity) newCapacity++;
-            const newItems = new Array(newCapacity);
-            this.items.forEach((item, index) => { newItems[index] = item });
-            this.items = newItems;
-            this.capacity = newCapacity;
-        }
-        this.items[this.count++] = item;
-    }
-    verifyIndex(index: number): boolean {
-        if (index < 0 || index >= this.count) {
-            return false;
-        }
-        return true;
-    }
-    put(index: number, item: T): boolean{
-        if (!this.verifyIndex(index)) {
-            return false;
-        }
-        this.items[index] = item;
-        return true;
-    }
-    removeAt(index: number): boolean {
-        if (!this.verifyIndex(index)) {
-            return false;
-        }
-        for (let i = index; i < this.count - 1; i++) {
-            this.items[i] = this.items[i + 1];
-        }
-        this.count--;
-        this.items[this.count] = undefined as T;
-        return true;
-    }
-    indexOf(item: T): number {
-        for (let i = 0; i < this.count; i++) {
-            if (this.items[i] === item) {
-                return i;
+    inserir(item: T): void  {
+        if (this.capacidade === this.contador) {
+            let novaCapacidade = Math.floor(this.capacidade * this.multiplicador);
+            if (novaCapacidade == this.capacidade) {
+                novaCapacidade++;
             }
+            const novosItens = new Array(novaCapacidade);
+            this.itens.forEach((item, indice) => { novosItens[indice] = item });
+            this.itens = novosItens;
+            this.capacidade = novaCapacidade;
+        }
+        this.itens[this.contador++] = item;
+    }
+    retirar(indice: number): T | undefined {
+        if (!this.veirificarIndice(indice)) {
+            return undefined;
+        }
+        const data = this.itens[indice];
+        for (let i = indice; i < this.contador - 1; i++) {
+            this.itens[i] = this.itens[i + 1];
+        }
+        this.contador--;
+        this.itens[this.contador] = undefined as T;
+        return data;
+    }
+    ver(indice: number): T | undefined {
+        if (this.veirificarIndice(indice)) {
+            return this.itens[indice];
+        } else {
+            return undefined;
+        }
+    }
+    veirificarIndice(indice: number): boolean {
+        if (indice < 0 || indice >= this.contador) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+    substituir(indice: number, item: T): boolean{
+        if (!this.veirificarIndice(indice)) {
+            return false;
+        } else {
+            this.itens[indice] = item;
+            return true;
+        }
+    }
+    removerIndice(indice: number): boolean {
+        if (!this.veirificarIndice(indice)) {
+            return false;
+        } else {
+            for (let i = indice; i < this.contador - 1; i++) {
+                this.itens[i] = this.itens[i + 1];
+            }
+            this.contador--;
+            this.itens[this.contador] = undefined as T;
+            return true;
+        }
+    }
+    indiceDe(item: T): number {
+        for (let i = 0; i < this.contador; i++) {
+            if (this.itens[i] === item) return i;
         }
         return -1;
     }
-    get(index: number): T | undefined {
-        if (this.verifyIndex(index)) {
-            return this.items[index];
+    forEach(funcao: (item: T) => void): void {
+        for (let i = 0; i < this.contador; i++) {
+            funcao(this.itens[i]!);
         }
+    }
+    filter(funcao: (item: T) => boolean): T[] {
+        const itensFiltrados: T[] = [];
+        for (let i = 0; i < this.contador; i++) {
+            if (funcao(this.itens[i]!)) {
+                itensFiltrados.push(this.itens[i]!);
+            }
+        }
+        return itensFiltrados;
+    }
+    every(funcao: (item: T) => boolean): boolean {
+        for (let i = 0; i < this.contador; i++) {
+            if (!funcao(this.itens[i]!)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    any(funcao: (item: T) => boolean): boolean {
+        for (let i = 0; i < this.contador; i++) {
+            if (funcao(this.itens[i]!)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    getSize(): number {
+        return this.contador;
+    }
+    isEmpty(): boolean {
+        return this.contador === 0;
+    }
+    clear(): void {
+        this.contador = 0;
+        for (let i = 0; i < this.capacidade; i++) {
+            this.itens[i] = undefined as T;
+        }
+    }
+    copiar(): Vetor<T> {
+        const copia = new Vetor<T>(this.contador);
+        for (let i = 0; i < this.contador; i++) {
+            copia.inserir(this.itens[i]!);
+        }
+        return copia;
     }
 }

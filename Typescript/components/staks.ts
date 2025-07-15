@@ -3,30 +3,24 @@ import { Node } from "./node.ts";
 export class Pilha<T> {
     private top: Node<T> | null = null;
     private size: number = 0;
-    getData(): T | null {
-        if (this.top === null) {
-            return null;
-        }
-        return this.top.data;
-    }
-    push(data: T): void {
+    inserir(data: T): void {
         const newNode = new Node(data);
         newNode.next = this.top
         this.top = newNode;
         this.size++;
     }
-    pop(): T | null {
+    retirar(): T | undefined {
         if (this.top === null) {
-            return null;
+            return undefined;
         }
         const data = this.top.data;
         this.top = this.top.next;
         this.size--;
         return data;
     }
-    peek(): T | null {
+    verTopo(): T | undefined {
         if (this.top === null) {
-            return null;
+            return undefined;
         }
         return this.top.data;
     }
@@ -42,12 +36,15 @@ export class Pilha<T> {
     }
     print(): void {
         let current = this.top;
-        let result = "Top ";
+        let result = "Top -> ";
         while (current !== null) {
-            result += current.data + " -> ";
+            result += current.data
             current = current.next;
+            if (current !== null) {
+                result += " -> ";
+            }
         }
-        result += "End";
+        result += " <- End";
         console.log(result);
     }
 }
