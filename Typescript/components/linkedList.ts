@@ -69,7 +69,7 @@ export class ListaVinculada<T> {
         }
         return current.data;
     }
-    retirarHead(): T | undefined {
+    removerHead(): T | undefined {
         if (!this.head) return undefined;
         const removeNode = this.head;
         if (this.size === 1) {
@@ -81,7 +81,7 @@ export class ListaVinculada<T> {
         this.size--;
         return removeNode.data;
     }
-    retirarTail(): T | undefined {
+    removerTail(): T | undefined {
         if (!this.tail) return undefined;
         const removeNode = this.tail;
         if (this.size === 1) {
@@ -93,10 +93,10 @@ export class ListaVinculada<T> {
         this.size--;
         return removeNode.data;
     }
-    retirarPorIndice(index: number): T | undefined {
+    removerPorIndice(index: number): T | undefined {
         if (index >= this.size || index < 0) return undefined;
-        if (index === 0) return this.retirarHead();
-        if (index === this.size - 1) return this.retirarTail();
+        if (index === 0) return this.removerHead();
+        if (index === this.size - 1) return this.removerTail();
         let removeNode = this.head!;
         for (let i = 1; i < index; i++) {
             removeNode = removeNode.next!;

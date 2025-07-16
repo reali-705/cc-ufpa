@@ -1,4 +1,4 @@
-import { AreaExploravel } from "../classes/areaExploravel.ts";
+import { AreaExploravel } from "../classes/bioma.ts";
 import { carregarDados } from "../functions/salvarCarregar.ts";
 
 const arquivo = "areaExploravel.json";

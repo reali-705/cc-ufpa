@@ -92,7 +92,7 @@ export class ListaVinculadaCircular<T> {
         if (index === 0) this.head = newNode;
         this.size++;
     }
-    retirarPorIndice(index: number): T | undefined {
+    removerPorIndice(index: number): T | undefined {
         if (index >= this.size || index < 0 || !this.head) return undefined;
         if (this.size === 1) {
             const data = this.head.data;

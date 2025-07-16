@@ -1,20 +1,16 @@
+import { Raridade } from "../contract/enums.ts";
 import { dataItem, IDClass } from "../contract/interfaces.ts";
 
 export class Item implements IDClass {
     public readonly id: string;
     public readonly nome: string;
     public readonly tamanho: number;
-    public readonly raridade: string;
-    constructor(
-        id: string,
-        nome: string,
-        tamanho: number = 1,
-        raridade: string = "Comum"
-    ) {
-        this.id = id;
-        this.nome = nome;
-        this.raridade = raridade;
-        this.tamanho = tamanho;
+    public readonly raridade: Raridade;
+    constructor(data: dataItem) {
+        this.id = data.id;
+        this.nome = data.nome;
+        this.raridade = data.raridade;
+        this.tamanho = data.tamanho;
     }
     public salvarObjeto(): dataItem {
         return {
@@ -25,14 +21,9 @@ export class Item implements IDClass {
         };
     }
     public static carregarObjeto(data: dataItem): Item {
-        return new this(
-            data.id,
-            data.nome,
-            data.tamanho,
-            data.raridade
-        ); 
+        return new this(data);
     }
     public print(): void {
-        console.log(`${this.id} - ${this.nome}\nRaridade: ${this.raridade}\nTamanho: ${this.tamanho}`);
+        console.log(`${this.id} - ${this.nome}\nRaridade: ${Raridade[this.raridade]}\nTamanho: ${this.tamanho}`);
     }
 }

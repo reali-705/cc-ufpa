@@ -8,12 +8,12 @@ export class PilhaVetor<T> {
     inserir(data: T): void {
         this.itens.inserir(data);
     }
-    retirar(): T | undefined {
+    remover(): T | undefined {
         if (this.itens.isEmpty()) {
             console.log("A pilha esta vazia.");
             return undefined;
         }
-        return this.itens.retirar(this.itens.getSize() - 1);
+        return this.itens.remover(this.itens.getSize() - 1);
     }
     verTopo(): T | undefined {
         if (this.itens.isEmpty()) {

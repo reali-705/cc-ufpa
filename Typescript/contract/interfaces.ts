@@ -1,4 +1,5 @@
-import { Item } from "../classes/item.ts";
+import { Vetor } from "../components/array.ts";
+import { Raridade } from "./enums.ts";
 
 export interface IDClass {
     id: string;
@@ -7,48 +8,35 @@ export interface IDClass {
     print(): void;
 }
 
-export interface Itens {
-    item: Item;
-    quantidade: number;
-}
-
-interface dataItens {
-    item: dataItem;
-    quantidade: number;
-}
-
 export interface dataItem {
     id: string;
     nome: string;
     tamanho: number;
-    raridade: string;
+    raridade: Raridade;
 }
 
-export interface dataAreaExploravel {
+export interface dataBioma {
     id: string;
     nome: string;
-    recursos: dataItem[];
-    explorada: boolean;
+    recursos: Vetor<dataItem>;
 }
 
 export interface dataPlaneta {
     id: string;
     nome: string;
-    explorado: boolean;
-    areas: dataAreaExploravel[];
+    biomas: Vetor<dataBioma>;
 }
 
 export interface dataSistemaSolar {
     id: string;
     nome: string;
-    planetas: dataPlaneta[];
-    explorado: boolean;
+    planetas: Vetor<dataPlaneta>;
 }
 
 export interface dataInventario {
     maxItensPorPilha: number;
     maxPilhas: number;
-    itens: dataItens[];
+    itens: Vetor<dataItens>;
 }
 
 export interface dataNave {
@@ -74,5 +62,5 @@ export interface dataGameMaster {
     id: string;
     sistemaSolar: dataSistemaSolar;
     jogador: dataJogador;
-    naves: dataNave[];
+    naves: Vetor<dataNave>;
 }

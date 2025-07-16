@@ -1,6 +1,6 @@
 import { Node } from "../components/node.ts";
 import { dataNave, IDClass } from "../contract/interfaces.ts";
-import { AreaExploravel } from "./areaExploravel.ts";
+import { AreaExploravel } from "./bioma.ts";
 import { Inventario } from "./inventario.ts";
 import { Planeta } from "./planeta.ts";
 import { SistemaSolar } from "./sistemaSolar.ts";

@@ -33,7 +33,7 @@ export class Fila<T> {
         }
         this.size++;
     }
-    retirar(): T | undefined {
+    remover(): T | undefined {
         if (this.head === null) {
             console.log("A fila esta vazia.");
             return undefined;

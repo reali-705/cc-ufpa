@@ -9,7 +9,7 @@ export class Pilha<T> {
         this.top = newNode;
         this.size++;
     }
-    retirar(): T | undefined {
+    remover(): T | undefined {
         if (this.top === null) {
             return undefined;
         }

@@ -46,7 +46,7 @@ export class FilaDupla<T> {
         }
         this.size++;
     }
-    retirarHead(): T | undefined {
+    removerHead(): T | undefined {
         if (this.head === null) {
             console.log("A fila esta vazia.");
             return undefined;
@@ -61,7 +61,7 @@ export class FilaDupla<T> {
         this.size--;
         return data;
     }
-    retirarTail(): T | undefined {
+    removerTail(): T | undefined {
         if (this.tail === null) {
             console.log("A fila esta vazia.");
             return undefined;

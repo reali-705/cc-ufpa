@@ -1,6 +1,8 @@
 # components/
 ## array.ts
 ```
+import { mergeSort } from "../functions/ordenacao.ts";
+
 export class Vetor<T> {
     private itens: Array<T>;
     private contador: number;
@@ -25,7 +27,7 @@ export class Vetor<T> {
     inserir(item: T): void  {
         if (this.capacidade === this.contador) {
             let novaCapacidade = Math.floor(this.capacidade * this.multiplicador);
-            if (novaCapacidade == this.capacidade) {
+            if (novaCapacidade === this.capacidade) {
                 novaCapacidade++;
             }
             const novosItens = new Array(novaCapacidade);
@@ -35,7 +37,7 @@ export class Vetor<T> {
         }
         this.itens[this.contador++] = item;
     }
-    retirar(indice: number): T | undefined {
+    remover(indice: number): T | undefined {
         if (!this.veirificarIndice(indice)) {
             return undefined;
         }
@@ -70,48 +72,75 @@ export class Vetor<T> {
         }
     }
     removerIndice(indice: number): boolean {
-        if (!this.veirificarIndice(indice)) {
-            return false;
-        } else {
-            for (let i = indice; i < this.contador - 1; i++) {
-                this.itens[i] = this.itens[i + 1];
-            }
-            this.contador--;
-            this.itens[this.contador] = undefined as T;
-            return true;
-        }
+        return this.remover(indice) !== undefined;
     }
     indiceDe(item: T): number {
         for (let i = 0; i < this.contador; i++) {
-            if (this.itens[i] === item) return i;
+            if (this.itens[i] === item) {
+                return i;
+            }
         }
         return -1;
     }
+    sorted(funcao: (a: T, b: T) => number): void {
+        const elementosOrdenados = mergeSort(this.itens.slice(0, this.contador), funcao);
+        this.clear();
+        elementosOrdenados.forEach((item, indice) => {
+            this.inserir(item);
+        })
+    }
+    sort(funcao: (a: T, b: T) => number): Vetor<T> {
+        const elementosOrdenados = mergeSort(this.itens.slice(0, this.contador), funcao);
+        const vetorOrdenado = new Vetor<T>(elementosOrdenados.length);
+        elementosOrdenados.forEach((item, indice) => {
+            vetorOrdenado.inserir(item);
+        })
+        return vetorOrdenado;
+    }
+    map<U>(funcao: (valor: T, indice: number, vetor: Vetor<T>) => U): Vetor<U> {
+        const novoVetor = new Vetor<U>(this.contador);
+        for (let i = 0; i < this.contador; i++) {
+            novoVetor.inserir(funcao(this.itens[i], i, this));
+        }
+        return novoVetor;
+    }
     forEach(funcao: (item: T) => void): void {
         for (let i = 0; i < this.contador; i++) {
-            funcao(this.itens[i]!);
+            if (!this.itens[i]) {
+                continue;
+            }
+            funcao(this.itens[i]);
         }
     }
-    filter(funcao: (item: T) => boolean): T[] {
-        const itensFiltrados: T[] = [];
+    filter(funcao: (item: T) => boolean): Vetor<T> {
+        const itensFiltrados: Vetor<T> = new Vetor<T>();
         for (let i = 0; i < this.contador; i++) {
-            if (funcao(this.itens[i]!)) {
-                itensFiltrados.push(this.itens[i]!);
+            if (!this.itens[i]) {
+                continue;
+            }
+            if (funcao(this.itens[i])) {
+                itensFiltrados.inserir(this.itens[i]);
             }
         }
         return itensFiltrados;
     }
     every(funcao: (item: T) => boolean): boolean {
         for (let i = 0; i < this.contador; i++) {
-            if (!funcao(this.itens[i]!)) {
+            if (!this.itens[i]) {
+                continue;
+            }
+            if (!funcao(this.itens[i])) {
                 return false;
             }
         }
         return true;
     }
-    any(funcao: (item: T) => boolean): boolean {
+    some(funcao: (item: T) => boolean): boolean {
         for (let i = 0; i < this.contador; i++) {
-            if (funcao(this.itens[i]!)) {
+            if (!this.itens[i]) {
+                continue;
+            }
+            if (funcao(this.itens[i])) {
                 return true;
             }
         }
@@ -572,6 +601,8 @@ export class Fila<T> {
 
 ## set.ts
 ```
+import { Vetor } from "./array";
+
 export class Conjunto<T> {
     private items: Map<T, T>;
     constructor() {
@@ -600,7 +631,9 @@ export class Conjunto<T> {
         console.log("Elementos do Conjunto:\n", this.values().join("\n"));
     }
     add(element: T): boolean {
-        if (this.has(element)) return false;
+        if (this.has(element)) {
+            return false;
+        }
         this.items.set(element, element);
         return true;
     }
@@ -608,10 +641,25 @@ export class Conjunto<T> {
         return this.items.delete(element);
     }
     get(element: T): T | undefined {
-        if (!this.has(element)) return undefined;
+        return this.items.get(element);
+    }
+    pop(element: T): T | undefined {
+        if (!this.has(element)) {
+            return undefined;
+        }
         const value = this.items.get(element);
         this.items.delete(element);
         return value;
+    }
+    map<U>(callbackfn: (value: T, key: T, set: Conjunto<T>) => U): Conjunto<U> {
+        const conjuntoMapeado = new Conjunto<U>();
+        this.values().forEach(item => conjuntoMapeado.add(callbackfn(item, item, this)));
+        return conjuntoMapeado;
+    }
+    toVetor(): Vetor<T> {
+        const vetor = new Vetor<T>(this.size());
+        this.values().forEach(item => vetor.inserir(item));
+        return vetor;
     }
     union(otherSet: Conjunto<T>): Conjunto<T> {
         const unionSet = new Conjunto<T>();
@@ -638,11 +686,15 @@ export class Conjunto<T> {
         return differenceSet;
     }
     isSubsetOf(otherSet: Conjunto<T>): boolean {
-        if (this.size() > otherSet.size()) return false;
+        if (this.size() > otherSet.size()) {
+            return false;
+        }
         return this.values().every(item => otherSet.has(item));
     }
     isSupersetOf(otherSet: Conjunto<T>): boolean {
-        if (this.size() < otherSet.size()) return false;
+        if (this.size() < otherSet.size()) {
+            return false;
+        }
         return otherSet.values().every(item => this.has(item));
     }
 }
