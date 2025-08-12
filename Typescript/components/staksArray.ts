@@ -22,6 +22,9 @@ export class PilhaVetor<T> {
         }
         return this.itens.ver(this.itens.getSize() - 1);
     }
+    tamanho(): number {
+        return this.itens.getSize();
+    }
     getSize(): number {
         return this.itens.getSize();
     }

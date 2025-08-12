@@ -1,4 +1,4 @@
-import { Vetor } from "./array";
+import { Vetor } from "./array.ts";
 
 export class Conjunto<T> {
     private items: Map<T, T>;

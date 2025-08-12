@@ -1,66 +1,78 @@
 import { Vetor } from "../components/array.ts";
-import { Raridade } from "./enums.ts";
+import { Raridade, TamanhoUniverso } from "./enums.ts";
 
 export interface IDClass {
-    id: string;
+    readonly id: string;
     nome: string;
     salvarObjeto(): any;
     print(): void;
 }
 
-export interface dataItem {
-    id: string;
+export interface Item {
+    readonly id: string;
     nome: string;
     tamanho: number;
     raridade: Raridade;
 }
 
 export interface dataBioma {
-    id: string;
+    readonly id: string;
     nome: string;
-    recursos: Vetor<dataItem>;
+    recursos: Vetor<Item>;
 }
 
 export interface dataPlaneta {
-    id: string;
+    readonly id: string;
     nome: string;
     biomas: Vetor<dataBioma>;
 }
 
 export interface dataSistemaSolar {
-    id: string;
+    readonly id: string;
     nome: string;
     planetas: Vetor<dataPlaneta>;
 }
 
+export interface dataUniverso {
+    readonly id: string;
+    nome: string;
+    tamanho: TamanhoUniverso;
+    sistemas: Vetor<dataSistemaSolar>;
+}
+
+export interface Posicao {
+    sistemaID: string;
+    planetaID: string | null;
+    biomaID: string | null;
+}
+
 export interface dataInventario {
-    maxItensPorPilha: number;
-    maxPilhas: number;
-    itens: Vetor<dataItens>;
+    slots: Map<Item, number>;
+    capacidadeMaxima: number;
+    capacidadeAtual: number;
 }
 
 export interface dataNave {
-    id: string;
+    readonly id: string;
     nome: string;
-    inventario: dataInventario;
-    idSistema: string;
-    idPlaneta: string;
-    idArea: string;
+    posicao: Posicao;
 }
 
 export interface dataJogador {
-    id: string;
+    readonly id: string;
     nome: string;
+    vida: number;
+    vidaMaxima: number;
+    escudo: number;
+    escudoMaximo: number;
+    posicao: Posicao;
     inventario: dataInventario;
-    idSistema: string;
-    idPlaneta: string;
-    idArea: string;
-    idNave?: string;
+    idNave: string | null;
+    moedas: number;
 }
 
 export interface dataGameMaster {
-    id: string;
-    sistemaSolar: dataSistemaSolar;
     jogador: dataJogador;
+    universo: dataUniverso;
     naves: Vetor<dataNave>;
 }

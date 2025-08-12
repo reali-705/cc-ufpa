@@ -5,14 +5,14 @@ export class Vetor<T> {
     private contador: number;
     private capacidade: number;
     private multiplicador: number = 1.5;
-    constructor(contador = 0){
-        if (contador < 0) {
-            contador = 0;
+    constructor(capacidade = 1){
+        if (capacidade < 1) {
+            capacidade = 1;
         }
-        this.contador = contador;
-        this.capacidade = Math.floor(this.contador * this.multiplicador) || 1;
+        this.contador = 0;
+        this.capacidade = Math.floor(capacidade * this.multiplicador);
         this.itens = new Array(this.capacidade);
-        for (let i = 0; i < contador; i++) {
+        for (let i = 0; i < this.contador; i++) {
             this.itens[i] = undefined as T;
         }
     }
@@ -32,7 +32,8 @@ export class Vetor<T> {
             this.itens = novosItens;
             this.capacidade = novaCapacidade;
         }
-        this.itens[this.contador++] = item;
+        this.itens[this.contador] = item;
+        this.contador++;
     }
     remover(indice: number): T | undefined {
         if (!this.veirificarIndice(indice)) {

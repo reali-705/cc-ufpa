@@ -1,16 +1,22 @@
 {
   "name": "no-man-sky",
   "version": "1.0.0",
-  "main": "index.js",
+  "description": "Uma réplica simplificada do jogo No Man's Sky",
+  "main": "./Javascript/main.js",
+  "type": "module",
   "scripts": {
-    "b-l": "tsc && mkdir -p Javascript/mappings && find Javascript -name '*.js.map' -exec mv {} Javascript/mappings \\;",
-    "b-w": "tsc && ( if not exist Javascript\\mappings\\ mkdir Javascript\\mappings ) && for /r Javascript %f in (*.js.map) do move \"%f\" Javascript\\mappings\\",
+    "bl": "tsc && mkdir -p Javascript/mappings && find Javascript -name '*.js.map' -exec mv {} Javascript/mappings \\;",
+    "b": "tsc && ( if not exist Javascript\\mappings\\ mkdir Javascript\\mappings ) && for /r Javascript %f in (*.js.map) do move \"%f\" Javascript\\mappings\\",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Ale-Reali-705",
   "license": "ISC",
-  "description": "",
   "devDependencies": {
-    "@types/node": "^24.0.7"
+    "@types/node": "^24.0.7",
+    "@types/seedrandom": "^3.0.8",
+    "typescript": "^5.0.4"
+  },
+  "dependencies": {
+    "seedrandom": "^3.0.5"
   }
 }

@@ -1,3 +1,4 @@
+import { Vetor } from "./array.ts";
 import { Node } from "./node.ts";
 
 export class FilaDupla<T> {
@@ -75,6 +76,28 @@ export class FilaDupla<T> {
         }
         this.size--;
         return data;
+    }
+    paraVetor(): Vetor<T> {
+        const result = new Vetor<T>(this.size);
+        if (!this.head) {
+            return result;
+        }
+        let current = this.head;
+        for (let i = 0; i < this.size; i++) {
+            result.inserir(current.data);
+            current = current.next!;
+        }
+        return result;
+    }
+    forEach(callback: (data: T) => void): void {
+        if (!this.head) {
+            return;
+        }
+        let current = this.head;
+        for (let i = 0; i < this.size; i++) {
+            callback(current.data);
+            current = current.next!;
+        }
     }
     getSize(): number {
         return this.size;

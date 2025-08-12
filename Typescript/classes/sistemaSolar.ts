@@ -1,5 +1,6 @@
 import { ListaVinculadaCircular } from "../components/circularLinkedList.ts";
 import { Conjunto } from "../components/set.ts";
+import { Raridade } from "../contract/enums.ts";
 import { dataPlaneta, dataSistemaSolar, IDClass } from "../contract/interfaces.ts";
 import { Item } from "./item.ts";
 import { Planeta } from "./planeta.ts";
@@ -44,7 +45,7 @@ export class SistemaSolar implements IDClass {
             console.log("Nenhum recurso");
         } else {
             recursos.toVetor().sort((itemA, itemB) => itemA.raridade - itemB.raridade).forEach((item) => {
-                console.log(`${item.id} - ${item.nome} (${item.raridade})`)
+                console.log(`${item.id} - ${item.nome} (${Raridade[item.raridade]})`)
             });
         }
         console.log(`Numero de planetas: ${this.planetas.getSize()}`);

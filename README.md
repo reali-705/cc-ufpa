@@ -6,6 +6,13 @@ Este trabalho é a culminação de uma atividade da disciplina Projeto de Algori
 ## A Essência do Projeto
 Esse projeto recria, em menor escala, a essência das mecânicas de No Man's Sky. O foco principal está na construção de um universo vasto e explorável, composto por sistemas solares, planetas diversos e áreas únicas. Você, como jogador, terá seu próprio personagem e uma nave para desbravar esses cenários, interagindo com o ambiente e seus recursos.
 
+### Obs
+Para utilizar uma estratégia de "chuncks", ou seja, carregar uma determinada quantidade de classes e apagar as que fugirem da limitação, foi utilizada a biblioteca `seedrandom`. Para usá-la em typescript é preciso instalá-la pelo terminal com:
+```
+npm install seedrandom
+npm install --save-dev @types/seedrandom
+```
+
 ## Estruturas de Dados e Algoritmos em Ação
 Aqui, você encontrará um mergulho profundo no coração do nosso código. Detalhamos as estruturas de dados e os métodos de algoritmos essenciais que foram meticulosamente integrados ao projeto. Cada seção demonstra como esses conceitos, antes teóricos, ganham vida e aplicabilidade em cenários práticos de desenvolvimento de software.
 
@@ -32,6 +39,7 @@ Uma fila bidirecional, ou deque (do inglês double-ended queue), oferece a flexi
 ### Recorte do Código
 ```
 ```
+
 ## Pilha com node
 Uma pilha é uma estrutura de dados que opera sob o princípio "Último a Entrar, Primeiro a Sair" (LIFO - Last-In, First-Out). Na implementação "com Node", cada elemento da pilha é um nó que aponta para o próximo nó, criando uma sequência encadeada de elementos.
 ### Utilização no Código Principal
@@ -39,6 +47,7 @@ Uma pilha é uma estrutura de dados que opera sob o princípio "Último a Entrar
 ### Recorte do Código
 ```
 ```
+
 ## Pilha com array
 Semelhante à pilha com Node, esta é uma estrutura LIFO, mas sua implementação utiliza um array subjacente para armazenar os elementos. As operações de empilhar (push) e desempilhar (pop) são realizadas diretamente nas extremidades do array, aproveitando a eficiência inerente dos arrays em linguagens como JavaScript/TypeScript.
 ### Utilização no Código Principal
@@ -46,6 +55,7 @@ Semelhante à pilha com Node, esta é uma estrutura LIFO, mas sua implementaçã
 ### Recorte do Código
 ```
 ```
+
 ## Lista circular com node
 Uma lista encadeada especial onde o último nó aponta de volta para o primeiro, formando um ciclo contínuo. Isso permite a travessia ininterrupta da lista em qualquer direção, sem um "fim" definido.
 ### Utilização no Código Principal
@@ -53,6 +63,7 @@ Uma lista encadeada especial onde o último nó aponta de volta para o primeiro,
 ### Recorte do Código
 ```
 ```
+
 ## Lista ligada com node
 Uma lista ligada (ou encadeada) é uma estrutura de dados fundamental onde cada elemento, ou "nó", contém os dados e um ponteiro (ou referência) para o próximo nó na sequência. Isso oferece grande flexibilidade para inserções e remoções eficientes em qualquer posição.
 ### Utilização no Código Principal
@@ -67,6 +78,7 @@ Esta estrutura representa um aninhamento poderoso de duas das nossas implementa�
 ### Recorte do Código
 ```
 ```
+
 ## Método ForEach
 O método `forEach` é uma ferramenta iterativa poderosa que executa uma função de callback uma única vez para cada elemento em uma coleção, como um array ou uma estrutura que implementa essa iteração. Ele é valorizado por sua clareza e por não modificar a coleção original.
 ### Utilização no Código Principal
@@ -74,6 +86,7 @@ O método `forEach` é uma ferramenta iterativa poderosa que executa uma funçã
 ### Recorte do Código
 ```
 ```
+
 ## Método Filter
  O método `filter` é uma função de array que cria um novo array, contendo apenas os elementos da coleção original que passaram em um teste lógico definido por uma função de callback fornecida. É excelente para refinar dados.
 ### Utilização no Código Principal
@@ -81,8 +94,17 @@ O método `forEach` é uma ferramenta iterativa poderosa que executa uma funçã
 ### Recorte do Código
 ```
 ```
+
 ## Método Every
 O método `every` é uma função de array que testa se todos os elementos em uma coleção passam em um teste lógico fornecido por uma função de callback. Ele retorna um valor booleano (true ou false), indicando se a condição foi satisfeita para todos os elementos.
+### Utilização no Código Principal
+
+### Recorte do Código
+```
+```
+
+## Dicionário
+
 ### Utilização no Código Principal
 
 ### Recorte do Código

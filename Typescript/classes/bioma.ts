@@ -1,6 +1,6 @@
 import { Conjunto } from "../components/set.ts";
-import { dataBioma, dataItem, IDClass } from "../contract/interfaces.ts";
-import { Item } from "./item.ts";
+import { Raridade } from "../contract/enums.ts";
+import { dataBioma, Item, IDClass } from "../contract/interfaces.ts";
 
 export class Bioma implements IDClass {
     public readonly id: string;
@@ -10,20 +10,13 @@ export class Bioma implements IDClass {
         this.id = data.id;
         this.nome = data.nome;
         this.recursos = new Conjunto<Item>();
-        data.recursos.forEach((itemData: dataItem) => {
-            try {
-                const item = Item.carregarObjeto(itemData);
-                this.recursos.add(item);
-            } catch (error) {
-                console.warn(error);
-            }
-        });
+        data.recursos.forEach((item: Item) => this.recursos.add(item));
     }
     public salvarObjeto(): dataBioma {
         return {
             id: this.id,
             nome: this.nome,
-            recursos: this.recursos.toVetor().map((item) => item.salvarObjeto()),
+            recursos: this.recursos.toVetor(),
         };
     }
     public static carregarObjeto(data: dataBioma): Bioma {
@@ -36,7 +29,7 @@ export class Bioma implements IDClass {
         if (recursos.isEmpty()) {
             console.log("Bioma sem recursos.");
         } else {
-            recursos.forEach((item) => console.log(`${item.id} - ${item.nome} (${item.raridade})`));
+            recursos.forEach((item) => console.log(`${item.id} - ${item.nome} (${Raridade[item.raridade]})`));
         }
         console.log("------------------------------------------");
     }

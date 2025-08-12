@@ -7,20 +7,44 @@ export enum Raridade {
     Exotico,
 }
 
+export enum Elemento {
+    Hidrogenio,
+    Carbono,
+    Oxigenio,
+    Ferro,
+    Sodio,
+    Silicio,
+    Fosforo,
+    Uranio,
+    Cobalto,
+    Ammonio
+}
+
 export enum TipoBioma {
-    Tropical = "Tropical",
-    Temperado = "Temperado",
-    Subtropical = "Subtropical",
-    TropicalDeserto = "Tropical Deserto",
-    TemperadoDeserto = "Temperado Deserto",
-    SubtropicalDeserto = "Subtropical Deserto",
+    FLORESTA,
+    PLANÍCIE,
+    MONTANHA,
+    LAGO,
+    MAR,
+    DESERTO,
+    TUNDRA,
+    GELIDO,
+    PANTANO,
+    // ...
 }
 
 export enum TipoPlaneta {
-    Rochoso = "Rochoso",
-    Gasoso = "Gasoso",
-    Aquatico = "Aquatico",
-    Florestal = "Florestal",
-    Desertico = "Desertico",
-    Gelado = "Gelado",
+    Rochoso,
+    Gasoso,
+    Aquatico,
+    Florestal,
+    Desertico,
+    Gelado,
+}
+
+export enum TamanhoUniverso {
+    Pequeno,
+    Medio,
+    Grande,
+    Enorme,
 }

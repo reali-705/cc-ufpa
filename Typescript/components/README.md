@@ -8,14 +8,14 @@ export class Vetor<T> {
     private contador: number;
     private capacidade: number;
     private multiplicador: number = 1.5;
-    constructor(contador = 0){
-        if (contador < 0) {
-            contador = 0;
+    constructor(capacidade = 1){
+        if (capacidade < 1) {
+            capacidade = 1;
         }
-        this.contador = contador;
-        this.capacidade = Math.floor(this.contador * this.multiplicador) || 1;
+        this.contador = 0;
+        this.capacidade = Math.floor(capacidade * this.multiplicador);
         this.itens = new Array(this.capacidade);
-        for (let i = 0; i < contador; i++) {
+        for (let i = 0; i < this.contador; i++) {
             this.itens[i] = undefined as T;
         }
     }
@@ -35,7 +35,8 @@ export class Vetor<T> {
             this.itens = novosItens;
             this.capacidade = novaCapacidade;
         }
-        this.itens[this.contador++] = item;
+        this.itens[this.contador] = item;
+        this.contador++;
     }
     remover(indice: number): T | undefined {
         if (!this.veirificarIndice(indice)) {
@@ -305,6 +306,7 @@ export class ListaVinculadaCircular<T> {
 
 ## deque.ts
 ```
+import { Vetor } from "./array.ts";
 import { Node } from "./node.ts";
 
 export class FilaDupla<T> {
@@ -353,7 +355,7 @@ export class FilaDupla<T> {
         }
         this.size++;
     }
-    retirarHead(): T | undefined {
+    removerHead(): T | undefined {
         if (this.head === null) {
             console.log("A fila esta vazia.");
             return undefined;
@@ -368,7 +370,7 @@ export class FilaDupla<T> {
         this.size--;
         return data;
     }
-    retirarTail(): T | undefined {
+    removerTail(): T | undefined {
         if (this.tail === null) {
             console.log("A fila esta vazia.");
             return undefined;
@@ -382,6 +384,28 @@ export class FilaDupla<T> {
         }
         this.size--;
         return data;
+    }
+    paraVetor(): Vetor<T> {
+        const result = new Vetor<T>(this.size);
+        if (!this.head) {
+            return result;
+        }
+        let current = this.head;
+        for (let i = 0; i < this.size; i++) {
+            result.inserir(current.data);
+            current = current.next!;
+        }
+        return result;
+    }
+    forEach(callback: (data: T) => void): void {
+        if (!this.head) {
+            return;
+        }
+        let current = this.head;
+        for (let i = 0; i < this.size; i++) {
+            callback(current.data);
+            current = current.next!;
+        }
     }
     getSize(): number {
         return this.size;
@@ -601,7 +625,7 @@ export class Fila<T> {
 
 ## set.ts
 ```
-import { Vetor } from "./array";
+import { Vetor } from "./array.ts";
 
 export class Conjunto<T> {
     private items: Map<T, T>;

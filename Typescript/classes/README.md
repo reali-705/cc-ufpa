@@ -2,23 +2,19 @@
 ## item.ts
 
 ```
+import { Raridade } from "../contract/enums.ts";
 import { dataItem, IDClass } from "../contract/interfaces.ts";
 
 export class Item implements IDClass {
     public readonly id: string;
     public readonly nome: string;
     public readonly tamanho: number;
-    public readonly raridade: string;
-    constructor(
-        id: string,
-        nome: string,
-        tamanho: number = 1,
-        raridade: string = "Comum"
-    ) {
-        this.id = id;
-        this.nome = nome;
-        this.raridade = raridade;
-        this.tamanho = tamanho;
+    public readonly raridade: Raridade;
+    constructor(data: dataItem) {
+        this.id = data.id;
+        this.nome = data.nome;
+        this.raridade = data.raridade;
+        this.tamanho = data.tamanho;
     }
     public salvarObjeto(): dataItem {
         return {
@@ -29,88 +25,58 @@ export class Item implements IDClass {
         };
     }
     public static carregarObjeto(data: dataItem): Item {
-        return new this(
-            data.id,
-            data.nome,
-            data.tamanho,
-            data.raridade
-        ); 
+        return new this(data);
     }
     public print(): void {
-        console.log(`${this.id} - ${this.nome}\nRaridade: ${this.raridade}\nTamanho: ${this.tamanho}`);
+        console.log(`${this.id} - ${this.nome}\nRaridade: ${Raridade[this.raridade]}\nTamanho: ${this.tamanho}`);
     }
 }
 ```
 
-## areaExploravel.ts
+## bioma.ts
 
 ```
 import { Conjunto } from "../components/set.ts";
-import { dataAreaExploravel, dataItem, IDClass } from "../contract/interfaces.ts";
+import { dataBioma, dataItem, IDClass } from "../contract/interfaces.ts";
 import { Item } from "./item.ts";
 
-export class AreaExploravel implements IDClass {
+export class Bioma implements IDClass {
     public readonly id: string;
     public readonly nome: string;
     public readonly recursos: Conjunto<Item>;
-    private explorada: boolean;
-    constructor(
-        id: string,
-        nome: string,
-        recursos: Item[] | Conjunto<Item> = new Conjunto<Item>(),
-        explorada: boolean = false
-    ) {
-        this.id = id;
-        this.nome = nome;
-        this.explorada = explorada;
-        if (Array.isArray(recursos)) {
-            this.recursos = new Conjunto<Item>();
-            recursos.forEach((item) => this.recursos.add(item));
-        } else {
-            this.recursos = recursos;
-        }
-    };
-    public explorar(): void {
-        if (!this.explorada) this.explorada = true;
+    constructor(data: dataBioma) {
+        this.id = data.id;
+        this.nome = data.nome;
+        this.recursos = new Conjunto<Item>();
+        data.recursos.forEach((itemData: dataItem) => {
+            try {
+                const item = Item.carregarObjeto(itemData);
+                this.recursos.add(item);
+            } catch (error) {
+                console.warn(error);
+            }
+        });
     }
-    public salvarObjeto(): dataAreaExploravel {
+    public salvarObjeto(): dataBioma {
         return {
             id: this.id,
             nome: this.nome,
-            recursos: this.recursos.values().map((item) => item.salvarObjeto()),
-            explorada: this.explorada
+            recursos: this.recursos.toVetor().map((item) => item.salvarObjeto()),
         };
     }
-    public static carregarObjeto(data: dataAreaExploravel): AreaExploravel {
-        const recursos = new Conjunto<Item>();
-        if (data.recursos) {
-            data.recursos.forEach((itemData: dataItem) => {
-                try {
-                    const item = Item.carregarObjeto(itemData);
-                    recursos.add(item);
-                } catch (error) {
-                    console.warn(error);
-                }
-            })
-        }
-        return new this(
-            data.id,
-            data.nome,
-            recursos,
-            data.explorada,
-        ); 
+    public static carregarObjeto(data: dataBioma): Bioma {
+        return new this(data);
     }
     public print(): void {
-        console.log(`------- Area: ${this.nome} (ID: ${this.id}) -------`);
-        if (!this.explorada) console.log("Desconhecida");
-        else {
-            console.log("Recursos:");
-            // TODO add ordenação dos itens...
-            const recursos = this.recursos.values();
-            if (!recursos) console.log("Area sem recursos.");
-            else recursos.forEach((item) => console.log(`${item.id} - ${item.nome} (${item.raridade})`));
+        console.log(`------- Bioma: ${this.nome} (ID: ${this.id}) -------`);
+        console.log("Recursos:");
+        const recursos = this.recursos.toVetor().sort((itemA, itemB) => itemA.raridade - itemB.raridade);
+        if (recursos.isEmpty()) {
+            console.log("Bioma sem recursos.");
+        } else {
+            recursos.forEach((item) => console.log(`${item.id} - ${item.nome} (${Raridade[item.raridade]})`));
         }
-        console.log("---------------------------------------");
+        console.log("------------------------------------------");
     }
 }
 ```
@@ -118,91 +84,60 @@ export class AreaExploravel implements IDClass {
 ## planeta.ts
 
 ```
-import { AreaExploravel } from "./areaExploravel.ts";
+import { Bioma } from "./bioma.ts";
 import { Item } from "./item.ts";
 import { ListaVinculadaCircular } from "../components/circularLinkedList.ts";
 import { Conjunto } from "../components/set.ts";
-import { Node } from "../components/node.ts";
-import { dataAreaExploravel, dataPlaneta, IDClass } from "../contract/interfaces.ts";
+import { dataBioma, dataPlaneta, IDClass } from "../contract/interfaces.ts";
+import { Raridade } from "../contract/enums.ts";
 
 export class Planeta implements IDClass {
     public readonly id: string;
     public readonly nome: string;
-    public readonly areas: ListaVinculadaCircular<AreaExploravel>;
-    private explorado: boolean;
-    constructor(
-        id: string,
-        nome: string,
-        explorado: boolean = false,
-        areas: AreaExploravel[] | ListaVinculadaCircular<AreaExploravel>
-    ) {
-        this.id = id;
-        this.nome = nome;
-        this.explorado = explorado;
-        if (Array.isArray(areas)) {
-            if (!areas.length) throw new Error("Lista de areas vazia");
-            this.areas = new ListaVinculadaCircular<AreaExploravel>();
-            areas.forEach((area) => this.areas.insert(area));
-        } else {
-            if (!areas.getSize()) throw new Error("Lista de areas vazia");
-            this.areas = areas;
-        }
-    }
-    public explorar(): void {
-        if (!this.explorado) this.explorado = true;
-    }
-    public getNodeArea(id?: string): Node<AreaExploravel> {
-        if (!id) return this.areas.getHead()!;
-        const node = this.areas.getID(id);
-        if (!node) return this.areas.getHead()!;
-        else return node;
+    public readonly biomas: ListaVinculadaCircular<Bioma>;
+    constructor(data: dataPlaneta) {
+        this.id = data.id;
+        this.nome = data.nome;
+        this.biomas = new ListaVinculadaCircular<Bioma>();
+        data.biomas.forEach((areaData: dataBioma) => {
+            try {
+                const area = Bioma.carregarObjeto(areaData);
+                this.biomas.inserir(area);
+            } catch (error) {
+                console.warn(error);
+            }
+        });
     }
     public recurosDoMundo(): Conjunto<Item> {
         let recursos = new Conjunto<Item>();
-        this.areas.forEach((area) => recursos = recursos.union(area.recursos));
+        this.biomas.forEach((area) => recursos = recursos.union(area.recursos));
         return recursos;
-    }
-    public print(): void {
-        console.log(`\n======= Planeta: ${this.nome} (ID: ${this.id}) =======`);
-        if (!this.explorado) console.log("Desconhecido");
-        else {
-            console.log(`Recursos do Mundo:`);
-            // TODO add ordenação dos itens...
-            const recursos = this.recurosDoMundo();
-            if (recursos.isEmpty()) console.log("Nenhum recurso");
-            else recursos.values().forEach((item) => console.log(`${item.id} - ${item.nome} (${item.raridade})`));
-            console.log(`Número de áreas: ${this.areas.getSize()}\n`);
-            console.log("------ Áreas ------");
-            this.areas.forEach((area) => area.print());
-        }
-        console.log("=================================================");
     }
     public salvarObjeto(): dataPlaneta {
         return {
             id: this.id,
             nome: this.nome,
-            explorado: this.explorado,
-            areas: this.areas.toArray().map((area) => area.salvarObjeto())
+            biomas: this.biomas.paraVetor().map((area) => area.salvarObjeto())
         }
     }
     public static carregarObjeto(data: dataPlaneta): Planeta {
-        const areas = new ListaVinculadaCircular<AreaExploravel>();
-        if (data.areas) {
-            data.areas.forEach((areaData: dataAreaExploravel) => {
-                try {
-                    const area = AreaExploravel.carregarObjeto(areaData);
-                    areas.insert(area);
-                } catch (error) {
-                    console.warn(error);
-                }
-            });
-        }
-        return new this(
-            data.id,
-            data.nome,
-            data.explorado,
-            areas
-        );
+        return new this(data);
+    }
+    public print(): void {
+        console.log(`\n======= Planeta: ${this.nome} (ID: ${this.id}) =======`);
+            console.log(`Recursos do Mundo:`);
+            const recursos = this.recurosDoMundo();
+            if (recursos.isEmpty()) {
+                console.log("Nenhum recurso");
+            } else {
+                recursos.toVetor().sort((itemA, itemB) => itemA.raridade - itemB.raridade).forEach((item) => {
+                    console.log(`${item.id} - ${item.nome} (${Raridade[item.raridade]})`)
+                });
+            }
+            console.log(`Número de biomas: ${this.biomas.getSize()}\n`);
+            console.log("------ Biomas ------");
+            this.biomas.forEach((area) => area.print());
+        console.log("=================================================");
     }
 }
 ```
@@ -211,7 +146,6 @@ export class Planeta implements IDClass {
 
 ```
 import { ListaVinculadaCircular } from "../components/circularLinkedList.ts";
-import { Node } from "../components/node.ts";
 import { Conjunto } from "../components/set.ts";
 import { dataPlaneta, dataSistemaSolar, IDClass } from "../contract/interfaces.ts";
 import { Item } from "./item.ts";
@@ -220,105 +154,107 @@ import { Planeta } from "./planeta.ts";
 export class SistemaSolar implements IDClass {
     public readonly id: string;
     public readonly nome: string;
-    private explorado: boolean;
     public readonly planetas: ListaVinculadaCircular<Planeta>;
-    constructor(
-        id: string,
-        nome: string,
-        explorado: boolean = false,
-        planetas: Planeta[] | ListaVinculadaCircular<Planeta> = new ListaVinculadaCircular<Planeta>()
-    ) {
-        this.id = id;
-        this.nome = nome;
-        this.explorado = explorado;
-        if (Array.isArray(planetas)) {
-            if (!planetas.length) throw new Error("Lista de planetas vazia");
-            this.planetas = new ListaVinculadaCircular<Planeta>();
-            planetas.forEach((planeta) => this.planetas.insert(planeta));
-        } else {
-            if (!planetas.getSize()) throw new Error("Lista de planetas vazia");
-            this.planetas = planetas;
-        }
-    }
-    public explorar(): void {
-        if (!this.explorado) this.explorado = true;
-    }
-    public getNodePlaneta(id?: string): Node<Planeta> {
-        if (!id) return this.planetas.getHead()!;
-        const node = this.planetas.getID(id);
-        if (!node) return this.planetas.getHead()!;
-        else return node;
+    constructor(data: dataSistemaSolar) {
+        this.id = data.id;
+        this.nome = data.nome;
+        this.planetas = new ListaVinculadaCircular<Planeta>();
+        data.planetas.forEach((planetaData: dataPlaneta) => {
+            try {
+                const planeta = Planeta.carregarObjeto(planetaData);
+                this.planetas.inserir(planeta);
+            } catch (error) {
+                console.warn(error);
+            }
+        });
     }
     public recurosDoSistema(): Conjunto<Item> {
         let recursos = new Conjunto<Item>();
         this.planetas.forEach((planeta) => recursos = recursos.union(planeta.recurosDoMundo()));
         return recursos;
     }
-    public print(): void {
-        console.log(`\n########### Sistema Solar: ${this.nome} (ID: ${this.id}) ###########`);
-        if (!this.explorado) console.log("Desconhecido");
-        else {
-            console.log("Recursos do Sistema:");
-            // TODO add ordenação dos itens...
-            const recursos = this.recurosDoSistema();
-            if (recursos.isEmpty()) console.log("Nenhum recurso");
-            else recursos.values().forEach((item) => console.log(`${item.id} - ${item.nome} (${item.raridade})`));
-            console.log(`Numero de planetas: ${this.planetas.getSize()}`);
-            console.log("------ Planetas ------");
-            this.planetas.forEach((planeta) => planeta.print());
-        }
-        console.log("##################################################");
-    }
     public salvarObjeto(): dataSistemaSolar {
         return {
             id: this.id,
             nome: this.nome,
-            explorado: this.explorado,
-            planetas: this.planetas.toArray().map((planeta) => planeta.salvarObjeto()),
+            planetas: this.planetas.paraVetor().map((planeta) => planeta.salvarObjeto()),
         }
     }
     public static carregarObjeto(data: dataSistemaSolar): SistemaSolar {
-        const planetas = new ListaVinculadaCircular<Planeta>();
-        if (data.planetas) {
-            data.planetas.forEach((planetaData: dataPlaneta) => {
-                try {
-                    const planeta = Planeta.carregarObjeto(planetaData);
-                    planetas.insert(planeta);
-                } catch (error) {
-                    console.warn(error);
-                }
+        return new this(data);
+    }
+    public print(): void {
+        console.log(`\n########### Sistema Solar: ${this.nome} (ID: ${this.id}) ###########`);
+        console.log("Recursos do Sistema:");
+        const recursos = this.recurosDoSistema();
+        if (recursos.isEmpty()) {
+            console.log("Nenhum recurso");
+        } else {
+            recursos.toVetor().sort((itemA, itemB) => itemA.raridade - itemB.raridade).forEach((item) => {
+                console.log(`${item.id} - ${item.nome} (${Raridade[item.raridade]})`)
             });
         }
-        return new this(
-            data.id,
-            data.nome,
-            data.explorado,
-            planetas
-        );
+        console.log(`Numero de planetas: ${this.planetas.getSize()}`);
+        console.log("------ Planetas ------");
+        this.planetas.forEach((planeta) => planeta.print());        
+        console.log("##################################################");
     }
 }
 ```
 
-## iventario.ts
-
+## universo.ts
 ```
+import { FilaDupla } from "../components/deque.ts";
+import { TamanhoUniverso } from "../contract/enums.ts";
+import { dataSistemaSolar, dataUniverso, IDClass } from "../contract/interfaces.ts";
+import { SistemaSolar } from "./sistemaSolar.ts";
 
-```
-
-## jogador.ts
-
-```
-
-```
-
-## nave.ts
-
-```
-
-```
-
-## gameMaster.ts
-
-```
-
+export class Universo implements IDClass {
+    public readonly id: string;
+    public readonly nome: string;
+    public readonly tamanho: TamanhoUniverso;
+    public readonly sistemas: FilaDupla<SistemaSolar>;
+    constructor(data: dataUniverso) {
+        this.id = data.id;
+        this.nome = data.nome;
+        this.tamanho = data.tamanho;
+        this.sistemas = new FilaDupla<SistemaSolar>();
+        data.sistemas.forEach((sistemaData: dataSistemaSolar) => {
+            try {
+                const sistema = SistemaSolar.carregarObjeto(sistemaData);
+                this.sistemas.inserirTail(sistema);
+            } catch (error) {
+                console.warn(error);
+            }
+        })
+    }
+    public addSistemaHead(sistema: SistemaSolar): void {
+        if (this.sistemas.getSize() >= (3 + 2 * this.tamanho)) {
+            this.sistemas.removerTail();
+        }
+        this.sistemas.inserirHead(sistema);
+    }
+    public addSistemaTail(sistema: SistemaSolar): void {
+        if (this.sistemas.getSize() >= (3 + 2 * this.tamanho)) {
+            this.sistemas.removerHead();
+        }
+        this.sistemas.inserirTail(sistema);
+    }
+    public salvarObjeto(): dataUniverso {
+        return {
+            id: this.id,
+            nome: this.nome,
+            tamanho: this.tamanho,
+            sistemas: this.sistemas.paraVetor().map((sistema) => sistema.salvarObjeto())
+        }
+    }
+    public static carregarObjeto(data: dataUniverso): Universo {
+        return new this(data);
+    }
+    public print(): void {
+        console.log(`@@@@@@@@ Universo: ${this.nome} (ID: ${this.id}) @@@@@@@@`);
+        this.sistemas.forEach((sistema) => sistema.print());
+        console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+    }
+}
 ```

@@ -1,39 +1,30 @@
-import { dataGameMaster, dataJogador, dataNave, dataSistemaSolar } from "../contract/interfaces.ts";
+import { Vetor } from "../components/array.ts";
+import { Dicionario } from "../components/maps.ts";
+import { dataGameMaster, Posicao } from "../contract/interfaces.ts";
 import { Jogador } from "./jogador.ts";
 import { Nave } from "./nave.ts";
-import { SistemaSolar } from "./sistemaSolar.ts";
+import { Universo } from "./universo.ts";
 
 export class GameMaster {
-    public readonly id: string;
-    public readonly sistemaSolar: SistemaSolar;
-    public readonly jogador: Jogador;
-    public readonly naves: Nave[];
-    constructor(id: string, sistemaSolar: SistemaSolar, jogador: Jogador, naves: Nave[]) {
-        this.id = id;
-        this.sistemaSolar = sistemaSolar;
-        this.jogador = jogador;
-        this.naves = naves;
-    }
-    public static carregarJogo(dados: dataGameMaster): GameMaster | null {
-        try {
-            const sistemaSolarCarregado = SistemaSolar.carregarObjeto(dados.sistemaSolar);
-            const navesCarregadas = dados.naves.map((naveData: dataNave) =>
-                Nave.carregarObjeto(naveData, sistemaSolarCarregado)
-            );
-            const naveDoJogador = navesCarregadas.find(nave => nave.id === dados.jogador.idNave);
-            const jogadorCarregado = Jogador.carregarObjeto(dados.jogador, sistemaSolarCarregado, naveDoJogador);
-            return new this(dados.id, sistemaSolarCarregado, jogadorCarregado, navesCarregadas);
-        } catch (error) {
-            console.error("Erro ao carregar o jogo:", error, "\n");
-            return null;
-        }
-    }
-    public salvarJogo(): dataGameMaster {
-        return {
-            id: this.id,
-            sistemaSolar: this.sistemaSolar.salvarObjeto(),
-            jogador: this.jogador.salvarObjeto(),
-            naves: this.naves.map((nave) => nave.salvarObjeto()),
-        }
+    public universo: Universo;
+    public jogador: Jogador;
+    public naves: Dicionario<Posicao, Nave>;
+    constructor(data: dataGameMaster) {
+        this.universo = Universo.carregarObjeto(data.universo);
+        this.jogador = Jogador.carregarObjeto(data.jogador);
+        this.naves = new Dicionario<Posicao, Nave>((posicao: Posicao) => {
+            const vetor = new Vetor<string>();
+            vetor.inserir(posicao.sistemaID);
+            if (posicao.planetaID) {
+                vetor.inserir(posicao.planetaID);
+            }
+            if (posicao.biomaID) {
+                vetor.inserir(posicao.biomaID);
+            }
+            return vetor;
+        });
+        data.naves.forEach(naveData => {
+            this.naves.inserir(Nave.carregarObjeto(naveData));
+        });
     }
 }
