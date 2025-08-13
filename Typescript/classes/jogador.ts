@@ -1,4 +1,5 @@
 import { Node } from "../components/node.ts";
+import { Pilha } from "../components/staks.ts";
 import { dataJogador, IDClass, Posicao } from "../contract/interfaces.ts";
 import { Bioma } from "./bioma.ts";
 import { Inventario } from "./inventario.ts";
@@ -11,11 +12,8 @@ export class Jogador implements IDClass {
     public vidaMaximo: number;
     public escudo: number;
     public escudoMaximo: number;
-    public posicaoAtual: Posicao;
-    public biomaNode: Node<Bioma>;
+    public historico: Pilha<Posicao>;
     public inventario: Inventario;
-    public nave: Nave | null; // TODO Nave
-    public emNave: boolean; // TODO Nave
     public moedas: number;
     constructor(data: dataJogador) {
         this.id = data.id;
@@ -24,19 +22,34 @@ export class Jogador implements IDClass {
         this.vidaMaximo = data.vidaMaxima;
         this.escudo = data.escudo;
         this.escudoMaximo = data.escudoMaximo;
-        this.posicaoAtual = data.posicao;
+        this.historico = new Pilha<Posicao>();
+        data.historico.forEach(posicao => this.historico.inserir(posicao));
         this.inventario = Inventario.carregarObjeto(data.inventario);
-        if (data.idNave) {
-            // TODO criar nave
-            this.emNave = true;
-        } else {
-            this.nave = null;
-            this.emNave = false;
-        }
         this.moedas = data.moedas;
     }
-    public coletarItem(): void {
-        
+    private atualizarPosicao(Bioma: Node<Bioma> | null): void {
+        if (!Bioma) {
+            return;
+        }
+        let posicaoAtual = this.historico.verTopo();
+        if (!posicaoAtual) {
+            throw new Error("Histórico de posições vazio.");
+        }
+        posicaoAtual.biomaID = Bioma.data.id;
+        this.historico.inserir(posicaoAtual);
+    }
+    public verPosicaoAtual(): Posicao | undefined {
+        return this.historico.verTopo();
+    }
+    public irLeste(bioma: Node<Bioma>): void {
+        this.atualizarPosicao(bioma.next);
+    }
+    public irOeste(bioma: Node<Bioma>): void {
+        this.atualizarPosicao(bioma.prev);
+    }
+    public minerar(bioma: Bioma): void {
+        // TODO logica de minerar
+        console.log(`Minerando no bioma: ${bioma.id}`);
     }
     public salvarObjeto(): dataJogador {
         return {
@@ -46,9 +59,8 @@ export class Jogador implements IDClass {
             vidaMaxima: this.vidaMaximo,
             escudo: this.escudo,
             escudoMaximo: this.escudoMaximo,
-            posicao: this.posicaoAtual,
+            historico: this.historico.toVetor(),
             inventario: this.inventario.salvarObjeto(),
-            idNave: this.nave ? this.nave.id : null, // TODO Nave
             moedas: this.moedas
         };
     }
@@ -60,5 +72,13 @@ export class Jogador implements IDClass {
         console.log(`Vida: ${this.vida}/${this.vidaMaximo}`);
         console.log(`Escudo: ${this.escudo}/${this.escudoMaximo}`);
         console.log(`Moedas: ${this.moedas}`);
+        const posicaoAtual = this.verPosicaoAtual();
+        if (!posicaoAtual) {
+            console.log("Posição Atual: Desconhecida");
+        } else {
+            console.log(`Posição Atual: ${posicaoAtual.sistemaID} => ${posicaoAtual.planetaID} => ${posicaoAtual.biomaID}`);
+        }
+        console.log("\nMochila:");
+        this.inventario.print();
     }
 }

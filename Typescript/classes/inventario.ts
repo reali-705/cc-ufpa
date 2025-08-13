@@ -58,7 +58,7 @@ export class Inventario {
     public print(): void {
         console.log(`Inventario: ${this.capacidadeAtual}/${this.capacidadeMaxima}`);
         this.slots.forEach((item, quantidade) => {
-            console.log(`- ${item.nome} (x${quantidade})`);
+            console.log(`-(${item.id}) ${item.nome}: ${quantidade} (x${item.tamanho})`);
         });
     }
 }

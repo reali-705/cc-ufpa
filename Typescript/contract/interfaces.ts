@@ -65,9 +65,8 @@ export interface dataJogador {
     vidaMaxima: number;
     escudo: number;
     escudoMaximo: number;
-    posicao: Posicao;
+    historico: Vetor<Posicao>;
     inventario: dataInventario;
-    idNave: string | null;
     moedas: number;
 }
 

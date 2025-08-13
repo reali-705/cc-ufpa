@@ -122,3 +122,13 @@ A classe `Dicionario` é uma implementação personalizada inspirada na estrutur
 ### Recorte do Código
 ```
 ```
+
+## Tabela Hash
+
+A classe `TabelaHash` é uma implementação personalizada de uma tabela hash, permitindo armazenar e acessar pares chave-valor de forma eficiente por meio de uma função de hash. Ela aceita funções customizadas para gerar o hash e para converter a chave em string, tornando-se flexível para diferentes tipos de dados. Entre suas principais funcionalidades estão inserir, buscar, remover, limpar e listar elementos, além de retornar uma representação textual da tabela. É ideal para cenários onde buscas rápidas por chave são essenciais.
+
+### Utilização no Código Principal
+
+### Recorte do Código
+```
+```

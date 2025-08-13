@@ -2,10 +2,11 @@ export class Dicionario<X, T> {
     private funcaoString: (parametro: X) => string;
     private tabela: { [chave: string]: {chave: X, valor: T } };
     constructor(funcaoString: ((parametro: X) => string) | StringConstructor = String) {
-        this.funcaoString = (parametro: X) => {
-            this.validarChave(parametro);
-            return String(parametro);
-        };
+        if (typeof funcaoString === "function") {
+            this.funcaoString = funcaoString;
+        } else {
+            this.funcaoString = (parametro: X) => String(parametro);
+        }
         this.tabela = {};
     }
     private validarChave(chave: X): string {

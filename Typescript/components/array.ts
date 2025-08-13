@@ -21,22 +21,32 @@ export class Vetor<T> {
             console.log(`(${i}): ${this.itens[i]}`);
         }
     }
-    inserir(item: T): void  {
+    inserirIndice(item: T, indice: number): boolean {
+        if (indice < 0 || indice > this.contador) {
+            return false;
+        }
         if (this.capacidade === this.contador) {
             let novaCapacidade = Math.floor(this.capacidade * this.multiplicador);
             if (novaCapacidade === this.capacidade) {
                 novaCapacidade++;
             }
             const novosItens = new Array(novaCapacidade);
-            this.itens.forEach((item, indice) => { novosItens[indice] = item });
+            this.itens.forEach((item, i) => { novosItens[i] = item });
             this.itens = novosItens;
             this.capacidade = novaCapacidade;
         }
-        this.itens[this.contador] = item;
+        for (let i = this.contador; i > indice; i--) {
+            this.itens[i] = this.itens[i - 1];
+        }
+        this.itens[indice] = item;
         this.contador++;
+        return true;
+    }
+    inserir(item: T): void  {
+        this.inserirIndice(item, this.contador);
     }
     remover(indice: number): T | undefined {
-        if (!this.veirificarIndice(indice)) {
+        if (!this.verificarIndice(indice)) {
             return undefined;
         }
         const data = this.itens[indice];
@@ -48,13 +58,13 @@ export class Vetor<T> {
         return data;
     }
     ver(indice: number): T | undefined {
-        if (this.veirificarIndice(indice)) {
+        if (this.verificarIndice(indice)) {
             return this.itens[indice];
         } else {
             return undefined;
         }
     }
-    veirificarIndice(indice: number): boolean {
+    verificarIndice(indice: number): boolean {
         if (indice < 0 || indice >= this.contador) {
             return false;
         } else {
@@ -62,7 +72,7 @@ export class Vetor<T> {
         }
     }
     substituir(indice: number, item: T): boolean{
-        if (!this.veirificarIndice(indice)) {
+        if (!this.verificarIndice(indice)) {
             return false;
         } else {
             this.itens[indice] = item;

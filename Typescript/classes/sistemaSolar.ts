@@ -1,8 +1,7 @@
 import { ListaVinculadaCircular } from "../components/circularLinkedList.ts";
 import { Conjunto } from "../components/set.ts";
 import { Raridade } from "../contract/enums.ts";
-import { dataPlaneta, dataSistemaSolar, IDClass } from "../contract/interfaces.ts";
-import { Item } from "./item.ts";
+import { dataPlaneta, dataSistemaSolar, IDClass, Item } from "../contract/interfaces.ts";
 import { Planeta } from "./planeta.ts";
 
 export class SistemaSolar implements IDClass {

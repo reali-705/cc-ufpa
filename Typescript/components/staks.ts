@@ -1,3 +1,4 @@
+import { Vetor } from "./array.ts";
 import { Node } from "./node.ts";
 
 export class Pilha<T> {
@@ -5,7 +6,7 @@ export class Pilha<T> {
     private size: number = 0;
     inserir(data: T): void {
         const newNode = new Node(data);
-        newNode.next = this.top
+        newNode.next = this.top;
         this.top = newNode;
         this.size++;
     }
@@ -23,6 +24,18 @@ export class Pilha<T> {
             return undefined;
         }
         return this.top.data;
+    }
+    toVetor(): Vetor<T> {
+        const vetor = new Vetor<T>(this.size);
+        if (this.isEmpty()) {
+            return vetor;
+        }
+        let current = this.top!;
+        for (let i = this.getSize() - 1; i >= 0; i--) {
+            vetor.inserirIndice(current.data, i);
+            current = current.next!;
+        }
+        return vetor;
     }
     getSize(): number {
         return this.size;

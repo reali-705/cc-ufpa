@@ -1,8 +1,7 @@
 import { Bioma } from "./bioma.ts";
-import { Item } from "./item.ts";
 import { ListaVinculadaCircular } from "../components/circularLinkedList.ts";
 import { Conjunto } from "../components/set.ts";
-import { dataBioma, dataPlaneta, IDClass } from "../contract/interfaces.ts";
+import { dataBioma, dataPlaneta, IDClass, Item } from "../contract/interfaces.ts";
 import { Raridade } from "../contract/enums.ts";
 
 export class Planeta implements IDClass {

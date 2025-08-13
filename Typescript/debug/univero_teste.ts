@@ -7,8 +7,7 @@ async function testandoUniverso() {
     try {
         const dataUniverso = carregarDados(arquivoNome, "./Jsons/");
         if (!dataUniverso) {
-            console.error("Não foi possível carregar os dados do Universo.");
-            return;
+            throw new Error("Não foi possível carregar os dados do Universo.");
         }
         const universo = Universo.carregarObjeto(dataUniverso);
         universo.print();
