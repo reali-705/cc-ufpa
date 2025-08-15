@@ -72,5 +72,5 @@ export interface dataJogador {
 export interface dataGameMaster {
     jogador: dataJogador;
     universo: dataUniverso;
-    naves: dataNave[];
+    // naves: dataNave[];
 }

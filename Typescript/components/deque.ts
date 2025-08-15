@@ -99,6 +99,9 @@ export class FilaDupla<T> {
             current = current.next!;
         }
     }
+    getHead(): Node<T> | null {
+        return this.head;
+    }
     getSize(): number {
         return this.size;
     }
