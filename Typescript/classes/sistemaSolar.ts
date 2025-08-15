@@ -27,10 +27,12 @@ export class SistemaSolar implements IDClass {
         return recursos;
     }
     public salvarObjeto(): dataSistemaSolar {
+        const planetas = new Array<dataPlaneta>(this.planetas.getSize());
+        this.planetas.forEach((planeta) => planetas.push(planeta.salvarObjeto()));
         return {
             id: this.id,
             nome: this.nome,
-            planetas: this.planetas.paraVetor().map((planeta) => planeta.salvarObjeto()),
+            planetas: planetas,
         }
     }
     public static carregarObjeto(data: dataSistemaSolar): SistemaSolar {

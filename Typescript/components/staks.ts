@@ -1,4 +1,3 @@
-import { Vetor } from "./array.ts";
 import { Node } from "./node.ts";
 
 export class Pilha<T> {
@@ -25,17 +24,17 @@ export class Pilha<T> {
         }
         return this.top.data;
     }
-    toVetor(): Vetor<T> {
-        const vetor = new Vetor<T>(this.size);
-        if (this.isEmpty()) {
-            return vetor;
+    toArray(): Array<T> {
+        const vetor = new Array<T>(this.size);
+        let elemento = this.top;
+        while (!this.isEmpty()){
+            if (elemento === null) {
+                break
+            }
+            vetor.push(elemento.data);
+            elemento = elemento.next;
         }
-        let current = this.top!;
-        for (let i = this.getSize() - 1; i >= 0; i--) {
-            vetor.inserirIndice(current.data, i);
-            current = current.next!;
-        }
-        return vetor;
+        return vetor.reverse();
     }
     getSize(): number {
         return this.size;

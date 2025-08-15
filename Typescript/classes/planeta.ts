@@ -27,10 +27,12 @@ export class Planeta implements IDClass {
         return recursos;
     }
     public salvarObjeto(): dataPlaneta {
+        const biomas = new Array<dataBioma>(this.biomas.getSize());
+        this.biomas.forEach((area) => biomas.push(area.salvarObjeto()));
         return {
             id: this.id,
             nome: this.nome,
-            biomas: this.biomas.paraVetor().map((area) => area.salvarObjeto())
+            biomas: biomas
         }
     }
     public static carregarObjeto(data: dataPlaneta): Planeta {

@@ -1,4 +1,3 @@
-import { Vetor } from "../components/array.ts";
 import { Raridade, TamanhoUniverso } from "./enums.ts";
 
 export interface IDClass {
@@ -18,26 +17,26 @@ export interface Item {
 export interface dataBioma {
     readonly id: string;
     nome: string;
-    recursos: Vetor<Item>;
+    recursos: Item[];
 }
 
 export interface dataPlaneta {
     readonly id: string;
     nome: string;
-    biomas: Vetor<dataBioma>;
+    biomas: dataBioma[];
 }
 
 export interface dataSistemaSolar {
     readonly id: string;
     nome: string;
-    planetas: Vetor<dataPlaneta>;
+    planetas: dataPlaneta[];
 }
 
 export interface dataUniverso {
     readonly id: string;
     nome: string;
     tamanho: TamanhoUniverso;
-    sistemas: Vetor<dataSistemaSolar>;
+    sistemas: dataSistemaSolar[];
 }
 
 export interface Posicao {
@@ -47,7 +46,7 @@ export interface Posicao {
 }
 
 export interface dataInventario {
-    slots: Map<Item, number>;
+    slots: [Item, number][];
     capacidadeMaxima: number;
     capacidadeAtual: number;
 }
@@ -65,7 +64,7 @@ export interface dataJogador {
     vidaMaxima: number;
     escudo: number;
     escudoMaximo: number;
-    historico: Vetor<Posicao>;
+    historico: Posicao[];
     inventario: dataInventario;
     moedas: number;
 }
@@ -73,5 +72,5 @@ export interface dataJogador {
 export interface dataGameMaster {
     jogador: dataJogador;
     universo: dataUniverso;
-    naves: Vetor<dataNave>;
+    naves: dataNave[];
 }

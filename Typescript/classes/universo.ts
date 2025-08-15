@@ -35,11 +35,13 @@ export class Universo implements IDClass {
         this.sistemas.inserirTail(sistema);
     }
     public salvarObjeto(): dataUniverso {
+        const sistemas = new Array<dataSistemaSolar>(this.sistemas.getSize());
+        this.sistemas.forEach((sistema) => sistemas.push(sistema.salvarObjeto()));
         return {
             id: this.id,
             nome: this.nome,
             tamanho: this.tamanho,
-            sistemas: this.sistemas.paraVetor().map((sistema) => sistema.salvarObjeto())
+            sistemas: sistemas
         }
     }
     public static carregarObjeto(data: dataUniverso): Universo {

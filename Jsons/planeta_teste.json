@@ -1,0 +1,42 @@
+{
+  "id": "planeta-001",
+  "nome": "Eldoria",
+  "biomas": [
+    {
+      "id": "bioma-floresta-01",
+      "nome": "Floresta Élfica",
+      "recursos": [
+        { "id": "item-001", "nome": "Ferro", "tamanho": 2, "raridade": 0 },
+        { "id": "item-002", "nome": "Carbono", "tamanho": 1, "raridade": 0 }
+      ]
+    },
+    {
+      "id": "bioma-deserto-01",
+      "nome": "Deserto Dourado",
+      "recursos": [
+        { "id": "item-003", "nome": "Silício", "tamanho": 1, "raridade": 1 }
+      ]
+    },
+    {
+      "id": "bioma-montanha-01",
+      "nome": "Montanha Gélida",
+      "recursos": [
+        { "id": "item-004", "nome": "Uranio", "tamanho": 3, "raridade": 2 }
+      ]
+    },
+    {
+      "id": "bioma-lago-01",
+      "nome": "Lago Cristalino",
+      "recursos": [
+        { "id": "item-005", "nome": "Oxigenio", "tamanho": 1, "raridade": 0 }
+      ]
+    },
+    {
+      "id": "bioma-pantano-01",
+      "nome": "Pântano Sombrio",
+      "recursos": [
+        { "id": "item-006", "nome": "Cobalto", "tamanho": 2, "raridade": 1 }
+      ]
+    }
+  ]
+}

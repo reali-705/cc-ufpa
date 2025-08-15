@@ -9,7 +9,9 @@ export class Inventario {
         this.capacidadeMaxima = data.capacidadeMaxima;
         this.capacidadeAtual = data.capacidadeAtual;
         this.slots = new Dicionario<Item, number>((item: Item) => item.id);
-        data.slots.forEach((quantidade, item, itemData) => this.slots.inserir(item, quantidade));
+        if (Array.isArray(data.slots)) {
+            data.slots.forEach(([item, quantidade]) => this.slots.inserir(item, quantidade));
+        }
     }
     public adicionarItem(item: Item, quantidade: number): void {
         let capacidadeOcupada = quantidade * item.tamanho;
@@ -42,14 +44,14 @@ export class Inventario {
         }
     }
     public salvarObjeto(): dataInventario {
-        const mapa = new Map<Item, number>();
+        const mapa: [Item, number][] = new Array(this.slots.tamanho());
         this.slots.forEach((item, quantidade) => {
-            mapa.set(item, quantidade);
+            mapa.push([item, quantidade]);
         });
         return {
             capacidadeMaxima: this.capacidadeMaxima,
             capacidadeAtual: this.capacidadeAtual,
-            slots: mapa
+            slots: mapa.filter(item => item !== null)
         };
     }
     public static carregarObjeto(data: dataInventario): Inventario {

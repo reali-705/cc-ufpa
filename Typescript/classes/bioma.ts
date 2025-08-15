@@ -13,10 +13,12 @@ export class Bioma implements IDClass {
         data.recursos.forEach((item: Item) => this.recursos.add(item));
     }
     public salvarObjeto(): dataBioma {
+        const recursos = new Array<Item>(this.recursos.size());
+        this.recursos.toVetor().forEach(item => recursos.push(item));
         return {
             id: this.id,
             nome: this.nome,
-            recursos: this.recursos.toVetor(),
+            recursos: recursos,
         };
     }
     public static carregarObjeto(data: dataBioma): Bioma {

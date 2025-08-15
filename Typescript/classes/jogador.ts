@@ -31,12 +31,22 @@ export class Jogador implements IDClass {
         if (!Bioma) {
             return;
         }
-        let posicaoAtual = this.historico.verTopo();
-        if (!posicaoAtual) {
+        const posicaoAnterior = this.historico.verTopo();
+        if (!posicaoAnterior) {
             throw new Error("Histórico de posições vazio.");
         }
-        posicaoAtual.biomaID = Bioma.data.id;
-        this.historico.inserir(posicaoAtual);
+        this.historico.inserir({
+            sistemaID: posicaoAnterior.sistemaID,
+            planetaID: posicaoAnterior.planetaID,
+            biomaID: Bioma.data.id
+        });
+    }
+    public mostrarHistorico(): void {
+        console.log("Histórico de Posições:");
+        const historico = this.historico;
+        historico.toArray().forEach(posicao => {
+            console.log(` - ${posicao.sistemaID} => ${posicao.planetaID} => ${posicao.biomaID}`);
+        });
     }
     public verPosicaoAtual(): Posicao | undefined {
         return this.historico.verTopo();
@@ -48,8 +58,10 @@ export class Jogador implements IDClass {
         this.atualizarPosicao(bioma.prev);
     }
     public minerar(bioma: Bioma): void {
-        // TODO logica de minerar
-        console.log(`Minerando no bioma: ${bioma.id}`);
+        const recursos = bioma.recursos.values();
+        const item = recursos[Math.floor(Math.random() * recursos.length)];
+        const quantidade = Math.floor(Math.random() * (10 - item.raridade * 2 + 1)) + 1;
+        this.inventario.adicionarItem(item, quantidade);
     }
     public salvarObjeto(): dataJogador {
         return {
@@ -59,7 +71,7 @@ export class Jogador implements IDClass {
             vidaMaxima: this.vidaMaximo,
             escudo: this.escudo,
             escudoMaximo: this.escudoMaximo,
-            historico: this.historico.toVetor(),
+            historico: this.historico.toArray().filter(item => item !== null),
             inventario: this.inventario.salvarObjeto(),
             moedas: this.moedas
         };
