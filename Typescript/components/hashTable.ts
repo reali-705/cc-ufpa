@@ -27,7 +27,7 @@ export class TabelaHash<X , T> {
         return false;
     }
     public buscar(chave: X): T | undefined {
-        const chaveValor = this.tabela[this.funcaoString(chave)];
+        const chaveValor = this.tabela[this.codigoHash(chave)];
         return chaveValor === null ? undefined : chaveValor.valor;
     }
     public remover(chave: X): boolean {

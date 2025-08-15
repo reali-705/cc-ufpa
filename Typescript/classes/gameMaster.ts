@@ -1,57 +1,67 @@
-import { Vetor } from "../components/array.ts";
-import { Dicionario } from "../components/maps.ts";
-import { Node } from "../components/node.ts";
-import { dataGameMaster, dataJogador, dataUniverso, Posicao } from "../contract/interfaces.ts";
-import { Bioma } from "./bioma.ts";
-import { Jogador } from "./jogador.ts";
-import { Nave } from "./nave.ts";
 import { Planeta } from "./planeta.ts";
-import { SistemaSolar } from "./sistemaSolar.ts";
-import { Universo } from "./universo.ts";
+import { Jogador } from "./jogador.ts";
+import { Node } from "../components/node.ts";
+import { Bioma } from "./bioma.ts";
+import { TabelaHash } from "../components/hashTable.ts";
+import { Dicionario } from "../components/maps.ts";
+import { Item } from "../contract/interfaces.ts";
 
 export class GameMaster {
-    public universo: Universo;
+    public planeta: Planeta;
     public jogador: Jogador;
+    private biomaTabela = new Dicionario<string, Node<Bioma>>();
     // public naves: Dicionario<Posicao, Nave>;
-    constructor(universo: dataUniverso, jogador: dataJogador) {
-        this.universo = Universo.carregarObjeto(universo);
-        this.jogador = Jogador.carregarObjeto(jogador);
-    }
-    public procurarPosicao(): Node<Bioma> {
-        const posicao = this.jogador.verPosicaoAtual();
-        const sistemas = this.universo.sistemas;
-        let sistema = sistemas.getHead()!;
-        for (let i = 0; i < sistemas.getSize(); i++) {
-            if (sistema.data.id === posicao?.sistemaID) {
-                break;
-            }
-            sistema = sistema.next!;
+    constructor(planeta: Planeta, jogador: Jogador) {
+        // adicionando biomas à tabela
+        let nodeBioma = planeta.biomas.getHead();
+        if (nodeBioma === null) {
+            throw new Error("O planeta não possui biomas.");
         }
-        const planetas = sistema.data.planetas;
-        let planeta = planetas.getHead()!;
-        for (let i = 0; i < planetas.getSize(); i++) {
-            if (planeta.data.id === posicao?.planetaID) {
-                break;
-            }
-            planeta = planeta.next!;
+        for (let i = 0; i < planeta.biomas.getSize(); i++) {
+            this.biomaTabela.inserir(nodeBioma.data.id, nodeBioma);
+            nodeBioma = nodeBioma.next!;
         }
-        const biomas = planeta.data.biomas;
-        let bioma = biomas.getHead()!;
-        for (let i = 0; i < biomas.getSize(); i++) {
-            if (bioma.data.id === posicao?.biomaID) {
-                break;
-            }
-            bioma = bioma.next!;
+        console.log(this.biomaTabela.toString());
+        // obtendo planeta
+        this.planeta = planeta;
+        // tratando dados do jogador
+        const posicaoAtual = jogador.verPosicaoAtual();
+        if (posicaoAtual === "Desconhecida" || !posicaoAtual.includes(planeta.id)) {
+            const bioma = this.planeta.biomas.getHead()!;
+            jogador.atualizarPosicao(this.planeta.id + " - " + bioma.data.id);
         }
-        return bioma;
+        this.jogador = jogador;
     }
-    public static carregarObjeto(data: dataGameMaster): GameMaster {
-        return new GameMaster(data.universo, data.jogador);
+    private procurarPosicao(): Node<Bioma> {
+        // retorna o bioma correspondente à posição atual do jogador
+        const posicaoAtual = this.jogador.verPosicaoAtual().split(" - ");
+        return this.biomaTabela.obterValor(posicaoAtual[1])!;
     }
-    public salvarObjeto(): dataGameMaster {
-        return {
-            universo: this.universo.salvarObjeto(),
-            jogador: this.jogador.salvarObjeto(),
-        };
+    public irLeste(): boolean {
+        const proximoBioma = this.procurarPosicao().next;
+        if (proximoBioma) {
+            this.jogador.atualizarPosicao(this.planeta.id + " - " + proximoBioma.data.id);
+            return true;
+        }
+        return false;
+    }
+    public irOeste(): boolean {
+        const proximoBioma = this.procurarPosicao().prev;
+        if (proximoBioma) {
+            this.jogador.atualizarPosicao(this.planeta.id + " - " + proximoBioma.data.id);
+            return true;
+        }
+        return false;
+    }
+    public minerar(): boolean {
+        const bioma = this.procurarPosicao().data;
+        if (bioma) {
+            this.jogador.minerar(bioma.recursos.values());
+            return true;
+        }
+        return false;
+    }
+    public removerItem(item: Item, quantidade: number): void {
+        this.jogador.inventario.removerItem(item, quantidade);
     }
 }

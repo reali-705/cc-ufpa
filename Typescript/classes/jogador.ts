@@ -1,9 +1,7 @@
-import { Node } from "../components/node.ts";
 import { Pilha } from "../components/staks.ts";
-import { dataJogador, IDClass, Posicao } from "../contract/interfaces.ts";
-import { Bioma } from "./bioma.ts";
+import { dataJogador, IDClass, Item } from "../contract/interfaces.ts";
 import { Inventario } from "./inventario.ts";
-import { Nave } from "./nave.ts";
+// import { Nave } from "./nave.ts";
 
 export class Jogador implements IDClass {
     public readonly id: string;
@@ -12,7 +10,7 @@ export class Jogador implements IDClass {
     public vidaMaximo: number;
     public escudo: number;
     public escudoMaximo: number;
-    public historico: Pilha<Posicao>;
+    public historico: Pilha<string>;
     public inventario: Inventario;
     public moedas: number;
     constructor(data: dataJogador) {
@@ -22,44 +20,23 @@ export class Jogador implements IDClass {
         this.vidaMaximo = data.vidaMaxima;
         this.escudo = data.escudo;
         this.escudoMaximo = data.escudoMaximo;
-        this.historico = new Pilha<Posicao>();
+        this.historico = new Pilha<string>();
         data.historico.forEach(posicao => this.historico.inserir(posicao));
         this.inventario = Inventario.carregarObjeto(data.inventario);
         this.moedas = data.moedas;
     }
-    private atualizarPosicao(Bioma: Node<Bioma> | null): void {
-        if (!Bioma) {
-            return;
+    public atualizarPosicao(posicao: string): void {
+        const posicaoAnterior = this.verPosicaoAtual();
+        if (posicaoAnterior === "Desconhecida") {
+            this.historico.remover();
         }
-        const posicaoAnterior = this.historico.verTopo();
-        if (!posicaoAnterior) {
-            throw new Error("Histórico de posições vazio.");
-        }
-        this.historico.inserir({
-            sistemaID: posicaoAnterior.sistemaID,
-            planetaID: posicaoAnterior.planetaID,
-            biomaID: Bioma.data.id
-        });
+        this.historico.inserir(posicao);
     }
-    public mostrarHistorico(): void {
-        console.log("Histórico de Posições:");
-        const historico = this.historico;
-        historico.toArray().forEach(posicao => {
-            console.log(` - ${posicao.sistemaID} => ${posicao.planetaID} => ${posicao.biomaID}`);
-        });
+    public verPosicaoAtual(): string {
+        return this.historico.verTopo() || "Desconhecida";
     }
-    public verPosicaoAtual(): Posicao | undefined {
-        return this.historico.verTopo();
-    }
-    public irLeste(bioma: Node<Bioma>): void {
-        this.atualizarPosicao(bioma.next);
-    }
-    public irOeste(bioma: Node<Bioma>): void {
-        this.atualizarPosicao(bioma.prev);
-    }
-    public minerar(bioma: Bioma): void {
-        const recursos = bioma.recursos.values();
-        const item = recursos[Math.floor(Math.random() * recursos.length)];
+    public minerar(itens: Item[]): void {
+        const item = itens[Math.floor(Math.random() * itens.length)];
         const quantidade = Math.floor(Math.random() * (10 - item.raridade * 2 + 1)) + 1;
         this.inventario.adicionarItem(item, quantidade);
     }
@@ -84,13 +61,15 @@ export class Jogador implements IDClass {
         console.log(`Vida: ${this.vida}/${this.vidaMaximo}`);
         console.log(`Escudo: ${this.escudo}/${this.escudoMaximo}`);
         console.log(`Moedas: ${this.moedas}`);
-        const posicaoAtual = this.verPosicaoAtual();
-        if (!posicaoAtual) {
-            console.log("Posição Atual: Desconhecida");
-        } else {
-            console.log(`Posição Atual: ${posicaoAtual.sistemaID} => ${posicaoAtual.planetaID} => ${posicaoAtual.biomaID}`);
-        }
+        console.log(`Posição Atual: ${this.verPosicaoAtual()}`);
         console.log("\nMochila:");
         this.inventario.print();
+    }
+    public printHistorico(): void {
+        console.log("Histórico de Posições:");
+        const historico = this.historico;
+        historico.toArray().forEach((posicao, indice) => {
+            console.log(`${indice} : ${posicao}`);
+        });
     }
 }

@@ -6,15 +6,11 @@
   "escudo": 50,
   "escudoMaximo": 50,
   "historico": [
-    {
-      "sistemaID": "sistema-001",
-      "planetaID": "planeta-001",
-      "biomaID": "bioma-pantano-01"
-    }
+    "Desconhecida"
   ],
   "inventario": {
     "capacidadeMaxima": 100,
-    "capacidadeAtual": 46,
+    "capacidadeAtual": 100,
     "slots": [
       [
         {
@@ -23,7 +19,7 @@
           "tamanho": 2,
           "raridade": 0
         },
-        9
+        4
       ],
       [
         {
@@ -41,7 +37,16 @@
           "tamanho": 1,
           "raridade": 1
         },
-        5
+        8
+      ],
+      [
+        {
+          "id": "item-006",
+          "nome": "Cobalto",
+          "tamanho": 2,
+          "raridade": 1
+        },
+        0
       ]
     ]
   },

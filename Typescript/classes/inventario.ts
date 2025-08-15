@@ -13,6 +13,13 @@ export class Inventario {
             data.slots.forEach(([item, quantidade]) => this.slots.inserir(item, quantidade));
         }
     }
+    private verificarQuantidade(): void {
+        this.slots.forEach((item, quantidade) => {
+            if (quantidade <= 0) {
+                this.slots.remover(item);
+            }
+        });
+    }
     public adicionarItem(item: Item, quantidade: number): void {
         let capacidadeOcupada = quantidade * item.tamanho;
         while (quantidade > 0) {
@@ -27,6 +34,7 @@ export class Inventario {
         }
         this.capacidadeAtual += capacidadeOcupada;
         this.slots.inserir(item, quantidade);
+        this.verificarQuantidade();
     }
     public removerItem(item: Item, quantidade: number): void {
         if (!this.slots.existeChave(item)) {
@@ -42,6 +50,7 @@ export class Inventario {
         } else {
             this.slots.inserir(item, quantidadeAtual - quantidade);
         }
+        this.verificarQuantidade();
     }
     public salvarObjeto(): dataInventario {
         const mapa: [Item, number][] = new Array(this.slots.tamanho());

@@ -39,12 +39,6 @@ export interface dataUniverso {
     sistemas: dataSistemaSolar[];
 }
 
-export interface Posicao {
-    sistemaID: string;
-    planetaID: string | null;
-    biomaID: string | null;
-}
-
 export interface dataInventario {
     slots: [Item, number][];
     capacidadeMaxima: number;
@@ -54,7 +48,7 @@ export interface dataInventario {
 export interface dataNave {
     readonly id: string;
     nome: string;
-    posicao: Posicao;
+    posicao: string;
 }
 
 export interface dataJogador {
@@ -64,7 +58,7 @@ export interface dataJogador {
     vidaMaxima: number;
     escudo: number;
     escudoMaximo: number;
-    historico: Posicao[];
+    historico: string[];
     inventario: dataInventario;
     moedas: number;
 }
