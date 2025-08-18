@@ -1,0 +1,150 @@
+{
+    "planeta": {
+        "id": "planeta_galileu",
+        "nome": "Galileu",
+        "biomas": [
+            {
+                "id": "bioma_01",
+                "nome": "Floresta Serena",
+                "recursos": [
+                    {
+                        "id": "recurso_01",
+                        "nome": "Minério de Ferro",
+                        "tamanho": 1,
+                        "raridade": 0
+                    },
+                    {
+                        "id": "recurso_02",
+                        "nome": "Carvão",
+                        "tamanho": 1,
+                        "raridade": 0
+                    },
+                    {
+                        "id": "recurso_03",
+                        "nome": "Minério de Cobre",
+                        "tamanho": 2,
+                        "raridade": 1
+                    }
+                ]
+            },
+            {
+                "id": "bioma_02",
+                "nome": "Planície Desolada",
+                "recursos": [
+                    {
+                        "id": "recurso_04",
+                        "nome": "Minério de Ouro",
+                        "tamanho": 3,
+                        "raridade": 2
+                    },
+                    {
+                        "id": "recurso_05",
+                        "nome": "Gema de Quartzo",
+                        "tamanho": 2,
+                        "raridade": 1
+                    }
+                ]
+            },
+            {
+                "id": "bioma_03",
+                "nome": "Pântano Nebuloso",
+                "recursos": [
+                    {
+                        "id": "recurso_06",
+                        "nome": "Gás Exótico",
+                        "tamanho": 5,
+                        "raridade": 5
+                    }
+                ]
+            },
+            {
+                "id": "bioma_04",
+                "nome": "Cordilheira de Cristal",
+                "recursos": [
+                    {
+                        "id": "recurso_07",
+                        "nome": "Cristal de Água",
+                        "tamanho": 1,
+                        "raridade": 0
+                    },
+                    {
+                        "id": "recurso_08",
+                        "nome": "Minério de Platina",
+                        "tamanho": 4,
+                        "raridade": 3
+                    }
+                ]
+            },
+            {
+                "id": "bioma_05",
+                "nome": "Deserto Ardente",
+                "recursos": []
+            }
+        ]
+    },
+    "jogador": {
+        "id": "jogador_01",
+        "nome": "Viajante Solitário",
+        "vida": 100,
+        "vidaMaxima": 100,
+        "escudo": 50,
+        "escudoMaximo": 50,
+        "historico": [
+            "planeta_galileu - bioma_01",
+            "planeta_galileu - bioma_05",
+            "planeta_galileu - bioma_04"
+        ],
+        "inventario": {
+            "capacidadeMaxima": 100,
+            "capacidadeAtual": 65,
+            "slots": [
+                [
+                    {
+                        "id": "recurso_07",
+                        "nome": "Cristal de Água",
+                        "tamanho": 1,
+                        "raridade": 0
+                    },
+                    7
+                ],
+                [
+                    {
+                        "id": "recurso_08",
+                        "nome": "Minério de Platina",
+                        "tamanho": 4,
+                        "raridade": 3
+                    },
+                    3
+                ],
+                [
+                    {
+                        "id": "recurso_04",
+                        "nome": "Minério de Ouro",
+                        "tamanho": 3,
+                        "raridade": 2
+                    },
+                    4
+                ],
+                [
+                    {
+                        "id": "recurso_03",
+                        "nome": "Minério de Cobre",
+                        "tamanho": 2,
+                        "raridade": 1
+                    },
+                    5
+                ],
+                [
+                    {
+                        "id": "recurso_02",
+                        "nome": "Carvão",
+                        "tamanho": 1,
+                        "raridade": 0
+                    },
+                    9
+                ]
+            ]
+        },
+        "moedas": 100
+    }
+}

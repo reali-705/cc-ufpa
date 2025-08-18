@@ -2,7 +2,7 @@
   "name": "no-man-sky",
   "version": "1.0.0",
   "description": "Uma réplica simplificada do jogo No Man's Sky",
-  "main": "./Javascript/main.js",
+  "main": "./Javascript/server/servidor.js",
   "type": "module",
   "scripts": {
     "bl": "tsc && mkdir -p Javascript/mappings && find Javascript -name '*.js.map' -exec mv {} Javascript/mappings \\;",
@@ -12,11 +12,13 @@
   "author": "Ale-Reali-705",
   "license": "ISC",
   "devDependencies": {
-    "@types/node": "^24.0.7",
+    "@types/express": "^5.0.3",
+    "@types/node": "^24.3.0",
     "@types/seedrandom": "^3.0.8",
     "typescript": "^5.0.4"
   },
   "dependencies": {
+    "express": "^5.1.0",
     "seedrandom": "^3.0.5"
   }
 }

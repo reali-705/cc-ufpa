@@ -1,0 +1,100 @@
+{
+  "planeta": {
+    "id": "Planeta-1",
+    "nome": "Planeta 1",
+    "biomas": [
+      {
+        "id": "Bioma-1",
+        "nome": "Bioma 1",
+        "recursos": [
+          {
+            "id": "Elemento-1",
+            "nome": "Elemento 1",
+            "tamanho": 1,
+            "raridade": 0
+          },
+          {
+            "id": "Elemento-2",
+            "nome": "Elemento 2",
+            "tamanho": 1,
+            "raridade": 1
+          }
+        ]
+      },
+      {
+        "id": "Bioma-2",
+        "nome": "Bioma 2",
+        "recursos": [
+          {
+            "id": "Elemento-3",
+            "nome": "Elemento 3",
+            "tamanho": 1,
+            "raridade": 0
+          }
+        ]
+      },
+      {
+        "id": "Bioma-3",
+        "nome": "Bioma 3",
+        "recursos": [
+          {
+            "id": "Elemento-4",
+            "nome": "Elemento 4",
+            "tamanho": 2,
+            "raridade": 2
+          },
+          {
+            "id": "Elemento-5",
+            "nome": "Elemento 5",
+            "tamanho": 1,
+            "raridade": 3
+          }
+        ]
+      },
+      {
+        "id": "Bioma-4",
+        "nome": "Bioma 4",
+        "recursos": []
+      },
+      {
+        "id": "Bioma-5",
+        "nome": "Bioma 5",
+        "recursos": [
+          {
+            "id": "Elemento-1",
+            "nome": "Elemento 1",
+            "tamanho": 1,
+            "raridade": 0
+          }
+        ]
+      }
+    ]
+  },
+  "jogador": {
+    "id": "Jogador-1",
+    "nome": "Jogador 1",
+    "vida": 100,
+    "vidaMaxima": 100,
+    "escudo": 50,
+    "escudoMaximo": 50,
+    "historico": [
+      "Planeta-1 - Bioma-1"
+    ],
+    "inventario": {
+      "capacidadeMaxima": 100,
+      "capacidadeAtual": 6,
+      "slots": [
+        [
+          {
+            "id": "Elemento-1",
+            "nome": "Elemento 1",
+            "tamanho": 1,
+            "raridade": 0
+          },
+          6
+        ]
+      ]
+    },
+    "moedas": 10
+  }
+}

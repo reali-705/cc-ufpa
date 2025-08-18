@@ -1,7 +1,6 @@
 import { Pilha } from "../components/staks.ts";
 import { dataJogador, IDClass, Item } from "../contract/interfaces.ts";
 import { Inventario } from "./inventario.ts";
-// import { Nave } from "./nave.ts";
 
 export class Jogador implements IDClass {
     public readonly id: string;
@@ -27,13 +26,13 @@ export class Jogador implements IDClass {
     }
     public atualizarPosicao(posicao: string): void {
         const posicaoAnterior = this.verPosicaoAtual();
-        if (posicaoAnterior === "Desconhecida") {
+        if (posicaoAnterior === "") {
             this.historico.remover();
         }
         this.historico.inserir(posicao);
     }
     public verPosicaoAtual(): string {
-        return this.historico.verTopo() || "Desconhecida";
+        return this.historico.verTopo() || "";
     }
     public minerar(itens: Item[]): void {
         const item = itens[Math.floor(Math.random() * itens.length)];

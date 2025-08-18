@@ -21,13 +21,13 @@ export class Planeta implements IDClass {
             }
         });
     }
-    public recurosDoMundo(): Conjunto<Item> {
+    public recursosDoMundo(): Conjunto<Item> {
         let recursos = new Conjunto<Item>();
         this.biomas.forEach((area) => recursos = recursos.union(area.recursos));
         return recursos;
     }
     public salvarObjeto(): dataPlaneta {
-        const biomas = new Array<dataBioma>(this.biomas.getSize());
+        const biomas = new Array<dataBioma>();
         this.biomas.forEach((area) => biomas.push(area.salvarObjeto()));
         return {
             id: this.id,
@@ -41,7 +41,7 @@ export class Planeta implements IDClass {
     public print(): void {
         console.log(`\n======= Planeta: ${this.nome} (ID: ${this.id}) =======`);
             console.log(`Recursos do Mundo:`);
-            const recursos = this.recurosDoMundo();
+            const recursos = this.recursosDoMundo();
             if (recursos.isEmpty()) {
                 console.log("Nenhum recurso");
             } else {

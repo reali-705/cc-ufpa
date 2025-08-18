@@ -1,4 +1,4 @@
-import { Raridade, TamanhoUniverso } from "./enums.ts";
+import { Raridade } from "./enums.ts";
 
 export interface IDClass {
     readonly id: string;
@@ -24,19 +24,6 @@ export interface dataPlaneta {
     readonly id: string;
     nome: string;
     biomas: dataBioma[];
-}
-
-export interface dataSistemaSolar {
-    readonly id: string;
-    nome: string;
-    planetas: dataPlaneta[];
-}
-
-export interface dataUniverso {
-    readonly id: string;
-    nome: string;
-    tamanho: TamanhoUniverso;
-    sistemas: dataSistemaSolar[];
 }
 
 export interface dataInventario {
@@ -65,6 +52,5 @@ export interface dataJogador {
 
 export interface dataGameMaster {
     jogador: dataJogador;
-    universo: dataUniverso;
-    // naves: dataNave[];
+    planeta: dataPlaneta;
 }

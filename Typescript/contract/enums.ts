@@ -32,19 +32,3 @@ export enum TipoBioma {
     PANTANO,
     // ...
 }
-
-export enum TipoPlaneta {
-    Rochoso,
-    Gasoso,
-    Aquatico,
-    Florestal,
-    Desertico,
-    Gelado,
-}
-
-export enum TamanhoUniverso {
-    Pequeno,
-    Medio,
-    Grande,
-    Enorme,
-}

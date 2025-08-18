@@ -4,28 +4,64 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>No Man Sky</title>
-        <style>
-
-        </style>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link rel="stylesheet" href="style.css">
     </head>
     <body>
-        <div>
-            <h1>No Man Sky</h1>
-            <div>
-                <h2>Ações do Jogador</h2>
-                <button id="irLeste">Ir para o Leste</button>
-                <button id="irOeste">Ir para o Oeste</button>
-                <button id="minerar">Minerar</button>
-                <button id="mostrarInfo">Mostrar Informações</button>
+        <h1>No Man's Sky</h1>
+
+        <!-- Menu Retrátil (Salvar/Carregar) -->
+        <div class="menu-container">
+            <details class="menu-suspenso">
+                <summary class="menu-toggle" aria-label="Abrir Menu">
+                    <i class="fas fa-bars icone"></i>
+                </summary>
+                <div class="menu-opcoes">
+                    <!-- Mantive o ID original para o seu JS -->
+                    <button id="salvar">Salvar</button>
+                    <button id="carregar">Carregar</button>
+                    <button id="novoJogo">Novo Jogo</button>
+                </div>
+            </details>
+        </div>
+
+        <!-- Container Principal com as Seções do Jogo -->
+        <div class="container-principal">
+            <div class="secoes-info">
+
+                <!-- Painel de Status do Jogador (Lado Esquerdo) -->
+                <div class="info-painel">
+                    <h2>Status do Jogador</h2>
+                    <!-- IDs correspondem aos do seu main.ts -->
+                    <h3 id="nomePersonagem">Nome: ...</h3>
+                    <h3 id="vidaPersonagem">Vida: ...</h3>
+                    <h3 id="escudoPersonagem">Escudo: ...</h3>
+                </div>
+
+                <!-- Seção de Ações do Jogador (Central) -->
+                <div class="info-painel acoes-botoes">
+                    <h2>Ações do Jogador</h2>
+                    <button id="irLeste">Ir para o Leste</button>
+                    <button id="irOeste">Ir para o Oeste</button>
+                    <button id="minerar">Minerar</button>
+                    <button id="mostrarInventario">Mostrar Inventário</button>
+                </div>
+
+                <!-- Painel de Informações do Planeta (Lado Direito) -->
+                <div class="info-painel">
+                    <h2>Informações do Planeta</h2>
+                    <!-- IDs correspondem aos do seu main.ts -->
+                    <h3 id="planeta">Planeta: ...</h3>
+                    <h3 id="bioma">Bioma: ...</h3>
+                    <h3 id="recursos">Recursos: ...</h3>
+                </div>
             </div>
-            <div>
-                <h2>Salvar/Carregar</h2>
-                <button id="salvar">Salvar</button>
-                <button id="carregar">Carregar</button>
-                <button id="novoJogo">Novo Jogo</button>
+
+            <!-- Caixa de Saídas do Jogo (Log) -->
+            <div class="info-painel">
+                <h2>Saídas do Jogo</h2>
+                <pre id="saida"></pre>
             </div>
-            <h2>Saídas do Jogo:</h2>
-            <pre id="saida"></pre>
         </div>
         <script type="module" src="./Javascript/main.js"></script>
     </body>

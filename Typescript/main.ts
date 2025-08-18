@@ -1,107 +1,173 @@
-// import { UiLogger } from "./classes/uiLogger.ts";
-// import { Jogador } from "./classes/jogador.ts";
-// import { Planeta } from "./classes/planeta.ts";
-// import { Elementos, TipoAreas } from "./enums.ts";
-// import { AreaExploravel } from "./classes/areaExplorravel.ts";
+/*
+principal:
+    botoes para controlar a movimentação (irLeste, irOeste)
+        ativa o metodo irLeste ou irOeste do GM
+    botao para minerar
+        ativa o metodo minerar do GM
+    botao para abrir inventário
+        muda a tela para o inventario do jogador
+            visualizar os itens
+            remover itens especificos
+    salvar e sair
+        transformar game master
+        if (!gameMaster) {
+            saida.textContent += 'Game Master não inicializado.\n';
+            return;
+        } em um arquivo json
+    carregar jogo salvo
+        transformar um arquivo json para um game master
+        if (!gameMaster) {
+            saida.textContent += 'Game Master não inicializado.\n';
+            return;
+        } jogavel
+    novo jogo
+        tela de login para selecionar um jogador e um planeta
+            utilizar tabela hash nesse processo
 
-// const logger = new UiLogger();
-// let jogador: Jogador;
-// let planetaAtual: Planeta;
-// let historicoNavegacao: string[] = [];
+opcional:
+    criar gerador aleatorio de planetas
+    adicionar sistema de crafting
+    adicionar itens de combate (armas, escudos, curativos etc)
+    adicionar inimigos com chances de combate ao entrar nos biomas
+    criar zonas seguras em determinados biomas
+    desenvolver sistema de criação de base
+    implementar sistema de missões
+    criar NPCs aleatorios no mapa
+    criar eventos aleatórios no planeta
+    criar naves para alterar entre planetas
+    adicionar sistema de combate com naves
+*/
 
-// function iniciarNovoJogo(): void {
-//     logger.clear();
-//     planetaAtual = new Planeta("01", "Terra", [{
-//         id: "01a",
-//         tipo: TipoAreas.Planicie,
-//         porcentagemElementos: {
-//             [Elementos.Hidrogenio]: 75,
-//             [Elementos.Carbono]: 40,
-//             [Elementos.Oxigenio]: 55,
-//             [Elementos.Silicio]: 20
-//         }
-//     }]);
-//     jogador = new Jogador("Reali", planetaAtual);
-//     historicoNavegacao = [`Você chegou ao planeta ${planetaAtual.getNome()}`];
-//     logger.log("=== Novo jogo iniciado ===");
-//     mostrarInformacoesJogo();
-// }
+import { GameMaster } from "./classes/gameMaster.ts";
+import { carregarJogo, salvarJogo } from "./functions/chamados.ts";
 
-// function mover(direcao: "Leste" | "Oeste"): void {
-//     let novaLocalizacao = "";
-//     logger.log(`Você se moveu para ${direcao}.`);
-//     historicoNavegacao.push(`Vocé está em ${jogador.getAreaAtual().getArea()}.`);
-//     mostrarInformacoesJogo();
-// }
+let gameMaster: GameMaster | null = null;
+const saida = document.getElementById('saida') as HTMLPreElement;
+const arquivo = "gameMaster.json"
 
-// function minerar(): void {
-//     jogador.minerar();
-//     mostrarInformacoesJogo();
-// }
+// Seletores para os elementos do UI
+const nomePersonagem = document.getElementById('nomePersonagem') as HTMLHeadingElement;
+const vidaPersonagem = document.getElementById('vidaPersonagem') as HTMLHeadingElement;
+const escudoPersonagem = document.getElementById('escudoPersonagem') as HTMLHeadingElement;
+const planetaUI = document.getElementById('planeta') as HTMLHeadingElement;
+const biomaUI = document.getElementById('bioma') as HTMLHeadingElement;
+const recursosUI = document.getElementById('recursos') as HTMLHeadingElement;
 
-// function mostrarInformacoesJogo(): void {
-//     logger.log(`\n=== Informações Atuais ===`);
-//     logger.log(`Planeta: ${jogador.getPlanetaAtual().getNome()}`);
-//     logger.log(`Área: ${jogador.getAreaAtual().getArea()}`);
-//     logger.log(`Jogador: ${jogador.getNome()}`);
-//     logger.log(`Inventário:`);
-//     jogador.inventario.getItems().forEach((elemento, quantidade) => logger.log(`${elemento}: ${quantidade};`));
-//     logger.log("=============================\n");
-// }
+/**
+ * Atualiza todos os elementos da interface do usuário com os dados do GameMaster.
+ */
+function atualizarUI() {
+    if (!gameMaster) {
+        nomePersonagem.textContent = 'Nome: ';
+        vidaPersonagem.textContent = 'Vida: ';
+        escudoPersonagem.textContent = 'Escudo: ';
+        planetaUI.textContent = 'Planeta: ';
+        biomaUI.textContent = 'Bioma: ';
+        recursosUI.textContent = 'Recursos: ';
+        return;
+    }
 
-// function salvarJogo(): void {
-//     try {
-//         const estadoJogo = {
-//             jogador: jogador.salvarObjeto(),
-//             // planetaAtual: planetaAtual.salvarObjeto();
-//             historicoNavegacao: historicoNavegacao
-//         }
-//         localStorage.setItem("NoManSkySave", JSON.stringify(estadoJogo));
-//         logger.log("Jogo salvo com sucesso!");
-//     } catch (error) {
-//         logger.log("Erro ao salvar o jogo: " + error);
-//         console.error("Erro ao salvar o jogo:", error);
-//     };
-// }
+    const jogador = gameMaster.verJogador();
+    nomePersonagem.textContent = `Nome: ${jogador.nome}`;
+    vidaPersonagem.textContent = `Vida: ${jogador.vida}`;
+    escudoPersonagem.textContent = `Escudo: ${jogador.escudo}`;
 
-// function carregarJogo(): void {
-//     try {
-//         const saveData = localStorage.getItem("NoManSkySave");
-//         if (saveData) {
-//             const estadoJogo = JSON.parse(saveData);
-//             // jogador = Jogador.carregarObjeto(estadoJogo.jogador);
-//             // planetaAtual = Planeta.carregarObjeto(estadoJogo.planetaAtual);
-//             historicoNavegacao = estadoJogo.historicoNavegacao;
-//             logger.clear();
-//             logger.log("Jogo carregado com sucesso!");
-//             mostrarInformacoesJogo();
-//         } else {
-//             logger.log("Nenhum jogo salvo encontrado.");
-//         }
-//     } catch (error) {
-//         logger.log("Erro ao carregar o jogo: " + error);
-//         console.error("Erro ao carregar o jogo:", error);
-//     };
-// }
+    const planeta = gameMaster.verPlaneta();
+    planetaUI.textContent = `Planeta: ${planeta.nome}`;
+    biomaUI.textContent = `Bioma: ${gameMaster.verPosicaoAtual()}`;
 
-// function initGame(): void {
-//     const BotaoIrLeste = document.getElementById("irLeste") as HTMLButtonElement;
-//     const BotaoIrOeste = document.getElementById("irOeste") as HTMLButtonElement;
-//     const BotaoMinerar = document.getElementById("minerar") as HTMLButtonElement;
-//     const BotaoMostrarInfo = document.getElementById("mostrarInfo") as HTMLButtonElement;
-//     const BotaoSalvar = document.getElementById("salvar") as HTMLButtonElement;
-//     const BotaoCarregar = document.getElementById("carregar") as HTMLButtonElement;
-//     const BotaoNovoJogo = document.getElementById("novoJogo") as HTMLButtonElement;
+    // Obtém os recursos e formata para exibição
+    const recursosMapa = gameMaster.verPlaneta().recursosDoMundo();
+    const recursosArray = [...recursosMapa.values()]; // Converte o iterador para um array
+    const nomesRecursos = recursosArray.map(recurso => recurso.nome).join(', ');
+    recursosUI.textContent = `Recursos: ${nomesRecursos}`;
+}
 
-//     BotaoIrLeste.addEventListener("click", () => mover("Leste"));
-//     BotaoIrOeste.addEventListener("click", () => mover("Oeste"));
-//     BotaoMinerar.addEventListener("click", minerar);
-//     BotaoMostrarInfo.addEventListener("click", mostrarInformacoesJogo);
-//     BotaoSalvar.addEventListener("click", salvarJogo);
-//     BotaoCarregar.addEventListener("click", carregarJogo);
-//     BotaoNovoJogo.addEventListener("click", iniciarNovoJogo);
+async function main() {
+    const botaoLeste = document.getElementById('irLeste') as HTMLButtonElement;
+    const botaoOeste = document.getElementById('irOeste') as HTMLButtonElement;
+    const botaoMinerar = document.getElementById('minerar') as HTMLButtonElement;
+    const botaoInventario = document.getElementById('mostrarInventario') as HTMLButtonElement;
+    const botaoSalvar = document.getElementById('salvar') as HTMLButtonElement;
+    const botaoCarregar = document.getElementById('carregar') as HTMLButtonElement;
+    const botaoNovoJogo = document.getElementById('novoJogo') as HTMLButtonElement;
 
-//     iniciarNovoJogo();
-// }
+    botaoLeste.addEventListener('click', () => {
+        if (!gameMaster) {
+            saida.textContent += 'Game Master não inicializado.\n';
+            return;
+        }
+        saida.textContent += 'Movendo para o Leste...\n';
+        if (gameMaster.irLeste()) {
+            saida.textContent += 'Movimento realizado com sucesso!\n';
+            saida.textContent += `Nova posição do jogador: ${gameMaster.verPosicaoAtual()}\n`;
+            atualizarUI(); // Atualiza a UI após o movimento
+        } else {
+            saida.textContent += 'Movimento falhou.\n';
+        }
+    });
 
-// document.addEventListener("DOMContentLoaded", initGame);
+    botaoOeste.addEventListener('click', () => {
+        if (!gameMaster) {
+            saida.textContent += 'Game Master não inicializado.\n';
+            return;
+        }
+        saida.textContent += 'Movendo para o Oeste...\n';
+        if (gameMaster.irOeste()) {
+            saida.textContent += 'Movimento realizado com sucesso!\n';
+            saida.textContent += `Nova posição do jogador: ${gameMaster.verPosicaoAtual()}\n`;
+            atualizarUI(); // Atualiza a UI após o movimento
+        } else {
+            saida.textContent += 'Movimento falhou.\n';
+        }
+    });
+
+    botaoMinerar.addEventListener('click', () => {
+        if (!gameMaster) {
+            saida.textContent += 'Game Master não inicializado.\n';
+            return;
+        }
+        saida.textContent += 'Minerando...\n';
+        if (gameMaster.minerar()) {
+            saida.textContent += 'Mineração realizada com sucesso!\n';
+            atualizarUI(); // Atualiza a UI após a mineração
+        } else {
+            saida.textContent += 'Mineração falhou.\n';
+        }
+    });
+
+    botaoInventario.addEventListener('click', () => {
+        if (!gameMaster) {
+            saida.textContent += 'Game Master não inicializado.\n';
+            return;
+        }
+        saida.textContent += 'Abrindo inventário...\n';
+        gameMaster.abrirInventario().forEach((item, quantidade) => {
+            saida.textContent += `Item: ${item.nome} (x${quantidade})\n`;
+        });
+    });
+
+    botaoCarregar.addEventListener('click', () => {
+        carregarJogo(arquivo).then(dados => {
+            gameMaster = GameMaster.carregarObjeto(dados);
+            saida.textContent += 'Jogo carregado com sucesso!\n';
+            atualizarUI(); // Atualiza a UI após o carregamento
+        }).catch(error => {
+            saida.textContent += `Erro ao carregar o jogo: ${error}\n`;
+        });
+    });
+
+    botaoSalvar.addEventListener('click', () => {
+        if (!gameMaster) {
+            saida.textContent += 'Game Master não inicializado.\n';
+            return;
+        }
+        salvarJogo(gameMaster.salvarObjeto(), arquivo).then(() => {
+            saida.textContent += 'Jogo salvo com sucesso!\n';
+        }).catch(error => {
+            saida.textContent += `Erro ao salvar o jogo: ${error}\n`;
+        });
+    });
+}
+
+window.addEventListener('load', main);
