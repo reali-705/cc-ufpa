@@ -1,5 +1,5 @@
 import { Dicionario } from "../components/maps.ts";
-import { dataInventario, IDClass, Item } from "../contract/interfaces.ts";
+import { dataInventario, Item } from "../contract/interfaces.ts";
 
 export class Inventario {
     public capacidadeMaxima: number;
@@ -45,11 +45,7 @@ export class Inventario {
             throw new Error("Quantidade a ser removida é maior que a quantidade atual");
         }
         this.capacidadeAtual -= quantidade * item.tamanho;
-        if (quantidade === quantidadeAtual) {
-            this.slots.remover(item);
-        } else {
-            this.slots.inserir(item, quantidadeAtual - quantidade);
-        }
+        this.slots.inserir(item, quantidadeAtual - quantidade);
         this.verificarQuantidade();
     }
     public salvarObjeto(): dataInventario {

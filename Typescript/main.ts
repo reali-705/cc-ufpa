@@ -73,8 +73,9 @@ function atualizarUI() {
     escudoPersonagem.textContent = `Escudo: ${jogador.escudo}`;
 
     const planeta = gameMaster.verPlaneta();
-    planetaUI.textContent = `Planeta: ${planeta.nome}`;
-    biomaUI.textContent = `Bioma: ${gameMaster.verPosicaoAtual()}`;
+    const [planetaID, biomaID] = gameMaster.verPosicaoAtual().split(" - ");
+    planetaUI.textContent = planetaID;
+    biomaUI.textContent = biomaID;
 
     // Obtém os recursos e formata para exibição
     const recursosMapa = gameMaster.verPlaneta().recursosDoMundo();
@@ -167,6 +168,20 @@ async function main() {
         }).catch(error => {
             saida.textContent += `Erro ao salvar o jogo: ${error}\n`;
         });
+    });
+
+    botaoNovoJogo.addEventListener('click', () => {
+        if (gameMaster) {
+            salvarJogo(gameMaster.salvarObjeto(), arquivo).then(() => {
+                saida.textContent += 'Jogo salvo com sucesso!\n';
+            }).catch(error => {
+                saida.textContent += `Erro ao salvar o jogo: ${error}\n`;
+            });
+        }
+        saida.textContent += 'Carregando novo jogo...\n';
+        gameMaster = GameMaster.criarNovoObjeto('Heroi', 0);
+        atualizarUI();
+        saida.textContent += 'Novo Jogo Criado com Sucesso!\n';
     });
 }
 

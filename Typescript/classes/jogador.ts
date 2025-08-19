@@ -1,19 +1,17 @@
 import { Pilha } from "../components/staks.ts";
-import { dataJogador, IDClass, Item } from "../contract/interfaces.ts";
+import { dataJogador, Item } from "../contract/interfaces.ts";
 import { Inventario } from "./inventario.ts";
 
-export class Jogador implements IDClass {
-    public readonly id: string;
-    public nome: string;
+export class Jogador {
+    public readonly nome: string;
     public vida: number;
-    public vidaMaximo: number;
+    public readonly vidaMaximo: number;
     public escudo: number;
-    public escudoMaximo: number;
+    public readonly escudoMaximo: number;
     public historico: Pilha<string>;
     public inventario: Inventario;
     public moedas: number;
     constructor(data: dataJogador) {
-        this.id = data.id;
         this.nome = data.nome;
         this.vida = data.vida;
         this.vidaMaximo = data.vidaMaxima;
@@ -25,23 +23,16 @@ export class Jogador implements IDClass {
         this.moedas = data.moedas;
     }
     public atualizarPosicao(posicao: string): void {
-        const posicaoAnterior = this.verPosicaoAtual();
-        if (posicaoAnterior === "") {
-            this.historico.remover();
-        }
         this.historico.inserir(posicao);
     }
     public verPosicaoAtual(): string {
-        return this.historico.verTopo() || "";
+        return this.historico.verTopo()!;
     }
-    public minerar(itens: Item[]): void {
-        const item = itens[Math.floor(Math.random() * itens.length)];
-        const quantidade = Math.floor(Math.random() * (10 - item.raridade * 2 + 1)) + 1;
+    public minerar(item: Item, quantidade: number): void {
         this.inventario.adicionarItem(item, quantidade);
     }
     public salvarObjeto(): dataJogador {
         return {
-            id: this.id,
             nome: this.nome,
             vida: this.vida,
             vidaMaxima: this.vidaMaximo,
@@ -55,8 +46,26 @@ export class Jogador implements IDClass {
     public static carregarObjeto(data: dataJogador): Jogador {
         return new this(data);
     }
+    public static criarNovoObjeto(nomeJogador: string): dataJogador {
+        const vidaMaxima = 100;
+        const escudoMaximo = 50;
+        return {
+            nome: nomeJogador,
+            vida: vidaMaxima,
+            vidaMaxima: vidaMaxima,
+            escudo: escudoMaximo,
+            escudoMaximo: escudoMaximo,
+            historico: [],
+            inventario: {
+                capacidadeMaxima: 100,
+                capacidadeAtual: 0,
+                slots: []
+            },
+            moedas: 100
+        };
+    }
     public print(): void {
-        console.log(`Jogador: ${this.nome} (ID: ${this.id})`);
+        console.log(`Jogador: ${this.nome}`);
         console.log(`Vida: ${this.vida}/${this.vidaMaximo}`);
         console.log(`Escudo: ${this.escudo}/${this.escudoMaximo}`);
         console.log(`Moedas: ${this.moedas}`);

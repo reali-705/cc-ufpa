@@ -1,147 +1,68 @@
 {
-    "planeta": {
-        "id": "planeta_galileu",
-        "nome": "Galileu",
-        "biomas": [
-            {
-                "id": "bioma_01",
-                "nome": "Floresta Serena",
-                "recursos": [
-                    {
-                        "id": "recurso_01",
-                        "nome": "Minério de Ferro",
-                        "tamanho": 1,
-                        "raridade": 0
-                    },
-                    {
-                        "id": "recurso_02",
-                        "nome": "Carvão",
-                        "tamanho": 1,
-                        "raridade": 0
-                    },
-                    {
-                        "id": "recurso_03",
-                        "nome": "Minério de Cobre",
-                        "tamanho": 2,
-                        "raridade": 1
-                    }
-                ]
-            },
-            {
-                "id": "bioma_02",
-                "nome": "Planície Desolada",
-                "recursos": [
-                    {
-                        "id": "recurso_04",
-                        "nome": "Minério de Ouro",
-                        "tamanho": 3,
-                        "raridade": 2
-                    },
-                    {
-                        "id": "recurso_05",
-                        "nome": "Gema de Quartzo",
-                        "tamanho": 2,
-                        "raridade": 1
-                    }
-                ]
-            },
-            {
-                "id": "bioma_03",
-                "nome": "Pântano Nebuloso",
-                "recursos": [
-                    {
-                        "id": "recurso_06",
-                        "nome": "Gás Exótico",
-                        "tamanho": 5,
-                        "raridade": 5
-                    }
-                ]
-            },
-            {
-                "id": "bioma_04",
-                "nome": "Cordilheira de Cristal",
-                "recursos": [
-                    {
-                        "id": "recurso_07",
-                        "nome": "Cristal de Água",
-                        "tamanho": 1,
-                        "raridade": 0
-                    },
-                    {
-                        "id": "recurso_08",
-                        "nome": "Minério de Platina",
-                        "tamanho": 4,
-                        "raridade": 3
-                    }
-                ]
-            },
-            {
-                "id": "bioma_05",
-                "nome": "Deserto Ardente",
-                "recursos": []
-            }
-        ]
-    },
+    "planeta": "{\"id\":\"Planeta: Rochoso (0)\",\"tipo\":\"Rochoso\",\"biomas\":[\"{\\\"id\\\":\\\"Planeta: Rochoso (0) - Bioma: Deserto (0)\\\",\\\"tipo\\\":\\\"Deserto\\\",\\\"recursos\\\":[]}\",\"{\\\"id\\\":\\\"Planeta: Rochoso (0) - Bioma: Planície (1)\\\",\\\"tipo\\\":\\\"Planície\\\",\\\"recursos\\\":[{\\\"id\\\":\\\"11\\\",\\\"nome\\\":\\\"Planta Luminosa\\\",\\\"raridade\\\":2,\\\"tamanho\\\":1},{\\\"id\\\":\\\"6\\\",\\\"nome\\\":\\\"Gás Oxigênio\\\",\\\"raridade\\\":1,\\\"tamanho\\\":1},{\\\"id\\\":\\\"1\\\",\\\"nome\\\":\\\"Minério de Ferro\\\",\\\"raridade\\\":0,\\\"tamanho\\\":1}]}\",\"{\\\"id\\\":\\\"Planeta: Rochoso (0) - Bioma: Planície (2)\\\",\\\"tipo\\\":\\\"Planície\\\",\\\"recursos\\\":[{\\\"id\\\":\\\"13\\\",\\\"nome\\\":\\\"Célula de Vácuo\\\",\\\"raridade\\\":2,\\\"tamanho\\\":2},{\\\"id\\\":\\\"5\\\",\\\"nome\\\":\\\"Gás Hidrogênio\\\",\\\"raridade\\\":0,\\\"tamanho\\\":1}]}\",\"{\\\"id\\\":\\\"Planeta: Rochoso (0) - Bioma: Gélido (3)\\\",\\\"tipo\\\":\\\"Gélido\\\",\\\"recursos\\\":[{\\\"id\\\":\\\"13\\\",\\\"nome\\\":\\\"Célula de Vácuo\\\",\\\"raridade\\\":2,\\\"tamanho\\\":2},{\\\"id\\\":\\\"4\\\",\\\"nome\\\":\\\"Nióbio\\\",\\\"raridade\\\":3,\\\"tamanho\\\":2},{\\\"id\\\":\\\"15\\\",\\\"nome\\\":\\\"Água Purificada\\\",\\\"raridade\\\":0,\\\"tamanho\\\":1},{\\\"id\\\":\\\"3\\\",\\\"nome\\\":\\\"Titânio\\\",\\\"raridade\\\":1,\\\"tamanho\\\":2}]}\",\"{\\\"id\\\":\\\"Planeta: Rochoso (0) - Bioma: Planície (4)\\\",\\\"tipo\\\":\\\"Planície\\\",\\\"recursos\\\":[]}\"]}",
     "jogador": {
-        "id": "jogador_01",
-        "nome": "Viajante Solitário",
+        "nome": "Heroi",
         "vida": 100,
         "vidaMaxima": 100,
         "escudo": 50,
         "escudoMaximo": 50,
         "historico": [
-            "planeta_galileu - bioma_01",
-            "planeta_galileu - bioma_05",
-            "planeta_galileu - bioma_04"
+            "Planeta: Rochoso (0) - Bioma: Deserto (0)",
+            "Planeta: Rochoso (0) - Bioma: Planície (4)",
+            "Planeta: Rochoso (0) - Bioma: Gélido (3)",
+            "Planeta: Rochoso (0) - Bioma: Planície (4)",
+            "Planeta: Rochoso (0) - Bioma: Deserto (0)",
+            "Planeta: Rochoso (0) - Bioma: Planície (1)",
+            "Planeta: Rochoso (0) - Bioma: Deserto (0)",
+            "Planeta: Rochoso (0) - Bioma: Planície (4)",
+            "Planeta: Rochoso (0) - Bioma: Gélido (3)",
+            "Planeta: Rochoso (0) - Bioma: Planície (2)",
+            "Planeta: Rochoso (0) - Bioma: Planície (1)",
+            "Planeta: Rochoso (0) - Bioma: Deserto (0)",
+            "Planeta: Rochoso (0) - Bioma: Planície (1)",
+            "Planeta: Rochoso (0) - Bioma: Planície (2)",
+            "Planeta: Rochoso (0) - Bioma: Gélido (3)",
+            "Planeta: Rochoso (0) - Bioma: Planície (4)",
+            "Planeta: Rochoso (0) - Bioma: Deserto (0)",
+            "Planeta: Rochoso (0) - Bioma: Planície (1)",
+            "Planeta: Rochoso (0) - Bioma: Planície (2)",
+            "Planeta: Rochoso (0) - Bioma: Gélido (3)",
+            "Planeta: Rochoso (0) - Bioma: Planície (4)",
+            "Planeta: Rochoso (0) - Bioma: Gélido (3)",
+            "Planeta: Rochoso (0) - Bioma: Planície (4)",
+            "Planeta: Rochoso (0) - Bioma: Deserto (0)",
+            "Planeta: Rochoso (0) - Bioma: Planície (1)"
         ],
         "inventario": {
             "capacidadeMaxima": 100,
-            "capacidadeAtual": 65,
+            "capacidadeAtual": 7,
             "slots": [
                 [
                     {
-                        "id": "recurso_07",
-                        "nome": "Cristal de Água",
-                        "tamanho": 1,
-                        "raridade": 0
+                        "id": "11",
+                        "nome": "Planta Luminosa",
+                        "raridade": 2,
+                        "tamanho": 1
                     },
-                    7
+                    1
                 ],
                 [
                     {
-                        "id": "recurso_08",
-                        "nome": "Minério de Platina",
-                        "tamanho": 4,
-                        "raridade": 3
+                        "id": "13",
+                        "nome": "Célula de Vácuo",
+                        "raridade": 2,
+                        "tamanho": 2
                     },
-                    3
+                    1
                 ],
                 [
                     {
-                        "id": "recurso_04",
-                        "nome": "Minério de Ouro",
-                        "tamanho": 3,
-                        "raridade": 2
+                        "id": "15",
+                        "nome": "Água Purificada",
+                        "raridade": 0,
+                        "tamanho": 1
                     },
                     4
-                ],
-                [
-                    {
-                        "id": "recurso_03",
-                        "nome": "Minério de Cobre",
-                        "tamanho": 2,
-                        "raridade": 1
-                    },
-                    5
-                ],
-                [
-                    {
-                        "id": "recurso_02",
-                        "nome": "Carvão",
-                        "tamanho": 1,
-                        "raridade": 0
-                    },
-                    9
                 ]
             ]
         },

@@ -14,6 +14,18 @@ export class ListaVinculada<T> {
         this.tail = null;
         this.size = 0;
     }
+    isEmpty(): boolean {
+        return this.size === 0;
+    }
+    getHead(): Node<T> | null {
+        return this.head;
+    }
+    getSize(): number {
+        return this.size;
+    }
+    inserir(data: T): void {
+        this.inserirTail(data);
+    }
     inserirPrimeiroNode(node: Node<T>): boolean {
         if (!this.size) {
             this.head = node;
@@ -80,6 +92,28 @@ export class ListaVinculada<T> {
         this.head.prev = null;
         this.size--;
         return removeNode.data;
+    }
+    remover(data: T): boolean {
+        if (this.isEmpty()) return false;
+        let current = this.getHead();
+        while (current !== null) {
+            if (current.data === data) {
+                if (current.prev !== null) {
+                    current.prev.next = current.next;
+                } else {
+                    this.head = current.next; // Atualiza head se for o primeiro
+                }
+                if (current.next !== null) {
+                    current.next.prev = current.prev;
+                } else {
+                    this.tail = current.prev; // Atualiza tail se for o último
+                }
+                this.size--;
+                return true;
+            }
+            current = current.next;
+        }
+        return false;
     }
     removerTail(): T | undefined {
         if (!this.tail) return undefined;

@@ -1,31 +1,44 @@
 import { Conjunto } from "../components/set.ts";
-import { Raridade } from "../contract/enums.ts";
-import { dataBioma, Item, IDClass } from "../contract/interfaces.ts";
+import { Raridade, Tamanho, TipoBioma, TipoPlaneta } from "../contract/enums.ts";
+import { BIOMAS_ELEMENTOS, ELEMENTOS, PLANETAS_BIOMAS } from "../contract/gameData.ts";
+import { dataBioma, Item } from "../contract/interfaces.ts";
+import { sortearLista } from "../functions/utilidades.ts";
 
-export class Bioma implements IDClass {
+export class Bioma {
     public readonly id: string;
-    public readonly nome: string;
+    public readonly tipo: string;
     public readonly recursos: Conjunto<Item>;
     constructor(data: dataBioma) {
         this.id = data.id;
-        this.nome = data.nome;
+        this.tipo = data.tipo;
         this.recursos = new Conjunto<Item>();
         data.recursos.forEach((item: Item) => this.recursos.add(item));
     }
-    public salvarObjeto(): dataBioma {
-        const recursos = new Array<Item>();
-        this.recursos.toVetor().forEach(item => recursos.push(item));
-        return {
+    public salvarObjeto(): string {
+        return JSON.stringify({
             id: this.id,
-            nome: this.nome,
-            recursos: recursos,
-        };
+            tipo: this.tipo,
+            recursos: this.recursos.values()
+        });
     }
-    public static carregarObjeto(data: dataBioma): Bioma {
-        return new this(data);
+    public static carregarObjeto(data: string): Bioma {
+        return new this(JSON.parse(data));
+    }
+    public static criarNovoObjeto(indice: number, numeroElementos: number, tipoPlaneta: TipoPlaneta, planetaID: string): string {
+        const tipo = sortearLista(PLANETAS_BIOMAS[tipoPlaneta]);
+        const id = `${planetaID} - Bioma: ${tipo} (${indice})`;
+        const recursos: Item[] = [];
+        while (recursos.length < numeroElementos) {
+            const elemento = sortearLista(ELEMENTOS[sortearLista(BIOMAS_ELEMENTOS[tipo])]);
+            if (!recursos.some((item) => item.id === elemento.id)) {
+                recursos.push(elemento);
+            }
+            
+        }
+        return JSON.stringify({id, tipo, recursos});
     }
     public print(): void {
-        console.log(`------- Bioma: ${this.nome} (ID: ${this.id}) -------`);
+        console.log(`------- ${this.id} -------`);
         console.log("Recursos:");
         const recursos = this.recursos.toVetor().sort((itemA, itemB) => itemA.raridade - itemB.raridade);
         if (recursos.isEmpty()) {

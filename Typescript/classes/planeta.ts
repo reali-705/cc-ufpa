@@ -1,21 +1,22 @@
 import { Bioma } from "./bioma.ts";
 import { ListaVinculadaCircular } from "../components/circularLinkedList.ts";
 import { Conjunto } from "../components/set.ts";
-import { dataBioma, dataPlaneta, IDClass, Item } from "../contract/interfaces.ts";
-import { Raridade } from "../contract/enums.ts";
+import { dataPlaneta, Item } from "../contract/interfaces.ts";
+import { Raridade, Tamanho, TipoPlaneta } from "../contract/enums.ts";
+import { sortearEnum, sortearLista } from "../functions/utilidades.ts";
 
-export class Planeta implements IDClass {
+export class Planeta {
     public readonly id: string;
-    public readonly nome: string;
+    public readonly tipo: string;
     public readonly biomas: ListaVinculadaCircular<Bioma>;
     constructor(data: dataPlaneta) {
         this.id = data.id;
-        this.nome = data.nome;
+        this.tipo = data.tipo;
         this.biomas = new ListaVinculadaCircular<Bioma>();
-        data.biomas.forEach((areaData: dataBioma) => {
+        data.biomas.forEach((biomaData: string) => {
             try {
-                const area = Bioma.carregarObjeto(areaData);
-                this.biomas.inserir(area);
+                const bioma = Bioma.carregarObjeto(biomaData);
+                this.biomas.inserir(bioma);
             } catch (error) {
                 console.warn(error);
             }
@@ -26,20 +27,31 @@ export class Planeta implements IDClass {
         this.biomas.forEach((area) => recursos = recursos.union(area.recursos));
         return recursos;
     }
-    public salvarObjeto(): dataPlaneta {
-        const biomas = new Array<dataBioma>();
+    public salvarObjeto(): string {
+        const biomas = new Array<string>();
         this.biomas.forEach((area) => biomas.push(area.salvarObjeto()));
-        return {
+        return JSON.stringify({
             id: this.id,
-            nome: this.nome,
+            tipo: this.tipo,
             biomas: biomas
-        }
+        });
     }
-    public static carregarObjeto(data: dataPlaneta): Planeta {
-        return new this(data);
+    public static carregarObjeto(data: string): Planeta {
+        return new this(JSON.parse(data));
+    }
+    public static criarNovoObjeto(tamanho: Tamanho): string {
+        const tipo = sortearEnum(TipoPlaneta);
+        const id = `Planeta: ${tipo} (0)`;
+        const biomas = new Array<string>();
+        while (biomas.length < (tamanho * 5 + 5)) {
+            const numeroElementos = Math.floor(Math.random() * 6);
+            const bioma = Bioma.criarNovoObjeto(biomas.length, numeroElementos, tipo, id);
+            biomas.push(bioma);
+        }
+        return JSON.stringify({id, tipo, biomas});
     }
     public print(): void {
-        console.log(`\n======= Planeta: ${this.nome} (ID: ${this.id}) =======`);
+        console.log(`\n======= ${this.id} =======`);
             console.log(`Recursos do Mundo:`);
             const recursos = this.recursosDoMundo();
             if (recursos.isEmpty()) {

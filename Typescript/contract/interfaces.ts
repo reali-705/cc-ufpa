@@ -1,29 +1,22 @@
 import { Raridade } from "./enums.ts";
 
-export interface IDClass {
-    readonly id: string;
-    nome: string;
-    salvarObjeto(): any;
-    print(): void;
-}
-
 export interface Item {
-    readonly id: string;
+    id: string;
     nome: string;
     tamanho: number;
     raridade: Raridade;
 }
 
 export interface dataBioma {
-    readonly id: string;
-    nome: string;
+    id: string;
+    tipo: string;
     recursos: Item[];
 }
 
 export interface dataPlaneta {
-    readonly id: string;
-    nome: string;
-    biomas: dataBioma[];
+    id: string;
+    tipo: string;
+    biomas: string[];
 }
 
 export interface dataInventario {
@@ -32,19 +25,12 @@ export interface dataInventario {
     capacidadeAtual: number;
 }
 
-export interface dataNave {
-    readonly id: string;
-    nome: string;
-    posicao: string;
-}
-
 export interface dataJogador {
-    readonly id: string;
-    nome: string;
+    readonly nome: string;
     vida: number;
-    vidaMaxima: number;
+    readonly vidaMaxima: number;
     escudo: number;
-    escudoMaximo: number;
+    readonly escudoMaximo: number;
     historico: string[];
     inventario: dataInventario;
     moedas: number;
@@ -52,5 +38,5 @@ export interface dataJogador {
 
 export interface dataGameMaster {
     jogador: dataJogador;
-    planeta: dataPlaneta;
+    planeta: string;
 }
