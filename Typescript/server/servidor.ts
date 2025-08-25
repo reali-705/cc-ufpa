@@ -107,7 +107,7 @@ const servidor = http.createServer(async (requisicao, resposta) => {
                         const chave = `${nome}:${senha}`;
                         let nomeArquivo = registro.buscar(chave);
                         if (!nomeArquivo) {
-                            nomeArquivo = `${nome.toLowerCase().replace(/[^a-z0-9]/g, '')}.json`;
+                            nomeArquivo = `${Date.now()}-${nome.toLowerCase().replace(/[^a-z0-9]/g, '')}.json`;
                             registro.inserir(chave, nomeArquivo);
                             await salvarRegistro();
                         }
