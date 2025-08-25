@@ -23,6 +23,19 @@ export class Jogador extends Personagem {
     public minerar(item: Item, quantidade: number): void {
         this.inventario.adicionarItem(item, quantidade);
     }
+    public recuperarEscudo(): boolean {
+        if (Math.random() < 0.5) {
+            this.escudo += Math.min(Math.floor(this.escudoMaximo * 0.25), this.escudoMaximo);
+            return false;
+        }
+        this.escudo = this.escudoMaximo;
+        return true;
+    }
+    public calcularDano(): number {
+        const danoBase = 20;
+        const variacao = 1 + (Math.random() * 0.4 - 0.2);
+        return Math.floor(danoBase * variacao);
+    }
     public salvarObjeto(): dataJogador {
         return {
             nome: this.nome,

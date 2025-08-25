@@ -17,10 +17,10 @@ export class Personagem {
         if (this.escudo > 0) {
             const danoNoEscudo = Math.min(this.escudo, dano);
             this.escudo -= danoNoEscudo;
-            dano -= danoNoEscudo;
+            dano -= Math.floor(danoNoEscudo);
         }
         if (dano > 0) {
-            this.vida -= dano;
+            this.vida -= Math.floor(dano);
         }
         if (this.vida < 0) {
             this.vida = 0;

@@ -1,72 +1,90 @@
 import { GameMaster } from "../classes/gameMaster.ts";
-import { UI } from "../contract/interfaces.ts";
-import { salvarJogo } from "./chamados.ts";
 
-function errorGameMaster(saida: HTMLPreElement): boolean {
-    saida.textContent += 'Game Master nao inicializado.\n';
-    return false;
+// --- AÇÕES DE EXPLORAÇÃO ---
+
+export function mover(gameMaster: GameMaster | null, saida: HTMLPreElement, direcao: 'Leste' | 'Oeste'): string | null {
+    if (!gameMaster) return "Jogo não iniciado.";
+    const mensagemEncontro = direcao === 'Leste' ? gameMaster.irLeste() : gameMaster.irOeste();
+    saida.textContent += `Movendo para o ${direcao}...\n`;
+    if (gameMaster.getEstado() !== 'combate') { // Só mostra o resultado se não entrou em combate
+        saida.textContent += "Movimento realizado com sucesso.\n";
+    }
+    return mensagemEncontro;
 }
 
-export function atualizarUI(gameMaster: GameMaster | null): UI {
-    if (!gameMaster) {
-        return {
-            nome: 'Nome: ',
-            vida: 'Vida: ',
-            escudo: 'Escudo: ',
-            posicao: 'Planeta: ',
-            recursos: 'Recursos: ',
-        };
+export function minerar(gameMaster: GameMaster | null, saida: HTMLPreElement) {
+    if (!gameMaster) return;
+    if (gameMaster.minerar()) {
+        saida.textContent += 'Mineração realizada com sucesso!\n';
+    } else {
+        saida.textContent += 'Mineração falhou. Nenhum recurso encontrado.\n';
     }
-    const jogador = gameMaster.verJogador();
-    const planeta = gameMaster.verPlaneta();
-    const nomesRecursos = planeta.recursosDoMundo().values().map(recurso => recurso.nome).join('\n');
+}
+
+// --- AÇÕES DE COMBATE ---
+
+export function atacar(gameMaster: GameMaster | null, saida: HTMLPreElement) {
+    if (!gameMaster) return;
+    const mensagens = gameMaster.atacarInimigo(); // Corrigindo para o nome do seu método
+    mensagens.forEach(msg => { saida.textContent += msg + '\n'; });
+}
+
+export function fugir(gameMaster: GameMaster | null, saida: HTMLPreElement) {
+    if (!gameMaster) return;
+    saida.textContent += gameMaster.fugirCombate() + '\n';
+}
+
+export function recuperarEscudo(gameMaster: GameMaster | null, saida: HTMLPreElement) {
+    if (!gameMaster) return;
+    if (gameMaster.verJogador().recuperarEscudo()) {
+        // Retornou 'true' -> sucesso total
+        saida.textContent += "Sorte grande! Você focou sua energia e recuperou o escudo completamente!\n";
+    } else {
+        // Retornou 'false' -> sucesso parcial
+        saida.textContent += "Você tentou canalizar energia, recuperando 25% do escudo máximo.\n";
+    }
+}
+
+// --- FUNÇÕES DE ATUALIZAÇÃO DA UI ---
+
+export function getUIDadosJogador(gameMaster: GameMaster | null) {
+    const jogador = gameMaster?.verJogador();
+    if (!jogador) return { nome: 'Nome: ...', vida: 'Vida: ...', escudo: 'Escudo: ...', inventario: [] };
+    
+    const inventarioItens: string[] = [];
+    jogador.inventario.slots.forEach((item, quantidade) => {
+        inventarioItens.push(`${item.nome} (x${quantidade})`);
+    });
+
     return {
         nome: `Nome: ${jogador.nome}`,
         vida: `Vida: ${jogador.vida}/${jogador.vidaMaxima}`,
         escudo: `Escudo: ${jogador.escudo}/${jogador.escudoMaximo}`,
-        posicao: jogador.verPosicaoAtual(),
-        recursos: `Recursos:\n${nomesRecursos}`,
+        inventario: inventarioItens,
     };
 }
 
-export function irPara(gameMaster: GameMaster | null, saida: HTMLPreElement, sentido: string): boolean {
-    if (!gameMaster) {
-        return errorGameMaster(saida);
-    }
-    saida.textContent += `Movendo para o ${sentido}...\n`;
-    let resposta = sentido === 'Leste' ? gameMaster.irLeste() : gameMaster.irOeste();
-    if (resposta) {
-        saida.textContent += 'Movimento realizado com sucesso!\n';
-        saida.textContent += `Nova posicao do jogador: ${gameMaster.verPosicaoAtual()}\n`;
-        return true;
-    } else {
-        saida.textContent += 'Movimento falhou.\n';
-        return false;
-    }
+export function getUIDadosPlaneta(gameMaster: GameMaster | null) {
+    const planeta = gameMaster?.verPlaneta();
+    const biomaAtual = gameMaster?.procurarPosicao()?.data;
+    if (!planeta || !biomaAtual) return { nomePlaneta: 'Planeta: ...', recursosPlaneta: [], nomeBioma: 'Bioma: ...', recursosBioma: [] };
+
+    return {
+        nomePlaneta: `Planeta: ${planeta.tipo}`,
+        recursosPlaneta: planeta.recursosDoMundo().values().map(r => r.nome),
+        nomeBioma: `Bioma: ${biomaAtual.tipo}`,
+        recursosBioma: biomaAtual.recursos.values().map(r => r.nome),
+    };
 }
 
-export function minerar(gameMaster: GameMaster | null, saida: HTMLPreElement): boolean {
-    if (!gameMaster) {
-        return errorGameMaster(saida);
-    }
-    saida.textContent += 'Minerando...\n';
-    let resposta = gameMaster.minerar();
-    if (resposta) {
-        saida.textContent += 'Mineracao realizada com sucesso!\n';
-        return true;
-    } else {
-        saida.textContent += 'Mineracao falhou.\n';
-        return false;
-    }
-}
-
-export function inventario(gameMaster: GameMaster | null, saida: HTMLPreElement): boolean {
-    if (!gameMaster) {
-        return errorGameMaster(saida);
-    }
-    saida.textContent += 'Abrindo inventario...\n';
-    gameMaster.abrirInventario().forEach((item, quantidade) => {
-        saida.textContent += `Item: ${item.nome} (x${quantidade})\n`;
-    });
-    return true;
+export function getUIDadosInimigo(gameMaster: GameMaster | null) {
+    const inimigo = gameMaster?.inimigoAtual;
+    if (!inimigo) return { nome: 'Inimigo: --', vida: 'Vida: --', escudo: 'Escudo: --', poder: 'Poder: --' };
+    
+    return {
+        nome: `Inimigo: ${inimigo.nome}`,
+        vida: `Vida: ${inimigo.vida}/${inimigo.vidaMaxima}`,
+        escudo: `Escudo: ${inimigo.escudo}/${inimigo.escudoMaximo}`,
+        poder: `Poder: ${inimigo.poder}`,
+    };
 }

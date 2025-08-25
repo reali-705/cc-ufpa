@@ -28,12 +28,25 @@ export class Bioma {
         const tipo = sortearLista(PLANETAS_BIOMAS[tipoPlaneta]);
         const id = `${planetaID} - Bioma: ${tipo} (${indice})`;
         const recursos: Item[] = [];
+        // Pega a lista de tipos de elementos possíveis para este bioma
+        const elementosPossiveis = BIOMAS_ELEMENTOS[tipo as TipoBioma];
+        // Se, por algum motivo, não houver elementos definidos para este bioma, pare.
+        if (!elementosPossiveis || elementosPossiveis.length === 0) {
+            return JSON.stringify({id, tipo, recursos});
+        }
         while (recursos.length < numeroElementos) {
-            const elemento = sortearLista(ELEMENTOS[sortearLista(BIOMAS_ELEMENTOS[tipo])]);
-            if (!recursos.some((item) => item.id === elemento.id)) {
-                recursos.push(elemento);
+            // Sorteia um tipo de elemento da lista segura (ex: "Minerais")
+            const tipoElemento = sortearLista(elementosPossiveis);
+            // Pega a lista de itens concretos daquele tipo (ex: [{nome: "Ferro"}, ...])
+            const itensDoElemento = ELEMENTOS[tipoElemento];
+            // Se houver itens definidos para este tipo de elemento...
+            if (itensDoElemento && itensDoElemento.length > 0) {
+                const itemSorteado = sortearLista(itensDoElemento);
+                // Garante que o recurso ainda não foi adicionado
+                if (!recursos.some((item) => item.id === itemSorteado.id)) {
+                    recursos.push(itemSorteado);
+                }
             }
-            
         }
         return JSON.stringify({id, tipo, recursos});
     }

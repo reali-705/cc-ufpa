@@ -37,7 +37,7 @@ export enum TipoPlaneta {
 }
 
 export enum TipoInimigo {
-    Sentinela,
-    Fera,
-    FloraHostil
+    Sentinela = "Sentinela Corrompida",
+    Fera = "Fera das Rochas",
+    FloraHostil = "Flora Biomecânica"
 }

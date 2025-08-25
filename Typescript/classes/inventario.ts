@@ -33,6 +33,11 @@ export class Inventario {
             throw new Error("Capacidade máxima do inventário excedida");
         }
         this.capacidadeAtual += capacidadeOcupada;
+        if (this.slots.existeChave(item)) {
+            const quantidadeAtual = this.slots.obterValor(item) || 1;
+            this.slots.inserir(item, quantidadeAtual + quantidade);
+            return;
+        }
         this.slots.inserir(item, quantidade);
         this.verificarQuantidade();
     }

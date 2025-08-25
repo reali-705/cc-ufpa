@@ -1,4 +1,6 @@
-/* Estilos globais e de layout */
+/* ========================================= */
+/* ESTILOS GLOBAIS E VARIÁVEIS (ROOT)      */
+/* ========================================= */
 :root {
     --cor-fundo: #0a0a1a;
     --cor-painel: #1c1c36;
@@ -10,15 +12,12 @@
 }
 
 body {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Inter', sans-serif; /* Recomendo adicionar a fonte Inter no seu HTML ou CSS import */
     background-color: var(--cor-fundo);
     color: var(--cor-texto);
     margin: 0;
-    padding: 2rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 100vh;
+    padding: 1.5rem;
+    box-sizing: border-box;
 }
 
 h1 {
@@ -29,57 +28,115 @@ h1 {
     text-shadow: 0 0 10px var(--cor-destaque);
 }
 
-.container-principal {
-    width: 100%;
-    max-width: 1200px;
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    flex-grow: 1;
-}
-
-.painel-status {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-}
-
-.secoes-info {
-    display: flex;
-    justify-content: space-between;
-    gap: 1.5rem;
-}
-
-@media (max-width: 768px) {
-    .secoes-info {
-        flex-direction: column;
-    }
-}
-
-.info-painel {
-    background-color: var(--cor-painel);
-    border: 1px solid var(--cor-borda);
-    border-radius: 12px;
-    padding: 1.5rem;
-    box-shadow: var(--sombra-leve);
-    flex: 1;
-}
-
-.info-painel h2 {
+h2 {
     margin-top: 0;
     border-bottom: 2px solid var(--cor-destaque);
     padding-bottom: 0.5rem;
     margin-bottom: 1rem;
 }
 
-/* Estilos dos botões */
+/* ========================================= */
+/* LAYOUT DE TELAS E GRID                    */
+/* ========================================= */
+
+/* Controle das telas principais */
+.tela {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: calc(100vh - 3rem); /* Subtrai o padding do body */
+}
+
+/* Classe utilitária para esconder elementos */
+.hidden {
+    display: none !important;
+}
+
+/* Container do Grid de 3 Colunas */
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr; /* Coluna central 2x mais larga */
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 1400px;
+    align-items: stretch; /* Faz as colunas terem a mesma altura */
+}
+
+.coluna {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* ========================================= */
+/* COMPONENTES DA INTERFACE                  */
+/* ========================================= */
+
+/* Painéis de Informação */
+.info-painel {
+    background-color: var(--cor-painel);
+    border: 1px solid var(--cor-borda);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: var(--sombra-leve);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Painel que ocupa mais espaço verticalmente */
+.info-painel-grande {
+    flex-grow: 1;
+}
+
+/* Diário de Bordo e Logs de Combate */
+#saida-exploracao, #saida-combate {
+    background-color: #0d0d21;
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+    padding: 1rem;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    min-height: 250px;
+    overflow-y: auto;
+    flex-grow: 1; /* Faz o log preencher o espaço */
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+    max-height: 400px;
+}
+
+/* Listas (Recursos e Inventário) */
+.lista-recursos {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+.lista-recursos li {
+    background-color: #0d0d21;
+    padding: 0.5rem 0.75rem;
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+    border-left: 3px solid var(--cor-destaque);
+    font-size: 0.9rem;
+}
+
+/* Botões de Ação */
+.acoes-botoes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 1rem;
+    text-align: center;
+}
+
 .acoes-botoes button {
     background-color: #3b3b6b;
     color: var(--cor-texto);
     border: none;
     border-radius: 8px;
     padding: 0.8rem 1.2rem;
-    margin: 0.5rem;
     cursor: pointer;
     transition: background-color var(--transicao-suave), transform var(--transicao-suave);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -90,88 +147,9 @@ h1 {
     transform: translateY(-2px);
 }
 
-.acoes-botoes {
-    text-align: center;
-    margin-top: 1.5rem;
-}
-
-/* Estilo para a caixa de saída (log) */
-#saida {
-    background-color: #0d0d21;
-    border: 1px solid var(--cor-borda);
-    border-radius: 12px;
-    padding: 1rem;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-    min-height: 200px;
-    overflow-y: auto;
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-/* Estilo para o menu retrátil (details/summary) */
-.menu-container {
-    position: fixed;
-    top: 1rem;
-    right: 1rem;
-    z-index: 1000;
-}
-
-details.menu-suspenso {
-    background-color: var(--cor-painel);
-    border: 1px solid var(--cor-borda);
-    border-radius: 12px;
-    box-shadow: var(--sombra-leve);
-    width: fit-content;
-}
-
-details.menu-suspenso[open] {
-    padding: 1rem;
-}
-
-summary.menu-toggle {
-    list-style: none; /* Remove a seta padrão */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    padding: 0.5rem;
-    border-radius: 12px;
-    transition: background-color var(--transicao-suave);
-}
-
-summary.menu-toggle:hover {
-    background-color: #2a2a4b;
-}
-
-summary.menu-toggle::marker {
-    display: none;
-}
-
-summary.menu-toggle .icone {
-    font-size: 1.5rem;
-    color: var(--cor-texto);
-}
-
-.menu-opcoes {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    padding-top: 0.5rem;
-    border-top: 1px solid var(--cor-borda);
-    margin-top: 0.5rem;
-}
-
-/* Estilos para a nova tela de login */
-.login-screen {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background-color: var(--cor-fundo);
-    text-align: center;
-}
-
+/* ========================================= */
+/* TELA DE CADASTRO (LOGIN)                  */
+/* ========================================= */
 .login-panel {
     background-color: var(--cor-painel);
     border: 1px solid var(--cor-borda);
@@ -185,6 +163,7 @@ summary.menu-toggle .icone {
 .login-panel h2 {
     color: var(--cor-destaque);
     margin-bottom: 1.5rem;
+    text-align: center;
 }
 
 .login-panel input {
@@ -195,19 +174,31 @@ summary.menu-toggle .icone {
     border: 1px solid var(--cor-borda);
     border-radius: 8px;
     color: var(--cor-texto);
+    box-sizing: border-box; /* Garante que o padding não estoure a largura */
 }
 
 .login-panel button {
     width: 100%;
     padding: 0.75rem;
-    background-color: #3b3b6b;
-    color: var(--cor-texto);
+    background-color: var(--cor-destaque);
+    color: #fff;
     border: none;
     border-radius: 8px;
     cursor: pointer;
     transition: background-color var(--transicao-suave);
+    font-size: 1rem;
+    font-weight: bold;
 }
 
 .login-panel button:hover {
-    background-color: #4b4b8c;
+    background-color: #5a7de0;
+}
+
+/* ========================================= */
+/* RESPONSIVIDADE                            */
+/* ========================================= */
+@media (max-width: 992px) {
+    .grid-container {
+        grid-template-columns: 1fr; /* Colunas empilhadas */
+    }
 }

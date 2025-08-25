@@ -90,12 +90,12 @@ export const PLANETAS_BIOMAS: { [key in TipoPlaneta]: TipoBioma[] } = {
 
 export const INIMIGOS_DATA: { [key in TipoInimigo]: Omit<dataInimigo, 'vida' | 'escudo'> } = {
     [TipoInimigo.Sentinela]: {
-        nome: "Sentinela Corrompida", vidaMaxima: 75, escudoMaximo: 50, dano: 15, resistencia: 10
+        nome: TipoInimigo.Sentinela, vidaMaxima: 75, escudoMaximo: 50, dano: 15, resistencia: 10
     },
     [TipoInimigo.Fera]: {
-        nome: "Fera das Rochas", vidaMaxima: 150, escudoMaximo: 25, dano: 20, resistencia: 5
+        nome: TipoInimigo.Fera, vidaMaxima: 150, escudoMaximo: 25, dano: 20, resistencia: 5
     },
     [TipoInimigo.FloraHostil]: {
-        nome: "Flora Biomecânica", vidaMaxima: 75, escudoMaximo: 0, dano: 30, resistencia: 0
+        nome: TipoInimigo.FloraHostil, vidaMaxima: 75, escudoMaximo: 0, dano: 30, resistencia: 0
     }
 };

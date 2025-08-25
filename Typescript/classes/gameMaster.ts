@@ -41,7 +41,7 @@ export class GameMaster {
         }
         return tabela
     }
-    private procurarPosicao(): Node<Bioma> {
+    public procurarPosicao(): Node<Bioma> {
         return this.biomaTabela.obterValor(this.verPosicaoAtual())!;
     }
     private verificarEncontroDeInimigo(): string | null {
@@ -55,6 +55,9 @@ export class GameMaster {
     }
     public verPosicaoAtual(): string {
         return this.jogador.verPosicaoAtual();
+    }
+    public getEstado(): GameState {
+        return this.estadoAtual;
     }
     public verHistoricoPosicoes(): string[] {
         return this.jogador.historico.toArray();
@@ -111,7 +114,7 @@ export class GameMaster {
         }
 
         const mensagens: string[] = [];
-        const danoJogador = 15; // Dano base do jogador, pode ser melhorado
+        const danoJogador = this.jogador.calcularDano();
         
         // Turno do Jogador
         mensagens.push(`Você ataca ${this.inimigoAtual.nome}!`);

@@ -8,65 +8,107 @@
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
+        <main id="tela-cadastro" class="tela">
+            <div class="login-panel">
+                <h2>Novo Jogo ou Carregar</h2>
+                <input type="text" id="inputNomeJogador" placeholder="Nome do Jogador">
+                <input type="password" id="inputSenhaJogador" placeholder="Senha">
+                <button id="iniciarJogo">Iniciar Aventura</button>
+                <p id="mensagemLogin" style="color: #ff6a6a; margin-top: 1rem;"></p>
+            </div>
+        </main>
 
-    <!-- Tela de Login -->
-    <div id="login-screen" class="login-screen">
-        <div class="login-panel">
-            <h2>Novo Jogo ou Carregar</h2>
-            <input type="text" id="inputNomeJogador" placeholder="Nome do Jogador">
-            <input type="password" id="inputSenhaJogador" placeholder="Senha">
-            <button id="iniciarJogo">Iniciar Aventura</button>
-            <p id="mensagemLogin" style="color: #ff6a6a; margin-top: 1rem;"></p>
-        </div>
-    </div>
-
-    <!-- Container Principal do Jogo (Inicialmente escondido) -->
-    <div id="game-container" class="container-principal hidden">
-        <h1>No Man's Sky</h1>
-
-        <!-- Menu Retrátil (Salvar/Carregar) -->
-        <div class="menu-container">
-            <details class="menu-suspenso">
-                <summary class="menu-toggle" aria-label="Abrir Menu">
-                    <i class="fas fa-bars icone"></i>
-                </summary>
-                <div class="menu-opcoes">
-                    <button id="salvar">Salvar</button>
-                    <button id="carregar">Carregar</button>
-                    <button id="novoJogo">Novo Jogo</button>
+        <main id="tela-exploracao" class="tela hidden">
+            <h1>No Man's Sky</h1>
+            <div class="grid-container">
+                <div id="coluna-esquerda-exploracao" class="coluna">
+                    <div class="info-painel">
+                        <h2 id="planeta-nome">Planeta: ...</h2>
+                        <p>Recursos Globais:</p>
+                        <ul id="planeta-recursos-lista" class="lista-recursos">
+                            </ul>
+                    </div>
+                    <div class="info-painel">
+                        <h2 id="bioma-nome">Bioma Atual: ...</h2>
+                        <p>Recursos Locais:</p>
+                        <ul id="bioma-recursos-lista" class="lista-recursos">
+                            </ul>
+                    </div>
                 </div>
-            </details>
-        </div>
-
-        <!-- Seções do Jogo -->
-        <div class="secoes-info">
-            <div class="info-painel">
-                <h2>Status do Jogador</h2>
-                <h3 id="nomePersonagem">Nome: ...</h3>
-                <h3 id="vidaPersonagem">Vida: ...</h3>
-                <h3 id="escudoPersonagem">Escudo: ...</h3>
+                <div id="coluna-meio-exploracao" class="coluna">
+                    <div class="info-painel">
+                        <h2>Ações de Exploração</h2>
+                        <div class="acoes-botoes">
+                            <button id="irOeste">Ir para o Oeste</button>
+                            <button id="irLeste">Ir para o Leste</button>
+                            <button id="minerar">Minerar</button>
+                            <button id="botao-salvar">Salvar Jogo</button>
+                            <button id="botao-salvar-e-sair">Salvar e Sair</button>
+                        </div>
+                    </div>
+                    <div class="info-painel info-painel-grande">
+                        <h2>Diário de Bordo</h2>
+                        <pre id="saida-exploracao"></pre>
+                    </div>
+                </div>
+                <div id="coluna-direita-exploracao" class="coluna">
+                    <div class="info-painel">
+                        <h2>Status do Viajante</h2>
+                        <h3 id="nomePersonagem">Nome: ...</h3>
+                        <h3 id="vidaPersonagem">Vida: ...</h3>
+                        <h3 id="escudoPersonagem">Escudo: ...</h3>
+                    </div>
+                    <div class="info-painel info-painel-grande">
+                        <h2>Inventário</h2>
+                        <ul id="inventario-lista" class="lista-recursos">
+                            </ul>
+                    </div>
+                </div>
             </div>
-            <div class="info-painel">
-                <h2>Informações do Planeta</h2>
-                <h3 id="posicao">Planeta: ... - Bioma: ...</h3>
-                <h3 id="recursos">Recursos: ...</h3>
+        </main>
+
+        <main id="tela-combate" class="tela hidden">
+            <h1>-- ALERTA DE COMBATE --</h1>
+            <div class="grid-container">
+                <div id="coluna-esquerda-combate" class="coluna">
+                    <div class="info-painel">
+                        <h2>Ameaça Detectada</h2>
+                        <h3 id="inimigo-nome">Inimigo: ...</h3>
+                        <h3 id="inimigo-vida">Vida: ...</h3>
+                        <h3 id="inimigo-escudo">Escudo: ...</h3>
+                        <h3 id="inimigo-poder">Poder: ...</h3>
+                    </div>
+                </div>
+                <div id="coluna-meio-combate" class="coluna">
+                    <div class="info-painel">
+                        <h2>Ações de Combate</h2>
+                        <div class="acoes-botoes">
+                            <button id="botao-atacar">Atacar</button>
+                            <button id="botao-fugir">Fugir</button>
+                            <button id="botao-recuperar">Recuperar Escudo</button>
+                        </div>
+                    </div>
+                    <div class="info-painel info-painel-grande">
+                        <h2>Registro de Combate</h2>
+                        <pre id="saida-combate"></pre>
+                    </div>
+                </div>
+                <div id="coluna-direita-combate" class="coluna">
+                    <div class="info-painel">
+                        <h2>Status do Viajante</h2>
+                        <h3 id="nomePersonagem-combate">Nome: ...</h3>
+                        <h3 id="vidaPersonagem-combate">Vida: ...</h3>
+                        <h3 id="escudoPersonagem-combate">Escudo: ...</h3>
+                    </div>
+                    <div class="info-painel info-painel-grande">
+                        <h2>Inventário</h2>
+                        <ul id="inventario-lista-combate" class="lista-recursos">
+                            </ul>
+                    </div>
+                </div>
             </div>
-        </div>
-
-        <div class="info-painel acoes-botoes">
-            <h2>Ações do Jogador</h2>
-            <button id="irOeste">Ir para o Oeste</button>
-            <button id="irLeste">Ir para o Leste</button>
-            <button id="minerar">Minerar</button>
-            <button id="mostrarInventario">Mostrar Inventário</button>
-        </div>
-
-        <div class="info-painel">
-            <h2>Saídas do Jogo</h2>
-            <pre id="saida"></pre>
-        </div>
-    </div>
-
-    <script type="module" src="./Javascript/main.js"></script>
-</body>
+        </main>
+    
+        <script type="module" src="./Javascript/main.js"></script>
+    </body>
 </html>
