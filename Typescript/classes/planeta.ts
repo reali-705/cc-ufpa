@@ -4,11 +4,14 @@ import { Conjunto } from "../components/set.ts";
 import { dataPlaneta, Item } from "../contract/interfaces.ts";
 import { Raridade, Tamanho, TipoPlaneta } from "../contract/enums.ts";
 import { sortearEnum, sortearLista } from "../functions/utilidades.ts";
+import { Inimigo } from "./inimigo.ts";
+import { Heap } from "../components/heap.ts";
 
 export class Planeta {
     public readonly id: string;
     public readonly tipo: string;
     public readonly biomas: ListaVinculadaCircular<Bioma>;
+    public inimigos: Heap<Inimigo>;
     constructor(data: dataPlaneta) {
         this.id = data.id;
         this.tipo = data.tipo;
@@ -21,6 +24,8 @@ export class Planeta {
                 console.warn(error);
             }
         });
+        this.inimigos = new Heap<Inimigo>((a, b) => a.poder - b.poder);
+        data.inimigos.forEach((inimigoData: string) => this.inimigos.inserir(Inimigo.carregarObjeto(inimigoData)));
     }
     public recursosDoMundo(): Conjunto<Item> {
         let recursos = new Conjunto<Item>();
@@ -33,22 +38,26 @@ export class Planeta {
         return JSON.stringify({
             id: this.id,
             tipo: this.tipo,
-            biomas: biomas
+            biomas: biomas,
+            inimigos: this.inimigos.toArray().map((inimigo) => inimigo.salvarObjeto()),
         });
     }
     public static carregarObjeto(data: string): Planeta {
-        return new this(JSON.parse(data));
+        return new this(JSON.parse(data) as dataPlaneta);
     }
     public static criarNovoObjeto(tamanho: Tamanho): string {
         const tipo = sortearEnum(TipoPlaneta);
         const id = `Planeta: ${tipo} (0)`;
         const biomas = new Array<string>();
+        const inimigos = new Array<string>();
+
         while (biomas.length < (tamanho * 5 + 5)) {
             const numeroElementos = Math.floor(Math.random() * 6);
             const bioma = Bioma.criarNovoObjeto(biomas.length, numeroElementos, tipo, id);
             biomas.push(bioma);
+            inimigos.push(Inimigo.criarNovoObjeto())
         }
-        return JSON.stringify({id, tipo, biomas});
+        return JSON.stringify({id, tipo, biomas, inimigos});
     }
     public print(): void {
         console.log(`\n======= ${this.id} =======`);

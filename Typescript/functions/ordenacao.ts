@@ -90,3 +90,37 @@ export function quickSort<T>(lista: T[], funcaoDeComparacao: (a: T, b: T) => num
     }
     return [...quickSort(menores, funcaoDeComparacao), pivo, ...quickSort(maiores, funcaoDeComparacao)];
 }
+
+function heapify<T>(array: T[], index: number, heapSize: number, compareFunction: (a: T, b: T) => number) {
+    let largest = index;
+    const left = 2 * index + 1;
+    const right = 2 * index + 2;
+    if (left < heapSize && compareFunction(array[left], array[largest]) > 0) {
+        largest = left;
+    }
+    if (right < heapSize && compareFunction(array[right], array[largest]) > 0) {
+        largest = right;
+    }
+    if (largest !== index) {
+        [array[index], array[largest]] = [array[largest], array[index]];
+        heapify(array, largest, heapSize, compareFunction);
+    }
+}
+
+function buildMaxHeap<T>(array: T[], compareFunction: (a: T, b: T) => number) {
+    const heapSize = array.length;
+    for (let i = Math.floor(heapSize / 2) - 1; i >= 0; i--) {
+        heapify(array, i, heapSize, compareFunction);
+    }
+}
+
+export default function heapSort<T>(array: T[], compareFunction: (a: T, b: T) => number): T[] {
+    let heapSize = array.length;
+    buildMaxHeap(array, compareFunction);
+    while (heapSize > 1) {
+        heapSize--;
+        [array[0], array[heapSize]] = [array[heapSize], array[0]];
+        heapify(array, 0, heapSize, compareFunction);
+    }
+    return array;
+}

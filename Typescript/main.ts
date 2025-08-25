@@ -1,90 +1,30 @@
-/*
-principal:
-    botoes para controlar a movimentação (irLeste, irOeste)
-        ativa o metodo irLeste ou irOeste do GM
-    botao para minerar
-        ativa o metodo minerar do GM
-    botao para abrir inventário
-        muda a tela para o inventario do jogador
-            visualizar os itens
-            remover itens especificos
-    salvar e sair
-        transformar game master
-        if (!gameMaster) {
-            saida.textContent += 'Game Master não inicializado.\n';
-            return;
-        } em um arquivo json
-    carregar jogo salvo
-        transformar um arquivo json para um game master
-        if (!gameMaster) {
-            saida.textContent += 'Game Master não inicializado.\n';
-            return;
-        } jogavel
-    novo jogo
-        tela de login para selecionar um jogador e um planeta
-            utilizar tabela hash nesse processo
-
-opcional:
-    criar gerador aleatorio de planetas
-    adicionar sistema de crafting
-    adicionar itens de combate (armas, escudos, curativos etc)
-    adicionar inimigos com chances de combate ao entrar nos biomas
-    criar zonas seguras em determinados biomas
-    desenvolver sistema de criação de base
-    implementar sistema de missões
-    criar NPCs aleatorios no mapa
-    criar eventos aleatórios no planeta
-    criar naves para alterar entre planetas
-    adicionar sistema de combate com naves
-*/
-
 import { GameMaster } from "./classes/gameMaster.ts";
+import { Tamanho } from "./contract/enums.ts";
+import { atualizarUI, inventario, irPara, minerar } from "./functions/acoes_html.ts";
 import { carregarJogo, salvarJogo } from "./functions/chamados.ts";
 
-let gameMaster: GameMaster | null = null;
-const saida = document.getElementById('saida') as HTMLPreElement;
-const arquivo = "gameMaster.json"
+const tamanhoPlaneta = 0 as Tamanho;
 
-// Seletores para os elementos do UI
-const nomePersonagem = document.getElementById('nomePersonagem') as HTMLHeadingElement;
-const vidaPersonagem = document.getElementById('vidaPersonagem') as HTMLHeadingElement;
-const escudoPersonagem = document.getElementById('escudoPersonagem') as HTMLHeadingElement;
-const planetaUI = document.getElementById('planeta') as HTMLHeadingElement;
-const biomaUI = document.getElementById('bioma') as HTMLHeadingElement;
-const recursosUI = document.getElementById('recursos') as HTMLHeadingElement;
+const nome = document.getElementById('nomePersonagem') as HTMLHeadingElement;
+const vida = document.getElementById('vidaPersonagem') as HTMLHeadingElement;
+const escudo = document.getElementById('escudoPersonagem') as HTMLHeadingElement;
+const posicao = document.getElementById('posicao') as HTMLHeadingElement;
+const recursos = document.getElementById('recursos') as HTMLHeadingElement;
 
-/**
- * Atualiza todos os elementos da interface do usuário com os dados do GameMaster.
- */
-function atualizarUI() {
-    if (!gameMaster) {
-        nomePersonagem.textContent = 'Nome: ';
-        vidaPersonagem.textContent = 'Vida: ';
-        escudoPersonagem.textContent = 'Escudo: ';
-        planetaUI.textContent = 'Planeta: ';
-        biomaUI.textContent = 'Bioma: ';
-        recursosUI.textContent = 'Recursos: ';
-        return;
-    }
-
-    const jogador = gameMaster.verJogador();
-    nomePersonagem.textContent = `Nome: ${jogador.nome}`;
-    vidaPersonagem.textContent = `Vida: ${jogador.vida}`;
-    escudoPersonagem.textContent = `Escudo: ${jogador.escudo}`;
-
-    const planeta = gameMaster.verPlaneta();
-    const [planetaID, biomaID] = gameMaster.verPosicaoAtual().split(" - ");
-    planetaUI.textContent = planetaID;
-    biomaUI.textContent = biomaID;
-
-    // Obtém os recursos e formata para exibição
-    const recursosMapa = gameMaster.verPlaneta().recursosDoMundo();
-    const recursosArray = [...recursosMapa.values()]; // Converte o iterador para um array
-    const nomesRecursos = recursosArray.map(recurso => recurso.nome).join(', ');
-    recursosUI.textContent = `Recursos: ${nomesRecursos}`;
+function renderizarUI(gameMaster: GameMaster | null) {
+    const ui = atualizarUI(gameMaster);
+    nome.textContent = ui.nome;
+    vida.textContent = ui.vida;
+    escudo.textContent = ui.escudo;
+    posicao.textContent = ui.posicao;
+    recursos.textContent = ui.recursos;
 }
 
 async function main() {
+    let gameMaster: GameMaster | null = null;
+    const saida = document.getElementById('saida') as HTMLPreElement;
+    const nomeJogador = (document.getElementById('inputNomeJogador') as HTMLInputElement);
+    const senhaJogador = (document.getElementById('inputSenhaJogador') as HTMLInputElement);
     const botaoLeste = document.getElementById('irLeste') as HTMLButtonElement;
     const botaoOeste = document.getElementById('irOeste') as HTMLButtonElement;
     const botaoMinerar = document.getElementById('minerar') as HTMLButtonElement;
@@ -92,97 +32,77 @@ async function main() {
     const botaoSalvar = document.getElementById('salvar') as HTMLButtonElement;
     const botaoCarregar = document.getElementById('carregar') as HTMLButtonElement;
     const botaoNovoJogo = document.getElementById('novoJogo') as HTMLButtonElement;
+    const botaoIniciar = document.getElementById('iniciarJogo') as HTMLButtonElement;
+    const loginScreen = document.getElementById('login-screen') as HTMLDivElement;
+    const gameContainer = document.getElementById('game-container') as HTMLDivElement;
 
-    botaoLeste.addEventListener('click', () => {
-        if (!gameMaster) {
-            saida.textContent += 'Game Master não inicializado.\n';
+    botaoIniciar.addEventListener('click', async () => {
+        const nome = nomeJogador.value.trim();
+        const senha = senhaJogador.value;
+
+        if (!nome || !senha) {
+            document.getElementById('mensagemLogin')!.textContent = 'Por favor, insira um nome de jogador e uma senha.\n';
             return;
         }
-        saida.textContent += 'Movendo para o Leste...\n';
-        if (gameMaster.irLeste()) {
-            saida.textContent += 'Movimento realizado com sucesso!\n';
-            saida.textContent += `Nova posição do jogador: ${gameMaster.verPosicaoAtual()}\n`;
-            atualizarUI(); // Atualiza a UI após o movimento
-        } else {
-            saida.textContent += 'Movimento falhou.\n';
-        }
-    });
 
-    botaoOeste.addEventListener('click', () => {
-        if (!gameMaster) {
-            saida.textContent += 'Game Master não inicializado.\n';
-            return;
-        }
-        saida.textContent += 'Movendo para o Oeste...\n';
-        if (gameMaster.irOeste()) {
-            saida.textContent += 'Movimento realizado com sucesso!\n';
-            saida.textContent += `Nova posição do jogador: ${gameMaster.verPosicaoAtual()}\n`;
-            atualizarUI(); // Atualiza a UI após o movimento
-        } else {
-            saida.textContent += 'Movimento falhou.\n';
-        }
-    });
+        loginScreen.classList.add('hidden');
+        gameContainer.classList.remove('hidden');
+        saida.textContent = `Bem-vindo, ${nome}!\nTentando carregar o jogo...\n`;
 
-    botaoMinerar.addEventListener('click', () => {
-        if (!gameMaster) {
-            saida.textContent += 'Game Master não inicializado.\n';
-            return;
-        }
-        saida.textContent += 'Minerando...\n';
-        if (gameMaster.minerar()) {
-            saida.textContent += 'Mineração realizada com sucesso!\n';
-            atualizarUI(); // Atualiza a UI após a mineração
-        } else {
-            saida.textContent += 'Mineração falhou.\n';
-        }
-    });
-
-    botaoInventario.addEventListener('click', () => {
-        if (!gameMaster) {
-            saida.textContent += 'Game Master não inicializado.\n';
-            return;
-        }
-        saida.textContent += 'Abrindo inventário...\n';
-        gameMaster.abrirInventario().forEach((item, quantidade) => {
-            saida.textContent += `Item: ${item.nome} (x${quantidade})\n`;
-        });
-    });
-
-    botaoCarregar.addEventListener('click', () => {
-        carregarJogo(arquivo).then(dados => {
+        try {
+            const dados = await carregarJogo(nome, senha);
             gameMaster = GameMaster.carregarObjeto(dados);
             saida.textContent += 'Jogo carregado com sucesso!\n';
-            atualizarUI(); // Atualiza a UI após o carregamento
-        }).catch(error => {
-            saida.textContent += `Erro ao carregar o jogo: ${error}\n`;
-        });
-    });
-
+        } catch (error) {
+            const mensagemErro = (error instanceof Error) ? error.message : String(error);
+            saida.textContent += `Erro ao carregar o jogo: ${mensagemErro}\nCriando um novo jogo...\n`;
+            gameMaster = GameMaster.criarNovoObjeto(nome, tamanhoPlaneta);
+            saida.textContent += 'Jogo criado com sucesso!\n';
+        } finally {
+            renderizarUI(gameMaster);
+        }
+    })
+    
     botaoSalvar.addEventListener('click', () => {
         if (!gameMaster) {
-            saida.textContent += 'Game Master não inicializado.\n';
+            saida.textContent += 'Nao ha jogo para salvar.\n';
             return;
         }
-        salvarJogo(gameMaster.salvarObjeto(), arquivo).then(() => {
+        const nome = nomeJogador.value.trim();
+        const senha = senhaJogador.value;
+
+        if (!nome || !senha) {
+            saida.textContent += 'Por favor, insira um nome de jogador e uma senha.\n';
+            return;
+        };
+
+        saida.textContent += 'Salvando jogo...\n';
+        salvarJogo(nome, senha, gameMaster.salvarObjeto()).then(() => {
             saida.textContent += 'Jogo salvo com sucesso!\n';
         }).catch(error => {
             saida.textContent += `Erro ao salvar o jogo: ${error}\n`;
-        });
+        })
+    });
+    
+    botaoLeste.addEventListener('click', () => {
+        if (irPara(gameMaster, saida, 'Leste')) {
+            renderizarUI(gameMaster);
+        };
     });
 
-    botaoNovoJogo.addEventListener('click', () => {
-        if (gameMaster) {
-            salvarJogo(gameMaster.salvarObjeto(), arquivo).then(() => {
-                saida.textContent += 'Jogo salvo com sucesso!\n';
-            }).catch(error => {
-                saida.textContent += `Erro ao salvar o jogo: ${error}\n`;
-            });
-        }
-        saida.textContent += 'Carregando novo jogo...\n';
-        gameMaster = GameMaster.criarNovoObjeto('Heroi', 0);
-        atualizarUI();
-        saida.textContent += 'Novo Jogo Criado com Sucesso!\n';
+    botaoOeste.addEventListener('click', () => {
+        if (irPara(gameMaster, saida, 'Oeste')) {
+            renderizarUI(gameMaster);
+        };
     });
+
+    botaoMinerar.addEventListener('click', () => {
+        if (minerar(gameMaster, saida)) {
+            renderizarUI(gameMaster);
+        }
+    });
+
+    botaoInventario.addEventListener('click', () => inventario(gameMaster, saida));
 }
 
 window.addEventListener('load', main);

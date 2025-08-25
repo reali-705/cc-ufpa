@@ -7,6 +7,7 @@
   "scripts": {
     "bl": "tsc && mkdir -p Javascript/mappings && find Javascript -name '*.js.map' -exec mv {} Javascript/mappings \\;",
     "b": "tsc && ( if not exist Javascript\\mappings\\ mkdir Javascript\\mappings ) && for /r Javascript %f in (*.js.map) do move \"%f\" Javascript\\mappings\\",
+    "start": "node Javascript\\server\\servidor.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Ale-Reali-705",

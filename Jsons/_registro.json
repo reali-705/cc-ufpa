@@ -1,0 +1,14 @@
+[
+    [
+        "ale:reali",
+        "ale.json"
+    ],
+    [
+        "gameMaster:testando",
+        "gamemaster.json"
+    ],
+    [
+        "ale:123",
+        "ale.json"
+    ]
+]

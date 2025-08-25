@@ -160,3 +160,54 @@ summary.menu-toggle .icone {
     border-top: 1px solid var(--cor-borda);
     margin-top: 0.5rem;
 }
+
+/* Estilos para a nova tela de login */
+.login-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: var(--cor-fundo);
+    text-align: center;
+}
+
+.login-panel {
+    background-color: var(--cor-painel);
+    border: 1px solid var(--cor-borda);
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: var(--sombra-leve);
+    width: 90%;
+    max-width: 400px;
+}
+
+.login-panel h2 {
+    color: var(--cor-destaque);
+    margin-bottom: 1.5rem;
+}
+
+.login-panel input {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    background-color: #2a2a4b;
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+    color: var(--cor-texto);
+}
+
+.login-panel button {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #3b3b6b;
+    color: var(--cor-texto);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color var(--transicao-suave);
+}
+
+.login-panel button:hover {
+    background-color: #4b4b8c;
+}

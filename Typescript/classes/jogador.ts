@@ -1,22 +1,14 @@
 import { Pilha } from "../components/staks.ts";
 import { dataJogador, Item } from "../contract/interfaces.ts";
 import { Inventario } from "./inventario.ts";
+import { Personagem } from "./personagem.ts";
 
-export class Jogador {
-    public readonly nome: string;
-    public vida: number;
-    public readonly vidaMaximo: number;
-    public escudo: number;
-    public readonly escudoMaximo: number;
+export class Jogador extends Personagem {
     public historico: Pilha<string>;
     public inventario: Inventario;
     public moedas: number;
     constructor(data: dataJogador) {
-        this.nome = data.nome;
-        this.vida = data.vida;
-        this.vidaMaximo = data.vidaMaxima;
-        this.escudo = data.escudo;
-        this.escudoMaximo = data.escudoMaximo;
+        super(data);
         this.historico = new Pilha<string>();
         data.historico.forEach(posicao => this.historico.inserir(posicao));
         this.inventario = Inventario.carregarObjeto(data.inventario);
@@ -35,7 +27,7 @@ export class Jogador {
         return {
             nome: this.nome,
             vida: this.vida,
-            vidaMaxima: this.vidaMaximo,
+            vidaMaxima: this.vidaMaxima,
             escudo: this.escudo,
             escudoMaximo: this.escudoMaximo,
             historico: this.historico.toArray().filter(item => item !== null),
@@ -66,7 +58,7 @@ export class Jogador {
     }
     public print(): void {
         console.log(`Jogador: ${this.nome}`);
-        console.log(`Vida: ${this.vida}/${this.vidaMaximo}`);
+        console.log(`Vida: ${this.vida}/${this.vidaMaxima}`);
         console.log(`Escudo: ${this.escudo}/${this.escudoMaximo}`);
         console.log(`Moedas: ${this.moedas}`);
         console.log(`Posição Atual: ${this.verPosicaoAtual()}`);

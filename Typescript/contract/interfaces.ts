@@ -17,6 +17,7 @@ export interface dataPlaneta {
     id: string;
     tipo: string;
     biomas: string[];
+    inimigos: string[];
 }
 
 export interface dataInventario {
@@ -25,18 +26,34 @@ export interface dataInventario {
     capacidadeAtual: number;
 }
 
-export interface dataJogador {
-    readonly nome: string;
-    vida: number;
-    readonly vidaMaxima: number;
-    escudo: number;
-    readonly escudoMaximo: number;
+export interface dataPersonagem {
+    nome: string;
+    vida: number | undefined;
+    vidaMaxima: number;
+    escudo: number | undefined;
+    escudoMaximo: number;    
+}
+
+export interface dataJogador extends dataPersonagem {
     historico: string[];
     inventario: dataInventario;
     moedas: number;
 }
 
+export interface dataInimigo extends dataPersonagem {
+    dano: number;
+    resistencia: number;
+}
+
 export interface dataGameMaster {
     jogador: dataJogador;
     planeta: string;
+}
+
+export interface UI {
+    nome: string;
+    vida: string;
+    escudo: string;
+    posicao: string;
+    recursos: string;
 }

@@ -1,4 +1,4 @@
-import { ListaVinculada } from "./linkedList";
+import { ListaVinculada } from "./linkedList.ts";
 
 export class TabelaHashEncadeamentoSeparado<X , T> {
     private codigoHash: (chave: X) => number;
@@ -18,20 +18,29 @@ export class TabelaHashEncadeamentoSeparado<X , T> {
         return hash % 1013;
     }
     public inserir(chave: X, valor: T): boolean {
-        if (chave !== null && valor !== null) {
-            const hash = this.codigoHash(chave);
-            if (!this.tabela[hash]) {
-                this.tabela[hash] = new ListaVinculada<{ chave: X, valor: T }>();
-            }
-            this.tabela[hash].inserir({ chave, valor });
-            return true;
+        if (!chave || !valor) {
+            return false;
         }
-        return false;
+        const hash = this.codigoHash(chave);
+        if (!this.tabela[hash]) {
+            this.tabela[hash] = new ListaVinculada<{ chave: X, valor: T }>();
+        }
+        const listaLigada = this.tabela[hash];
+        let current = listaLigada.getHead();
+        while (current !== null) {
+            if (current.data.chave === chave) {
+                current.data.valor = valor;
+                return true;
+            }
+            current = current.next;
+        }
+        listaLigada.inserir({ chave, valor });
+        return true;
     }
     public buscar(chave: X): T | undefined {
         const hash = this.codigoHash(chave);
         const listaLigada = this.tabela[hash];
-        if (listaLigada !== null && !listaLigada.isEmpty()) {
+        if (listaLigada && !listaLigada.isEmpty()) {
             let current = listaLigada.getHead();
             while (current !== null) {
                 if (current.data.chave === chave) {

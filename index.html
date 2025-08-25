@@ -8,6 +8,20 @@
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
+
+    <!-- Tela de Login -->
+    <div id="login-screen" class="login-screen">
+        <div class="login-panel">
+            <h2>Novo Jogo ou Carregar</h2>
+            <input type="text" id="inputNomeJogador" placeholder="Nome do Jogador">
+            <input type="password" id="inputSenhaJogador" placeholder="Senha">
+            <button id="iniciarJogo">Iniciar Aventura</button>
+            <p id="mensagemLogin" style="color: #ff6a6a; margin-top: 1rem;"></p>
+        </div>
+    </div>
+
+    <!-- Container Principal do Jogo (Inicialmente escondido) -->
+    <div id="game-container" class="container-principal hidden">
         <h1>No Man's Sky</h1>
 
         <!-- Menu Retrátil (Salvar/Carregar) -->
@@ -17,7 +31,6 @@
                     <i class="fas fa-bars icone"></i>
                 </summary>
                 <div class="menu-opcoes">
-                    <!-- Mantive o ID original para o seu JS -->
                     <button id="salvar">Salvar</button>
                     <button id="carregar">Carregar</button>
                     <button id="novoJogo">Novo Jogo</button>
@@ -25,44 +38,35 @@
             </details>
         </div>
 
-        <!-- Container Principal com as Seções do Jogo -->
-        <div class="container-principal">
-            <div class="secoes-info">
-
-                <!-- Painel de Status do Jogador (Lado Esquerdo) -->
-                <div class="info-painel">
-                    <h2>Status do Jogador</h2>
-                    <!-- IDs correspondem aos do seu main.ts -->
-                    <h3 id="nomePersonagem">Nome: ...</h3>
-                    <h3 id="vidaPersonagem">Vida: ...</h3>
-                    <h3 id="escudoPersonagem">Escudo: ...</h3>
-                </div>
-
-                <!-- Seção de Ações do Jogador (Central) -->
-                <div class="info-painel acoes-botoes">
-                    <h2>Ações do Jogador</h2>
-                    <button id="irLeste">Ir para o Leste</button>
-                    <button id="irOeste">Ir para o Oeste</button>
-                    <button id="minerar">Minerar</button>
-                    <button id="mostrarInventario">Mostrar Inventário</button>
-                </div>
-
-                <!-- Painel de Informações do Planeta (Lado Direito) -->
-                <div class="info-painel">
-                    <h2>Informações do Planeta</h2>
-                    <!-- IDs correspondem aos do seu main.ts -->
-                    <h3 id="planeta">Planeta: ...</h3>
-                    <h3 id="bioma">Bioma: ...</h3>
-                    <h3 id="recursos">Recursos: ...</h3>
-                </div>
-            </div>
-
-            <!-- Caixa de Saídas do Jogo (Log) -->
+        <!-- Seções do Jogo -->
+        <div class="secoes-info">
             <div class="info-painel">
-                <h2>Saídas do Jogo</h2>
-                <pre id="saida"></pre>
+                <h2>Status do Jogador</h2>
+                <h3 id="nomePersonagem">Nome: ...</h3>
+                <h3 id="vidaPersonagem">Vida: ...</h3>
+                <h3 id="escudoPersonagem">Escudo: ...</h3>
+            </div>
+            <div class="info-painel">
+                <h2>Informações do Planeta</h2>
+                <h3 id="posicao">Planeta: ... - Bioma: ...</h3>
+                <h3 id="recursos">Recursos: ...</h3>
             </div>
         </div>
-        <script type="module" src="./Javascript/main.js"></script>
-    </body>
+
+        <div class="info-painel acoes-botoes">
+            <h2>Ações do Jogador</h2>
+            <button id="irOeste">Ir para o Oeste</button>
+            <button id="irLeste">Ir para o Leste</button>
+            <button id="minerar">Minerar</button>
+            <button id="mostrarInventario">Mostrar Inventário</button>
+        </div>
+
+        <div class="info-painel">
+            <h2>Saídas do Jogo</h2>
+            <pre id="saida"></pre>
+        </div>
+    </div>
+
+    <script type="module" src="./Javascript/main.js"></script>
+</body>
 </html>

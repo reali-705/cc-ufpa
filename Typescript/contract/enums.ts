@@ -35,3 +35,9 @@ export enum TipoPlaneta {
     Rochoso = "Rochoso",
     Congelado = "Congelado"
 }
+
+export enum TipoInimigo {
+    Sentinela,
+    Fera,
+    FloraHostil
+}
