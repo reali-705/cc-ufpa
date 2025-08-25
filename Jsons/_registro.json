@@ -1,18 +1,6 @@
 [
     [
-        "ale:reali",
-        "ale.json"
-    ],
-    [
         "Reali:705",
         "reali.json"
-    ],
-    [
-        "gameMaster:testando",
-        "gamemaster.json"
-    ],
-    [
-        "ale:123",
-        "ale.json"
     ]
 ]

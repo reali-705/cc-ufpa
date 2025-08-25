@@ -1,134 +1,116 @@
-# No Man's Sky - Projeto de Algoritmos
-Bem-vindo ao projeto No Man's Sky!
+# Projeto No Man's Sky - Estruturas de Dados
 
-Este trabalho é a culminação de uma atividade da disciplina Projeto de Algoritmos, com o objetivo central de colocar em prática as estruturas de classes e as operações de algoritmos que aprendemos em aula. Inspirado no aclamado jogo de exploração espacial, desenvolvemos uma simulação que mergulha na gestão de um universo procedural, na exploração dinâmica de planetas e áreas, e no gerenciamento intuitivo de inventário.
+Este é um projeto acadêmico desenvolvido para a disciplina de Projeto de Algoritmos 1, cujo objetivo principal é aplicar, em um contexto prático e lúdico, as estruturas de dados e algoritmos estudados em sala de aula. O resultado é um mini-jogo de exploração espacial inspirado em "No Man's Sky", desenvolvido em TypeScript e executado em um ambiente de navegador com um servidor Node.js para persistência de dados.
 
-## A Essência do Projeto
-Esse projeto recria, em menor escala, a essência das mecânicas de No Man's Sky. O foco principal está na construção de um universo vasto e explorável, composto por sistemas solares, planetas diversos e áreas únicas. Você, como jogador, terá seu próprio personagem e uma nave para desbravar esses cenários, interagindo com o ambiente e seus recursos.
+## 📜 Sobre a Inspiração: No Man's Sky
 
-### Obs
-Para utilizar uma estratégia de "chuncks", ou seja, carregar uma determinada quantidade de classes e apagar as que fugirem da limitação, foi utilizada a biblioteca `seedrandom`. Para usá-la em typescript é preciso instalá-la pelo terminal com:
+**No Man's Sky** é um renomado jogo de exploração e sobrevivência espacial desenvolvido pela Hello Games. Sua principal característica é um universo gerado proceduralmente, contendo bilhões de planetas únicos para descobrir. Os jogadores exploram, coletam recursos, constroem, negociam e lutam em uma vasta galáxia, com uma forte ênfase na descoberta e na jornada pessoal.
+
+## ✨ Mecânicas e Funcionalidades do Projeto
+
+Este projeto implementa uma versão simplificada de algumas das mecânicas centrais de No Man's Sky, focando na aplicação de estruturas de dados:
+
+* **Geração Procedural de Mundos:** Criação de planetas, biomas e populações de inimigos de forma aleatória.
+* **Exploração Circular:** Movimentação contínua entre biomas (Leste/Oeste).
+* **Coleta de Recursos:** Mineração de itens específicos de cada bioma.
+* **Gerenciamento de Inventário:** Sistema de inventário com capacidade limitada.
+* **Sistema de Combate por Turnos:** Encontros aleatórios com inimigos, com ações de atacar, fugir e se recuperar.
+* **Fila de Prioridade de Inimigos:** Os inimigos são organizados em um Heap para que o mais fraco sempre seja encontrado primeiro.
+* **Sistema de Login e Persistência:** O progresso do jogador é salvo em arquivos JSON no servidor, gerenciado por uma Tabela Hash.
+
+## 🏛️ Arquitetura e Estrutura de Módulos
+
+O projeto é dividido em módulos com responsabilidades bem definidas, facilitando a manutenção e a compreensão do código. Cada diretório principal contém seu próprio `README.md` com documentação detalhada.
+
+O coração do projeto reside no diretório `Typescript/components/`, onde as estruturas de dados foram implementadas do zero, **sendo este o foco principal da avaliação acadêmica.**
+
+* **[`Typescript/`](./Typescript/)**: Contém todo o código-fonte da aplicação cliente (frontend). É o cérebro do jogo, gerenciando o estado, as interações e a renderização no navegador.
+
+* **[`Typescript/components/`](./Typescript/components/)**: **(FOCO ACADÊMICO)** Uma biblioteca de estruturas de dados fundamentais e reutilizáveis (Tabela Hash, Heap, Pilha, etc.), todas construídas do zero para este projeto.
+
+* **[`Typescript/classes/`](./Typescript/classes/)**: As classes que modelam os objetos de domínio do jogo (GameMaster, Jogador, Planeta), encapsulando as regras de negócio e o estado do jogo.
+
+* **[`Typescript/contract/`](./Typescript/contract/)**: A espinha dorsal dos dados do projeto. Define, através de `interfaces` e `enums`, todos os "contratos" de dados, garantindo consistência e segurança de tipos.
+
+* **[`Typescript/functions/`](./Typescript/functions/)**: Módulos com funções reutilizáveis que servem como camadas de serviço, como a comunicação com o servidor, manipulação da UI e algoritmos de ordenação.
+
+* **[`Typescript/server/`](./Typescript/server/)**: O código do servidor backend em Node.js, responsável exclusivamente pela persistência de dados (salvar e carregar os jogos).
+
+* **[`Typescript/_debug/`](./Typescript/_debug/)**: Contém uma implementação alternativa do servidor usando o framework Express.js, mantida como referência e para fins de comparação de tecnologias.
+
+## 🚀 Começando
+
+Siga estas instruções para compilar e executar o projeto em sua máquina local.
+
+### Pré-requisitos
+
+Você precisará ter o Node.js e o npm (Node Package Manager) instalados.
+
+* **Node.js** (versão 18.x ou superior recomendada)
+    * [Link para download do Node.js](https://nodejs.org/)
+
+### Instalação e Execução
+
+1.  **Clone o repositório:**
+    ```sh
+    git clone https://github.com/reali-705/NoManSky.git
+    ```
+2.  **Navegue até o diretório do projeto:**
+    ```sh
+    cd NoManSky
+    ```
+3.  **Instale as dependências:**
+    ```sh
+    npm install
+    ```
+4.  **Compile o código TypeScript para JavaScript:**
+    ```sh
+    npm run b   # Para Windows
+    npm run bl  # Para Linux
+    ```
+    *Este comando irá transpilar todos os arquivos da pasta `Typescript/` para a pasta `Javascript/`.*
+
+5.  **Inicie o servidor local:**
+    ```sh
+    npm run start
+    ```
+    *O terminal deve exibir a mensagem "Servidor rodando em http://localhost:3000".*
+
+6.  **Abra o jogo:** Abra seu navegador e acesse a URL `http://localhost:3000`.
+
+## 📂 Estrutura de Arquivos
+
+A estrutura de arquivos do projeto, incluindo a documentação, está organizada da seguinte forma:
+
 ```
-npm install seedrandom
-npm install --save-dev @types/seedrandom
-```
-
-## Estruturas de Dados e Algoritmos em Ação
-Aqui, você encontrará um mergulho profundo no coração do nosso código. Detalhamos as estruturas de dados e os métodos de algoritmos essenciais que foram meticulosamente integrados ao projeto. Cada seção demonstra como esses conceitos, antes teóricos, ganham vida e aplicabilidade em cenários práticos de desenvolvimento de software.
-
-## Vetor com números aleatórios
- Vetores/Arrays são coleções ordenadas de elementos, e a capacidade de gerar sequências numéricas aleatórias dentro deles é a chave para simular a imprevisibilidade do universo. Isso nos permite criar experiências de jogo dinâmicas, onde a distribuição de recursos ou a ocorrência de eventos não são estáticas, mas sim geradas de forma procedural.
- 
-### Utilização no Código Principal
-
-### Recorte do Código
-```
-```
-
-## Fila normal
-Uma fila é uma estrutura de dados linear que segue a lógica "Primeiro a Entrar, Primeiro a Sair" (FIFO - First-In, First-Out). Imagine uma fila de espera: quem chega primeiro, é atendido primeiro.
-
-### Utilização no Código Principal
-
-### Recorte do Código
-```
-```
-
-## Fila bidirecional
-Uma fila bidirecional, ou deque (do inglês double-ended queue), oferece a flexibilidade de adicionar e remover elementos de ambas as extremidades: tanto do início quanto do fim.
-
-### Utilização no Código Principal
-
-### Recorte do Código
-```
-```
-
-## Pilha com node
-Uma pilha é uma estrutura de dados que opera sob o princípio "Último a Entrar, Primeiro a Sair" (LIFO - Last-In, First-Out). Na implementação "com Node", cada elemento da pilha é um nó que aponta para o próximo nó, criando uma sequência encadeada de elementos.
-
-### Utilização no Código Principal
-
-### Recorte do Código
-```
-```
-
-## Pilha com array
-Semelhante à pilha com Node, esta é uma estrutura LIFO, mas sua implementação utiliza um array subjacente para armazenar os elementos. As operações de empilhar (push) e desempilhar (pop) são realizadas diretamente nas extremidades do array, aproveitando a eficiência inerente dos arrays em linguagens como JavaScript/TypeScript.
-
-### Utilização no Código Principal
-
-### Recorte do Código
-```
-```
-
-## Lista circular com node
-Uma lista encadeada especial onde o último nó aponta de volta para o primeiro, formando um ciclo contínuo. Isso permite a travessia ininterrupta da lista em qualquer direção, sem um "fim" definido.
-
-### Utilização no Código Principal
-
-### Recorte do Código
-```
-```
-
-## Lista ligada com node
-Uma lista ligada (ou encadeada) é uma estrutura de dados fundamental onde cada elemento, ou "nó", contém os dados e um ponteiro (ou referência) para o próximo nó na sequência. Isso oferece grande flexibilidade para inserções e remoções eficientes em qualquer posição.
-
-### Utilização no Código Principal
-
-### Recorte do Código
-```
-```
-## Lista ligada com set
-Esta estrutura representa um aninhamento poderoso de duas das nossas implementações: a Lista Ligada (ListaVinculada) e o Conjunto (Conjunto). Ela permite criar uma sequência ordenada de coleções de elementos únicos. Imagine a flexibilidade de uma lista ligada, onde você pode facilmente adicionar, remover e navegar entre "caixas", mas cada uma dessas "caixas" é, na verdade, um Conjunto, garantindo que o conteúdo de cada caixa seja sempre exclusivo.
-
-### Utilização no Código Principal
-
-### Recorte do Código
-```
-```
-
-## Método ForEach
-O método `forEach` é uma ferramenta iterativa poderosa que executa uma função de callback uma única vez para cada elemento em uma coleção, como um array ou uma estrutura que implementa essa iteração. Ele é valorizado por sua clareza e por não modificar a coleção original.
-
-### Utilização no Código Principal
-
-### Recorte do Código
-```
-```
-
-## Método Filter
-O método `filter` é uma função de array que cria um novo array, contendo apenas os elementos da coleção original que passaram em um teste lógico definido por uma função de callback fornecida. É excelente para refinar dados.
-
-### Utilização no Código Principal
-
-### Recorte do Código
-```
-```
-
-## Método Every
-O método `every` é uma função de array que testa se todos os elementos em uma coleção passam em um teste lógico fornecido por uma função de callback. Ele retorna um valor booleano (true ou false), indicando se a condição foi satisfeita para todos os elementos.
-
-### Utilização no Código Principal
-
-### Recorte do Código
-```
+/
+├── Javascript/         # Arquivos JavaScript compilados (saída do tsc)
+├── Jsons/              # Local onde os jogos salvos são armazenados
+│   └── README.md
+├── server/
+│   ├── servidor.ts
+│   └── README.md
+├── Typescript/
+│   ├── _debug/
+│   │   ├── _referencia.ts
+│   │   └── README.md
+│   ├── classes/
+│   │   └── README.md
+│   ├── components/
+│   │   └── README.md
+│   ├── contract/
+│   │   └── README.md
+│   ├── functions/
+│   │   └── README.md
+│   ├── main.ts
+│   └── README.md
+├── index.html
+├── package.json
+├── README.md           # <-- Este arquivo
+├── style.css
+└── tsconfig.json
 ```
 
-## Dicionário
-A classe `Dicionario` é uma implementação personalizada inspirada na estrutura `Map` do JavaScript/TypeScript. Ela permite armazenar pares chave-valor de forma eficiente, aceitando qualquer tipo de objeto como chave (desde que seja possível convertê-lo para string de forma única). Entre suas principais funcionalidades estão a inserção, remoção, busca, iteração e listagem de chaves e valores. Além disso, oferece métodos utilitários como `forEach`, `toString` e suporte à iteração com `for...of`, tornando-a uma ferramenta versátil para gerenciar coleções dinâmicas de dados no projeto.
+## ✒️ Autor
 
-### Utilização no Código Principal
-
-### Recorte do Código
-```
-```
-
-## Tabela Hash
-
-A classe `TabelaHash` é uma implementação personalizada de uma tabela hash, permitindo armazenar e acessar pares chave-valor de forma eficiente por meio de uma função de hash. Ela aceita funções customizadas para gerar o hash e para converter a chave em string, tornando-se flexível para diferentes tipos de dados. Entre suas principais funcionalidades estão inserir, buscar, remover, limpar e listar elementos, além de retornar uma representação textual da tabela. É ideal para cenários onde buscas rápidas por chave são essenciais.
-
-### Utilização no Código Principal
-
-### Recorte do Código
-```
-```
+-   **Alessandro Reali Lopes Silva** - [alessandro.reali.3110@gmail.com](mailto:alessandro.reali.3110@gmail.com)

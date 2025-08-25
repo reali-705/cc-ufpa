@@ -2,23 +2,12 @@
     "planeta": "{\"id\":\"Planeta: Congelado (0)\",\"tipo\":\"Congelado\",\"biomas\":[\"{\\\"id\\\":\\\"Planeta: Congelado (0) - Bioma: Floresta (0)\\\",\\\"tipo\\\":\\\"Floresta\\\",\\\"recursos\\\":[{\\\"id\\\":\\\"15\\\",\\\"nome\\\":\\\"Água Purificada\\\",\\\"raridade\\\":0,\\\"tamanho\\\":1},{\\\"id\\\":\\\"6\\\",\\\"nome\\\":\\\"Gás Oxigênio\\\",\\\"raridade\\\":1,\\\"tamanho\\\":1}]}\",\"{\\\"id\\\":\\\"Planeta: Congelado (0) - Bioma: Floresta (1)\\\",\\\"tipo\\\":\\\"Floresta\\\",\\\"recursos\\\":[{\\\"id\\\":\\\"17\\\",\\\"nome\\\":\\\"Lágrimas de Titã\\\",\\\"raridade\\\":4,\\\"tamanho\\\":3},{\\\"id\\\":\\\"16\\\",\\\"nome\\\":\\\"Óleo Bruto\\\",\\\"raridade\\\":3,\\\"tamanho\\\":2}]}\",\"{\\\"id\\\":\\\"Planeta: Congelado (0) - Bioma: Floresta (2)\\\",\\\"tipo\\\":\\\"Floresta\\\",\\\"recursos\\\":[]}\",\"{\\\"id\\\":\\\"Planeta: Congelado (0) - Bioma: Floresta (3)\\\",\\\"tipo\\\":\\\"Floresta\\\",\\\"recursos\\\":[{\\\"id\\\":\\\"9\\\",\\\"nome\\\":\\\"Folha de Alga\\\",\\\"raridade\\\":1,\\\"tamanho\\\":1},{\\\"id\\\":\\\"5\\\",\\\"nome\\\":\\\"Gás Hidrogênio\\\",\\\"raridade\\\":0,\\\"tamanho\\\":1}]}\",\"{\\\"id\\\":\\\"Planeta: Congelado (0) - Bioma: Gélido (4)\\\",\\\"tipo\\\":\\\"Gélido\\\",\\\"recursos\\\":[{\\\"id\\\":\\\"17\\\",\\\"nome\\\":\\\"Lágrimas de Titã\\\",\\\"raridade\\\":4,\\\"tamanho\\\":3},{\\\"id\\\":\\\"13\\\",\\\"nome\\\":\\\"Célula de Vácuo\\\",\\\"raridade\\\":2,\\\"tamanho\\\":2},{\\\"id\\\":\\\"15\\\",\\\"nome\\\":\\\"Água Purificada\\\",\\\"raridade\\\":0,\\\"tamanho\\\":1}]}\"],\"inimigos\":[\"{\\\"nome\\\":\\\"Flora Biomecânica\\\",\\\"vida\\\":61,\\\"vidaMaxima\\\":61,\\\"escudo\\\":0,\\\"escudoMaximo\\\":0,\\\"dano\\\":28,\\\"resistencia\\\":0}\",\"{\\\"nome\\\":\\\"Sentinela Corrompida\\\",\\\"vida\\\":66,\\\"vidaMaxima\\\":66,\\\"escudo\\\":53,\\\"escudoMaximo\\\":53,\\\"dano\\\":13,\\\"resistencia\\\":9}\",\"{\\\"nome\\\":\\\"Flora Biomecânica\\\",\\\"vida\\\":79,\\\"vidaMaxima\\\":79,\\\"escudo\\\":0,\\\"escudoMaximo\\\":0,\\\"dano\\\":32,\\\"resistencia\\\":0}\",\"{\\\"nome\\\":\\\"Flora Biomecânica\\\",\\\"vida\\\":82,\\\"vidaMaxima\\\":82,\\\"escudo\\\":0,\\\"escudoMaximo\\\":0,\\\"dano\\\":24,\\\"resistencia\\\":0}\"]}",
     "jogador": {
         "nome": "Reali",
-        "vida": 99.5,
+        "vida": 100,
         "vidaMaxima": 100,
         "escudo": 50,
         "escudoMaximo": 50,
         "historico": [
-            "Planeta: Congelado (0) - Bioma: Floresta (0)",
-            "Planeta: Congelado (0) - Bioma: Floresta (1)",
-            "Planeta: Congelado (0) - Bioma: Floresta (2)",
-            "Planeta: Congelado (0) - Bioma: Floresta (3)",
-            "Planeta: Congelado (0) - Bioma: Floresta (2)",
-            "Planeta: Congelado (0) - Bioma: Floresta (3)",
-            "Planeta: Congelado (0) - Bioma: Gélido (4)",
-            "Planeta: Congelado (0) - Bioma: Floresta (0)",
-            "Planeta: Congelado (0) - Bioma: Floresta (1)",
-            "Planeta: Congelado (0) - Bioma: Floresta (2)",
-            "Planeta: Congelado (0) - Bioma: Floresta (3)",
-            "Planeta: Congelado (0) - Bioma: Gélido (4)"
+            "Planeta: Congelado (0) - Bioma: Floresta (0)"
         ],
         "inventario": {
             "capacidadeMaxima": 100,
