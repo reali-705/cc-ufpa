@@ -10,23 +10,8 @@ para análise comparativa de performance.
 """
 
 import time
-from dataclasses import dataclass
 
-@dataclass
-class Resultado:
-    metodo: str
-    comparacoes: int
-    trocas: int
-    lista_ordenada: list[int]
-    tempo_ms: float
-    def __str__(self) -> str:
-        return f"""
-                Método: {self.metodo}
-                Comparações: {self.comparacoes}
-                Trocas: {self.trocas}
-                Tempo (ms): {self.tempo_ms:.4f}
-                Lista Ordenada: {self.lista_ordenada}
-                """
+from algoritmos.resultado import Resultado
 
 class InsertionSort:
     """
@@ -68,8 +53,9 @@ class InsertionSort:
                 metodo='ordenacao_linear',
                 comparacoes=0,
                 trocas=0,
+                tempo_ms=0.0,
+                lista_base=[],
                 lista_ordenada=[],
-                tempo_ms=0.0
             )
         lista_copia = lista.copy()
         comparacoes = 0
@@ -97,8 +83,9 @@ class InsertionSort:
             metodo='ordenacao_linear',
             comparacoes=comparacoes,
             trocas=trocas,
+            tempo_ms=(tempo_final - tempo_inicial) * 1000,
+            lista_base=lista,
             lista_ordenada=lista_copia,
-            tempo_ms=(tempo_final - tempo_inicial) * 1000
         )
     
     def ordenacao_binaria(self, lista: list[int]) -> Resultado:
@@ -133,8 +120,9 @@ class InsertionSort:
                 metodo='ordenacao_binaria',
                 comparacoes=0,
                 trocas=0,
+                tempo_ms=0.0,
+                lista_base=[],
                 lista_ordenada=[],
-                tempo_ms=0.0
             )
         lista_copia = lista.copy()
         comparacoes = 0
@@ -166,6 +154,7 @@ class InsertionSort:
             metodo='ordenacao_binaria',
             comparacoes=comparacoes,
             trocas=trocas,
+            tempo_ms=(tempo_final - tempo_inicial) * 1000,
+            lista_base=lista,
             lista_ordenada=lista_copia,
-            tempo_ms=(tempo_final - tempo_inicial) * 1000
         )
