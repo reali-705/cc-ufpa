@@ -19,16 +19,19 @@ ENTRADAS = range(10, 110, 10)
 NUM_REPETICOES = 100
 
 
-def display_pior_caso(algoritmo_ordenacao : Callable[[list[int]],Any]):
+def display_pior_caso(algoritmo_ordenacao : Callable[[list[int]],Any], pior_caso : Callable[[int], list[int]]):
     '''
     Função que recebe a dunção de ordenação que mostra uma tabela com o tamanho da entrada e o tempo de execução
     
     :param algoritmo_ordenacao: Função de ordenação
     :type algoritmo_ordenacao: Callable[[list[int]], Any]
     '''
+    # Lista para armazenar os resultados
     lista_resultados = []
+    # Loop para cada tamanho de entrada
     for i in ENTRADAS:
-        lista_teste_pior_caso = list(reversed(range(i)))
+        # Gera uma lista de teste com o pior caso (lista reversa)
+        lista_teste_pior_caso = pior_caso(i)
         j = 0
         while j <= NUM_REPETICOES:
             lista_tempos = []
@@ -39,10 +42,10 @@ def display_pior_caso(algoritmo_ordenacao : Callable[[list[int]],Any]):
         lista_resultados.append((i, f"{tempo_medio:.4f}"))
     formatar(lista_resultados, "PIOR CASO")
         
-def display_melhor_caso(algoritmo_ordenacao : Callable[[list[int]],Any]):
+def display_melhor_caso(algoritmo_ordenacao : Callable[[list[int]],Any], melhor_caso : Callable[[int], list[int]]):
     lista_resultados = []
     for i in ENTRADAS:
-        lista_teste_melhor_caso = list(reversed(range(i)))
+        lista_teste_melhor_caso = melhor_caso(i)
         j = 0
         while j <= NUM_REPETICOES:
             lista_tempos = []
