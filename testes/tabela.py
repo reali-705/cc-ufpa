@@ -1,6 +1,30 @@
 """
 Arquivo interno para automatizar a geração de tabelas 
 """
+
+ENTRADAS = range(10, 110, 10)
+NUM_REPETICOES = 100
+
+def set_entradas(entradas : range):
+    '''
+    Função para definir os tamanhos de entrada para os testes
+    
+    :param entradas: Um range com os tamanhos de entrada
+    :type entradas: range
+    '''
+    global ENTRADAS
+    ENTRADAS = entradas
+
+def set_repeticoes(num_repeticoes : int):
+    '''
+    Função para definir o número de repetições para os testes
+    
+    :param num_repeticoes: Número de repetições
+    :type num_repeticoes: int
+    '''
+    global NUM_REPETICOES
+    NUM_REPETICOES = num_repeticoes
+
 from typing import Callable, Any
 
 
@@ -15,8 +39,6 @@ def mean(lista : list[float]) -> float:
     '''
     return sum(lista)/len(lista)
 
-ENTRADAS = range(10, 110, 10)
-NUM_REPETICOES = 100
 
 
 def display_pior_caso(algoritmo_ordenacao : Callable[[list[int]],Any], pior_caso : Callable[[int], list[int]]):

@@ -5,7 +5,8 @@ Docstring para testes.arvore_binaria
 from algoritmos import HeapSort
 from .tabela import *
 
-
+heap_sort_iterativo = HeapSort().ordem_iterativa
+heap_sort_recursivo = HeapSort().ordem_recursiva
 
 def gerar_pior_caso(tamanho : int) -> list[int]:
     '''
@@ -30,12 +31,12 @@ def gerar_melhor_caso(tamanho : int) -> list[int]:
     return list(reversed(range(tamanho)))
 
 def display_tabela():
-    print("Ordenação por inserção usando busca linear".upper())
-    display_pior_caso(insertion_sort_linear, gerar_pior_caso)
+    print("Ordenação por Heap Sort iterativo".upper())
+    display_pior_caso(heap_sort_iterativo, gerar_pior_caso)
     print("")
-    display_melhor_caso(insertion_sort_linear, gerar_melhor_caso)
+    display_melhor_caso(heap_sort_iterativo, gerar_melhor_caso)
     print("")
-    print("Ordenação por inserção usando busca binária".upper())
-    display_pior_caso(insertion_sort_binary, gerar_pior_caso)
+    print("Ordenação por Heap Sort recursivo".upper())
+    display_pior_caso(heap_sort_recursivo, gerar_pior_caso)
     print("")
-    display_melhor_caso(insertion_sort_binary, gerar_melhor_caso)
+    display_melhor_caso(heap_sort_recursivo, gerar_melhor_caso)
