@@ -2,54 +2,59 @@
 Docstring para testes.arvore_binaria
 """
 
-from algoritmos import ArvoreBinaria
-from algoritmos import AVL
-from .tabela import *
+from algoritmos import ArvoreBinaria, AVL
+from .tabela import run_casos_para_algoritmo
+
 
 abb_sort = ArvoreBinaria().ordenar
 avl_sort = AVL().ordenar
 
-def gerar_pior_caso(tamanho : int) -> list[int]:
-    '''
-    Função que gera uma lista de inteiros em ordem crescente para o pior caso da Árvore Binária de Busca
-    
-    :param tamanho: Tamanho da lista a ser gerada
-    :type tamanho: int
-    :return: Retorna uma lista de inteiros em ordem crescente
-    :rtype: list[int]
-    '''
+
+def gerar_pior_caso(tamanho: int) -> list[int]:
+    """
+    Lista crescente → pior caso para ABB (degenera em lista)
+    """
     return list(range(tamanho))
 
-def gerar_melhor_caso(tamanho : int) -> list[int]:
-    '''
-    Função que gera uma lista de inteiros em ordem exata para sempre manter a árvore balanceada para o melhor caso da Árvore Binária de Busca
-    
-    :param tamanho: Tamanho da lista a ser gerada
-    :type tamanho: int
-    :return: Retorna uma lista de inteiros
-    :rtype: list[int]
-    '''
 
-    lista = [(tamanho * 100) / 2]
-    lista.extend([lista[0] / 2, lista[0] + lista[0] / 2])
-    i = 3
-    while i < tamanho:
-        pai = (i - 1) // 2
-        avo = (pai - 1) // 2
-        passo = (lista[pai] - lista[avo]) / 2
-        lista.append(lista[pai] - passo)
-        lista.append(lista[pai] + passo)
-        i += 2
+def gerar_melhor_caso(tamanho: int) -> list[int]:
+    """
+    Gera inserção em ordem que mantém a ABB aproximadamente balanceada
+    """
+    if tamanho == 0:
+        return []
 
-    return lista[:tamanho]
+    def gerar_ordem_balanceada(valores):
+        if not valores:
+            return []
+        meio = len(valores) // 2
+        return (
+            [valores[meio]]
+            + gerar_ordem_balanceada(valores[:meio])
+            + gerar_ordem_balanceada(valores[meio + 1 :])
+        )
+
+    valores = list(range(tamanho))
+    return gerar_ordem_balanceada(valores)
+
 
 def display_tabela():
-    print("Ordenação Árvore de Busca Binária".upper())
-    display_pior_caso(abb_sort, gerar_pior_caso)
-    print("")
-    display_melhor_caso(abb_sort, gerar_melhor_caso)
-    print("")
-    print("Ordenação por AVL".upper())
-    display_pior_caso(avl_sort, gerar_pior_caso)
-    print("")
-    display_melhor_caso(avl_sort, gerar_melhor_caso)
+    print("=" * 40)
+    print("ORDENAÇÃO ÁRVORE BINÁRIA DE BUSCA".upper())
+
+    run_casos_para_algoritmo(
+        abb_sort,
+        "Árvore Binária de Busca",
+        gerar_melhor_caso,
+        gerar_pior_caso
+    )
+
+    print("=" * 40)
+    print("ORDENAÇÃO POR AVL".upper())
+
+    run_casos_para_algoritmo(
+        avl_sort,
+        "AVL",
+        gerar_melhor_caso,
+        gerar_pior_caso
+    )

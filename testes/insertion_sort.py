@@ -9,7 +9,7 @@ insertion_sort_linear = InsertionSort().ordenacao_linear
 insertion_sort_binary = InsertionSort().ordenacao_binaria
 
 
-def gerar_pior_caso(tamanho : int) -> list[int]:
+def gerar_pior_caso(tamanho: int) -> list[int]:
     '''
     Função que gera uma lista de inteiros em ordem decrescente para o pior caso do Insertion Sort
     
@@ -20,7 +20,8 @@ def gerar_pior_caso(tamanho : int) -> list[int]:
     '''
     return list(reversed(range(tamanho)))
 
-def gerar_melhor_caso(tamanho : int) -> list[int]:
+
+def gerar_melhor_caso(tamanho: int) -> list[int]:
     '''
     Função que gera uma lista de inteiros em ordem crescente para o melhor caso do Insertion Sort
     
@@ -34,11 +35,11 @@ def gerar_melhor_caso(tamanho : int) -> list[int]:
 
 def display_tabela():
     print("Ordenação por inserção usando busca linear".upper())
-    display_pior_caso(insertion_sort_linear, gerar_pior_caso)
+    display_pior_caso(insertion_sort_linear, "Insertion Sort (linear)", gerar_pior_caso)
     print("")
-    display_melhor_caso(insertion_sort_linear, gerar_melhor_caso)
+    display_melhor_caso(insertion_sort_linear, "Insertion Sort (linear)", gerar_melhor_caso)
     print("")
     print("Ordenação por inserção usando busca binária".upper())
-    display_pior_caso(insertion_sort_binary, gerar_pior_caso)
+    display_pior_caso(insertion_sort_binary, "Insertion Sort (binary)", gerar_pior_caso)
     print("")
-    display_melhor_caso(insertion_sort_binary, gerar_melhor_caso)
+    display_melhor_caso(insertion_sort_binary, "Insertion Sort (binary)", gerar_melhor_caso)
