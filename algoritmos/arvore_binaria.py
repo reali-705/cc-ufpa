@@ -50,8 +50,36 @@ class ArvoreBinaria:
             self.raiz = novo_no
         else:
             self._inserir_recursivo(self.raiz, novo_no)
+    
+    def inserir_iterativo(self, valor: int) -> None:
+        """
+        Insere valor na árvore de forma iterativa.
+        Alternativa ao método recursivo.
+        """
+        self.trocas += 1
+        novo_no = NoBase(valor)
 
-    def ordenar(self, lista: list[int]) -> Resultado:
+        if self.raiz is None:
+            self.raiz = novo_no
+            return
+
+        no_atual = self.raiz
+        while True:
+            self.comparacoes += 1
+            if valor < no_atual.valor:
+                if no_atual.esquerda is None:
+                    self.trocas += 1
+                    no_atual.esquerda = novo_no
+                    return
+                no_atual = no_atual.esquerda
+            else:
+                if no_atual.direita is None:
+                    self.trocas += 1
+                    no_atual.direita = novo_no
+                    return
+                no_atual = no_atual.direita
+
+    def ordenar(self, lista: list[int], recursivo: bool = False) -> Resultado:
         """
         Ordena lista usando Tree Sort.
         Complexidade: O(n log n) melhor caso, O(n²) pior caso.
@@ -62,7 +90,7 @@ class ArvoreBinaria:
 
         # Insere todos os elementos
         for valor in lista:
-            self.inserir(valor)
+            self.inserir(valor) if recursivo else self.inserir_iterativo(valor)
 
         lista_ordenada = self._em_ordem(self.raiz)
 
