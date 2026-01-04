@@ -5,42 +5,52 @@ nome_algoritmo | tamentrada | tempo | caso
 """
 
 import os
-from typing import Callable, Any, List, Tuple
+from typing import Callable, Any, List, Tuple, Iterable
 import pandas as pd
+from algoritmos import Resultado
+
+# ---------------- FUNÇÕES AUXILIARES ----------------
+
+def range_exponencial(start: int, stop: int, factor: float) -> Iterable[int]:
+    '''
+    Cria um iterável que aumenta exponencialmente de start até stop com um fator específico.
+    
+    :param start: Description
+    :type start: int
+    :param stop: Description
+    :type stop: int
+    :param factor: Description
+    :type factor: float
+    :return: Description
+    :rtype: Iterable[int]
+    '''
+    current = start
+    while current < stop:
+        yield int(current)
+        current **= factor
 
 
 # ---------------- CONFIGURAÇÕES GLOBAIS ----------------
 
-ENTRADAS = range(10, 110, 10)
-NUM_REPETICOES = 100
+ENTRADAS = range_exponencial(10, 110, 2)
 
 
-def set_entradas(entradas: range):
+def set_entradas(start: int, stop: int, factor: float):
     global ENTRADAS
-    ENTRADAS = entradas
+    ENTRADAS = range_exponencial(start, stop, factor)
 
-
-def set_repeticoes(num_repeticoes: int):
-    global NUM_REPETICOES
-    NUM_REPETICOES = num_repeticoes
-
-
-def mean(lista: List[float]) -> float:
-    if not lista:
-        return 0.0
-    return sum(lista) / len(lista)
 
 
 # ---------------- FUNÇÃO AUXILIAR (EXCEL) ----------------
 
 def salvar_excel(
-    dados: List[Tuple[str, int, float, str]],
+    dados: List[Tuple[str, int, float,int, int, str]],
     arquivo: str = "resultados.xlsx",
     append: bool = True
 ):
     df_novo = pd.DataFrame(
         dados,
-        columns=["nome_algoritmo", "tamentrada", "tempo", "caso"]
+        columns=["nome_algoritmo", "tamentrada", "tempo", "trocas", "comparações", "caso"]
     )
 
     if append and os.path.exists(arquivo):
@@ -49,86 +59,41 @@ def salvar_excel(
 
     df_novo.to_excel(arquivo, index=False)
 
+# ---------------- SALVAR DADOS PARA QUALQUER CASO ----------------
 
-# ---------------- PIOR CASO ----------------
-
-def display_pior_caso(
-    algoritmo_ordenacao: Callable[[list[int]], Any],
-    nome_algoritmo: str,
-    pior_caso: Callable[[int], list[int]],
-    salvar: bool = True,
-    arquivo: str = "resultados.xlsx"
-):
-    lista_resultados = []
+def calcular_testes(
+        algoritmo_ordenacao: Callable[[list[int]], Resultado],
+        nome_algoritmo: str,
+        gerar_lista_teste: Callable[[int], list[int]],
+        nome_do_caso: str,
+        salvar: bool = True,
+        arquivo: str = "resultados.xlsx"
+) -> List[Tuple[str, int, float, int, int, str]]:
+    '''
+    Calcula os testes e os salva em um arquivo Excel. Também retorna os dados calculados.
+    
+    :param algoritmo_ordenacao: A função de ordenação a ser testada
+    :type algoritmo_ordenacao: Callable[[list[int]], Resultado]
+    :param nome_algoritmo: Nome do algoritmo testado
+    :type nome_algoritmo: str
+    :param gerar_lista_teste: Função que gera as listas de teste
+    :type gerar_lista_teste: Callable[[int], list[int]]
+    :param nome_do_caso: Nome do caso de teste (e.g., "Pior Caso", "Melhor Caso")
+    :type nome_do_caso: str
+    :param salvar: booleno que indica se os resultados devem ser salvos. Por padrão é True
+    :type salvar: bool
+    :param arquivo: Nome do arquivo Excel onde os resultados serão salvos. Por padrão é "resultados.xlsx"
+    :type arquivo: str
+    :return: Lista de tuplas com nome do algoritmo, tamanho da entrada, tempo, trocas, comparaçãos e nome do caso
+    :rtype: List[Tuple[str, int, float, int, int, str]]
+    '''
     dados_excel = []
-
     for n in ENTRADAS:
-        tempos = []
-
-        for _ in range(NUM_REPETICOES):
-            lista = pior_caso(n)
-            tempos.append(algoritmo_ordenacao(lista).tempo_ms)
-
-        tempo_medio = mean(tempos)
-        lista_resultados.append((n, f"{tempo_medio:.4f}"))
-        dados_excel.append((nome_algoritmo, n, tempo_medio, "pior"))
-
-    formatar(lista_resultados, "PIOR CASO")
-
+        lista = gerar_lista_teste(n)
+        resultado = algoritmo_ordenacao(lista)
+        dados_excel.append((nome_algoritmo, n, resultado.tempo_ms, resultado.trocas, resultado.comparacoes, nome_do_caso))
+    
     if salvar:
         salvar_excel(dados_excel, arquivo)
-
-
-# ---------------- MELHOR CASO ----------------
-
-def display_melhor_caso(
-    algoritmo_ordenacao: Callable[[list[int]], Any],
-    nome_algoritmo: str,
-    melhor_caso: Callable[[int], list[int]],
-    salvar: bool = True,
-    arquivo: str = "resultados.xlsx"
-):
-    lista_resultados = []
-    dados_excel = []
-
-    for n in ENTRADAS:
-        tempos = []
-
-        for _ in range(NUM_REPETICOES):
-            lista = melhor_caso(n)
-            tempos.append(algoritmo_ordenacao(lista).tempo_ms)
-
-        tempo_medio = mean(tempos)
-        lista_resultados.append((n, f"{tempo_medio:.4f}"))
-        dados_excel.append((nome_algoritmo, n, tempo_medio, "melhor"))
-
-    formatar(lista_resultados, "MELHOR CASO")
-
-    if salvar:
-        salvar_excel(dados_excel, arquivo)
-
-
-# ---------------- FORMATAÇÃO ----------------
-
-def formatar(lista: List[tuple[int, str]], title: str):
-    print("-" * 24)
-    print(f"{title.center(24)}")
-    print("-" * 24)
-    print(f"{'N':>5} | {'Tempo médio (ms)':>15}")
-    print("-" * 24)
-    for n, tempo in lista:
-        print(f"{n:>5} | {tempo:>15}")
-    print("-" * 24)
-
-
-# ---------------- HELPER ----------------
-
-def run_casos_para_algoritmo(
-    algoritmo_ordenacao: Callable[[list[int]], Any],
-    nome_algoritmo: str,
-    melhor_caso: Callable[[int], list[int]],
-    pior_caso: Callable[[int], list[int]],
-    arquivo: str = "resultados.xlsx"
-):
-    display_pior_caso(algoritmo_ordenacao, nome_algoritmo, pior_caso, True, arquivo)
-    display_melhor_caso(algoritmo_ordenacao, nome_algoritmo, melhor_caso, True, arquivo)
+    
+    return dados_excel

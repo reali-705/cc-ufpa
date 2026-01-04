@@ -3,7 +3,7 @@ Docstring para testes.arvore_binaria
 """
 
 from algoritmos import ArvoreBinaria, AVL
-from .tabela import run_casos_para_algoritmo
+from .tabela import *
 
 
 abb_sort = ArvoreBinaria().ordenar
@@ -37,24 +37,38 @@ def gerar_melhor_caso(tamanho: int) -> list[int]:
     valores = list(range(tamanho))
     return gerar_ordem_balanceada(valores)
 
-
-def display_tabela():
-    print("=" * 40)
-    print("ORDENAÇÃO ÁRVORE BINÁRIA DE BUSCA".upper())
-
-    run_casos_para_algoritmo(
+def testar_abb_sort():
+    '''
+    Gera os testes para a ordenação por Árvore Binária de Busca (ABB)
+    '''
+    calcular_testes(
         abb_sort,
-        "Árvore Binária de Busca",
-        gerar_melhor_caso,
-        gerar_pior_caso
+        "Ordenação por ABB",
+        gerar_pior_caso,
+        "Pior Caso"
     )
 
-    print("=" * 40)
-    print("ORDENAÇÃO POR AVL".upper())
-
-    run_casos_para_algoritmo(
-        avl_sort,
-        "AVL",
+    calcular_testes(
+        abb_sort,
+        "Ordenação por ABB",
         gerar_melhor_caso,
-        gerar_pior_caso
+        "Melhor Caso"
+    )
+
+def testar_avl_sort():
+    '''
+    Gera os testes para a ordenação por Árvore AVL
+    '''
+    calcular_testes(
+        avl_sort,
+        "Ordenação por AVL",
+        gerar_pior_caso,
+        "Pior Caso"
+    )
+
+    calcular_testes(
+        avl_sort,
+        "Ordenação por AVL",
+        gerar_melhor_caso,
+        "Melhor Caso"
     )

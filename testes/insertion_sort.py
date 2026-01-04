@@ -32,14 +32,38 @@ def gerar_melhor_caso(tamanho: int) -> list[int]:
     '''
     return list(range(tamanho))
 
+def testar_insertion_sort_linear():
+    '''
+    Gera os testes para o Insertion Sort com busca linear
+    '''
+    calcular_testes(
+        insertion_sort_linear,
+        "Ordenação por inserção (busca linear)",
+        gerar_pior_caso,
+        "Pior Caso"
+    )
 
-def display_tabela():
-    print("Ordenação por inserção usando busca linear".upper())
-    display_pior_caso(insertion_sort_linear, "Insertion Sort (linear)", gerar_pior_caso)
-    print("")
-    display_melhor_caso(insertion_sort_linear, "Insertion Sort (linear)", gerar_melhor_caso)
-    print("")
-    print("Ordenação por inserção usando busca binária".upper())
-    display_pior_caso(insertion_sort_binary, "Insertion Sort (binary)", gerar_pior_caso)
-    print("")
-    display_melhor_caso(insertion_sort_binary, "Insertion Sort (binary)", gerar_melhor_caso)
+    calcular_testes(
+        insertion_sort_linear,
+        "Ordenação por inserção (busca linear)",
+        gerar_melhor_caso,
+        "Melhor Caso"
+    )
+
+def testar_insertion_sort_binary():
+    '''
+    Gera os testes para o Insertion Sort com busca binária
+    '''
+    calcular_testes(
+        insertion_sort_binary,
+        "Ordenação por inserção (busca binária)",
+        gerar_pior_caso,
+        "Pior Caso"
+    )
+
+    calcular_testes(
+        insertion_sort_binary,
+        "Ordenação por inserção (busca binária)",
+        gerar_melhor_caso,
+        "Melhor Caso"
+    )

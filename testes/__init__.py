@@ -1,18 +1,14 @@
-'''
-Modulo para a criação dos testes e das tabelas de resultados
-
-Para cada resultado
-'''
-
-from .insertion_sort import display_tabela as insertion_sort_tabela
-from .heap_sort import display_tabela as heap_sort_tabela
-from .arvore_binaria import display_tabela as arvore_binaria_tabela
-from .tabela import set_repeticoes, set_entradas
+from .insertion_sort import testar_insertion_sort_linear, testar_insertion_sort_binary
+from .heap_sort import testar_heap_sort_iterativo, testar_heap_sort_recursivo
+from .arvore_binaria import testar_abb_sort, testar_avl_sort
+from .tabela import set_entradas
 
 __all__ = [
-    "insertion_sort_tabela",
-    "heap_sort_tabela",
-    "arvore_binaria_tabela",
-    "set_repeticoes",
+    "testar_insertion_sort_linear",
+    "testar_insertion_sort_binary",
     "set_entradas",
+    "testar_heap_sort_iterativo",
+    "testar_heap_sort_recursivo",
+    "testar_abb_sort",
+    "testar_avl_sort",
 ]

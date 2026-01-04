@@ -23,30 +23,38 @@ def gerar_melhor_caso(tamanho: int) -> list[int]:
     return list(reversed(range(tamanho)))
 
 
-def display_tabela():
-    print("ORDENAÇÃO POR HEAP SORT ITERATIVO")
-    display_pior_caso(
+def testar_heap_sort_iterativo():
+    '''
+    Gera os testes para a ordenação por Heap Sort (iterativo)
+    '''
+    calcular_testes(
         heap_sort_iterativo,
-        "Heap Sort (iterativo)",
-        gerar_pior_caso
+        "Ordenação por heap sort (iterativo)",
+        gerar_pior_caso,
+        "Pior Caso"
     )
-    print("")
-    display_melhor_caso(
-        heap_sort_iterativo,
-        "Heap Sort (iterativo)",
-        gerar_melhor_caso
-    )
-    print("")
 
-    print("ORDENAÇÃO POR HEAP SORT RECURSIVO")
-    display_pior_caso(
-        heap_sort_recursivo,
-        "Heap Sort (recursivo)",
-        gerar_pior_caso
+    calcular_testes(
+        heap_sort_iterativo,
+        "Ordenação por heap sort (iterativo)",
+        gerar_melhor_caso,
+        "Melhor Caso"
     )
-    print("")
-    display_melhor_caso(
+
+def testar_heap_sort_recursivo():
+    '''
+    Gera os testes para a ordenação por Heap Sort (recursivo)
+    '''
+    calcular_testes(
         heap_sort_recursivo,
-        "Heap Sort (recursivo)",
-        gerar_melhor_caso
+        "Ordenação por heap sort (recursivo)",
+        gerar_pior_caso,
+        "Pior Caso"
+    )
+
+    calcular_testes(
+        heap_sort_recursivo,
+        "Ordenação por heap sort (recursivo)",
+        gerar_melhor_caso,
+        "Melhor Caso"
     )
