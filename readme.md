@@ -1,6 +1,15 @@
-# Repositório de Programação em Lógica
+# Programação em Lógica
 
-Este repositório armazena os exercícios e projetos desenvolvidos na disciplina de Programação em Lógica, do curso de Ciência da Computação. O objetivo é registrar a evolução e a implementação de bases de conhecimento e regras lógicas usando a linguagem Prolog.
+Este repositório tem o objetivo de registrar a evolução e a implementação de bases de conhecimento e regras lógicas usando a linguagem Prolog.
+
+## Universidade Federal do Pará (UFPA)
+
+**Curso:** Ciência da Computação  
+**Disciplina:** Programação em Lógica (EN05218)  
+**Professor:** Josivan Rodrigues dos Reis  
+**Aluno:** Alessandro Reali Lopes Silva  
+
+---
 
 ## 🤖 Tecnologias Utilizadas
 
@@ -22,19 +31,27 @@ Atividade em sala para criação de regras, abordando uma cadeia alimentar e a r
 
 Atividade de introdução à recursividade em Prolog, com uma implementação otimizada para calcular a sequência de Fibonacci.
 
+### 4. [`mergesort.pl`](./mergesort.pl)
+
+Implementação do algoritmo Merge Sort em Prolog, incluindo divisão da lista em metades, mesclagem ordenada e exemplos de consultas para testar os predicados `dividir/3`, `merge/3` e `mergesort/2`.
+
 ---
 
 ## 🚀 Como Usar
 
-1.  Certifique-se de ter o [SWI-Prolog](https://www.swi-prolog.org/download/stable) instalado em sua máquina.
-2.  Clone este repositório para o seu computador.
-3.  Navegue até a pasta do projeto e inicie o interpretador SWI-Prolog:
+1. Certifique-se de ter o [SWI-Prolog](https://www.swi-prolog.org/download/stable) instalado em sua máquina.
+2. Clone este repositório para o seu computador.
+3. Navegue até a pasta do projeto e inicie o interpretador SWI-Prolog:
+
     ```bash
     swipl
     ```
-4.  Dentro do interpretador, carregue (consulte) a base de conhecimento:
+
+4. Dentro do interpretador, carregue (consulte) a base de conhecimento:
+
     ```prolog
     ?- consult('nome_do_arquivo.pl').
     true.
     ```
-5.  Pronto! Agora você pode fazer consultas à base de conhecimento.
+
+5. Pronto! Agora você pode fazer consultas à base de conhecimento.
