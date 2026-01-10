@@ -48,4 +48,4 @@ pvz-java/
 ## 👥 Equipe
 
 - Desenvolvedor: [reali-705](https://github.com/reali-705)
-- Desenvolvedor: [FelipeBrazil](https://github.com/FelipeBrazil)
+- Desenvolvedor: [FelipeBrasill](https://github.com/FelipeBrasill)
