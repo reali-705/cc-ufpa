@@ -8,7 +8,7 @@ public class ZumbiTest {
     
     private Zumbi zumbi;
     private static final double POSICAO_INICIAL_X = 9.0;
-    private static final double POSICAO_INICIAL_Y = 0;
+    private static final int POSICAO_INICIAL_Y = 0;
 
     @BeforeEach
     public void setUp() {
