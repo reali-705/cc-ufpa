@@ -10,7 +10,7 @@ public class PlantaTest {
 
     @BeforeEach
     public void setUp() {
-        planta = new Planta(Config.VIDA_ATIRADOR, Config.DANO_ATIRADOR, );
+        planta = new Planta(Config.VIDA_ATIRADOR, Config.DANO_ATIRADOR, 1.0, 0);
     }
 
     @Test
