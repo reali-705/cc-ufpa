@@ -1,37 +1,25 @@
 package ufpa.icen.pvz.model;
 
-public class Planta extends EntidadeViva implements Atacante {
-    int dano;
-    int alcance;
-    int cooldownAttack;
+abstract public class Planta extends EntidadeViva {
+    /**  */
+    protected int custo;
+
+    /** */
+    protected int tempoPlantarNovamente;
+
+    /**
+     * Construtor da planta.
+     * 
+     * @param posicaoX posição horizontal (double para movimento contínuo)
+     * @param posicaoY posição vertical (linha do tabuleiro)
+     */
     
-    public Planta(int vida, int dano, double posicaoX, int posicaoY) {
-        super(vida, posicaoX, posicaoY);
-        this.dano = dano;
-        this.cooldownAttack = 1000; // Exemplo de cooldown em milissegundos
-    }
-    
-    @Override
-    public void atacar() {
-        // Implementação do ataque da planta
+    public Planta(double posicaoX, int posicaoY, Config.StatusBasicoPlanta status) {
+        super(posicaoX, posicaoY, status.vida());
+        this.custo = status.custo();
+        this.tempoPlantarNovamente = status.tempoRecarga();
     }
 
-    @Override
-    public boolean podeAtacar() {
-        return this.estado == EstadoEntidade.VIVA;
-    }
-
-    @Override
-    public void atualizar() {
-        // Lógica de atualização da planta (ex: verificar se pode atacar)
-    }
-
-    public int getDano() {
-        return dano;
-    }
-
-    public int getAlcance() {
-        return alcance;
-    }
-    
+    public int getCusto() { return custo; }
+    public int getTempoPlantarNovamente() { return tempoPlantarNovamente; }
 }
