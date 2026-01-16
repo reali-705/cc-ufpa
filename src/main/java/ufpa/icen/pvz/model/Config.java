@@ -18,20 +18,23 @@ public class Config {
     // Configurações de Recursos
     public static final int RECURSOS_INICIAIS = 50;
     public static final int RECURSOS_POR_CICLO = 25;
-    public static final int CUSTO_ATIRADOR = 50;
 
     // Configurações de Tempo (milissegundos)
     public static final int TEMPO_CICLO = 1000;
-    public static final int TEMPO_DISPARO = 1000;
-    public static final int TEMPO_SPAWN_ZUMBIS = 3000;
+    public static final int TEMPO_SPAWN_ZUMBIS = 5000;
 
-    // Configurações de Entidades
-    public static final int VIDA_ZUMBI = 100;
-    public static final int DANO_ZUMBI = 10;
-    public static final double VELOCIDADE_ZUMBI = 0.5;
-    public static final int VIDA_ATIRADOR = 50;
-    public static final int DANO_ATIRADOR = 20;
-    public static final double VELOCIDADE_PROJETIL = 1.5;
+    // Configurações de Zumbis
+    public record StatusBasicoZumbi(int vida, int dano, int tempoAtaque, double velocidade) {}
+
+    // Configurações de Zumbi Padrão
+    public static final StatusBasicoZumbi ZUMBI_PADRAO = new StatusBasicoZumbi(100, 10, 1500, 0.5);
+    // Configurações de Plantas
+    public record StatusBasicoPlanta(int vida, int custo, int tempoRecarga) {}
+    public record StatusAtaquePlanta(int dano, int tempoAtaque, double velocidadeProjetil) {}
+
+    // Configurações da Atiradora de Ervilha
+    public static final StatusBasicoPlanta ATIRADORA_DE_ERVILHA = new StatusBasicoPlanta(50, 50, 3000);
+    public static final StatusAtaquePlanta ATIRADORA_DE_ERVILHA_ATAQUE = new StatusAtaquePlanta(20, 1000, 1.5);
 
     // Construtor privado para evitar instanciação
     private Config() {

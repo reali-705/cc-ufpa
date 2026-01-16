@@ -1,10 +1,13 @@
 package ufpa.icen.pvz.model;
 
-public class Projetil extends Entidade implements Movivel {
+public class Projetil extends Entidade implements Movivel, Impactante {
+    /** Dano causado pelo projétil ao atingir um alvo. */
     private int dano;
+
+    /**  */
     private double velocidade;
 
-    public Projetil(int dano, double velocidade, double posicaoX, int posicaoY) {
+    public Projetil(double posicaoX, int posicaoY, int dano, double velocidade) {
         super(posicaoX, posicaoY);
         this.dano = dano;
         this.velocidade = velocidade;
@@ -16,15 +19,10 @@ public class Projetil extends Entidade implements Movivel {
     }
 
     @Override
-    public void atualizar() {
-        mover();
+    public void atingir(EntidadeViva outra) {
+        outra.receberDano(dano);
     }
     
-    public int getDano() {
-        return dano;
-    }
-
-    public double getVelocidade() {
-        return velocidade;
-    }
+    public int getDano() { return dano; }
+    public double getVelocidade() { return velocidade; }
 }

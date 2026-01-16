@@ -29,24 +29,7 @@ public abstract class Entidade {
         this.estado = EstadoEntidade.VIVA;
     }
 
-    /**
-     * Atualiza o estado e comportamento da entidade a cada tick do jogo.
-     * <p>
-     * Deve ser implementado pelas subclasses com lógica específica (movimento, ataque, etc).
-     * </p>
-     */
-    public abstract void atualizar();
-
     // ===== Getters e Setters =====
-
-    /**
-     * Obtém o estado atual da entidade.
-     * 
-     * @return o estado da entidade
-     */
-    public EstadoEntidade getEstado() {
-        return estado;
-    }
     
     /**
      * Define o estado da entidade.
@@ -58,20 +41,23 @@ public abstract class Entidade {
     }
 
     /**
+     * Obtém o estado atual da entidade.
+     * 
+     * @return o estado da entidade
+     */
+    public EstadoEntidade getEstado() { return estado; }
+
+    /**
      * Obtém a posição horizontal da entidade.
      * 
      * @return posição X (valor contínuo)
      */
-    public double getPosicaoX() {
-        return posicaoX;
-    }
+    public double getPosicaoX() { return posicaoX; }
     
     /**
      * Obtém a posição vertical da entidade.
      * 
      * @return posição Y (linha do tabuleiro)
      */
-    public int getPosicaoY() {
-        return posicaoY;
-    }
+    public int getPosicaoY() { return posicaoY; }
 }
