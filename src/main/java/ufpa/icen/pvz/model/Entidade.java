@@ -20,8 +20,8 @@ public abstract class Entidade {
     /**
      * Construtor base para todas as entidades.
      * 
-     * @param posicaoX posição horizontal (double para movimento contínuo)
-     * @param posicaoY posição vertical (linha do tabuleiro)
+     * @param posicaoX A posição horizontal no tabuleiro (0 a N).
+     * @param posicaoY A linha do tabuleiro (0 a M).
      */
     public Entidade(double posicaoX, int posicaoY) {
         this.posicaoX = posicaoX;
@@ -32,9 +32,12 @@ public abstract class Entidade {
     // ===== Getters e Setters =====
     
     /**
-     * Define o estado da entidade.
+     * Define o estado atual da entidade.
+     * <p>
+     * Usado para alterar o comportamento ou renderização (ex: matar a entidade).
+     * </p>
      * 
-     * @param estado novo estado
+     * @param estado O novo estado a ser atribuído.
      */
     public void setEstado(EstadoEntidade estado) {
         this.estado = estado;
@@ -43,21 +46,21 @@ public abstract class Entidade {
     /**
      * Obtém o estado atual da entidade.
      * 
-     * @return o estado da entidade
+     * @return O valor do enum {@link EstadoEntidade} representando o status.
      */
     public EstadoEntidade getEstado() { return estado; }
 
     /**
      * Obtém a posição horizontal da entidade.
      * 
-     * @return posição X (valor contínuo)
+     * @return A coordenada X (pode ser fracionária para movimentos suaves).
      */
     public double getPosicaoX() { return posicaoX; }
     
     /**
      * Obtém a posição vertical da entidade.
      * 
-     * @return posição Y (linha do tabuleiro)
+     * @return O índice inteiro da linha onde a entidade está.
      */
     public int getPosicaoY() { return posicaoY; }
 }

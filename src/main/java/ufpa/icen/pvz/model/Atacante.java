@@ -13,8 +13,15 @@ public interface Atacante {
      * <p>
      * Leva em consideração o tempo desde o último ataque e o tempo de recarga.
      * </p>
+     * 
+     * @return true se o ataque está disponível, false se estiver em tempo de recarga (cooldown).
      */
     boolean podeAtacar();
     
+    /**
+     * Obtém o tempo de recarga (cooldown) necessário entre dois ataques consecutivos.
+     * 
+     * @return O tempo de recarga em milissegundos.
+     */
     int getTempoAtaque();
 }

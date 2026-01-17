@@ -1,17 +1,27 @@
 package ufpa.icen.pvz.model;
 
+/**
+ * Interface para entidades que causam efeito (geralmente dano) ao colidir fisicamente com outras.
+ * <p>
+ * Define o comportamento de colisão para elementos como Projéteis (que somem ao bater)
+ * ou Zumbis (que atacam ao encostar).
+ * </p>
+ */
 public interface Impactante {
     /**
-     * Método chamado quando a entidade impacta outra entidade.
+     * Aplica o efeito do impacto na entidade alvo.
+     * <p>
+     * A implementação deve definir como o dano ou efeito é transferido para a entidade colidida.
+     * </p>
      * 
-     * @param outra Entidade que foi impactada
+     * @param outra A entidade viva que sofreu o impacto.
      */
     void atingir(EntidadeViva outra);
 
     /**
-     * Obtém o dano causado pelo impacto.
+     * Obtém a quantidade de dano base que este impacto causa.
      * 
-     * @return valor do dano
+     * @return Valor do dano em pontos de vida.
      */
     int getDano();
 }
