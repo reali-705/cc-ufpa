@@ -15,14 +15,11 @@ public interface Movivel {
      * </p>
      */
     void mover();
-    
+
     /**
-     * Obtém a velocidade de movimento da entidade.
-     * <p>
-     * A velocidade é fixa e define quantas unidades a entidade se move por tick.
-     * </p>
+     * Obtém a velocidade de deslocamento da entidade.
      * 
-     * @return velocidade de movimento (pixels ou unidades por tick)
+     * @return A quantidade de pixels/unidades que a entidade move por tick.
      */
     double getVelocidade();
 }

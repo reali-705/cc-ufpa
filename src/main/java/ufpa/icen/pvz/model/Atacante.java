@@ -9,31 +9,19 @@ package ufpa.icen.pvz.model;
  */
 public interface Atacante {
     /**
-     * Realiza um ataque.
+     * Verifica se a entidade pode atacar no momento atual.
      * <p>
-     * A implementação deve verificar {@link #podeAtacar()} antes de executar.
-     * </p>
-     */
-    void atacar();
-    
-    /**
-     * Obtém o dano causado por cada ataque desta entidade.
-     * <p>
-     * O dano é fixo e será aplicado quando um ataque acerta o alvo.
+     * Leva em consideração o tempo desde o último ataque e o tempo de recarga.
      * </p>
      * 
-     * @return valor de dano em pontos de vida
-     */
-    int getDano();
-    
-    /**
-     * Verifica se a entidade pode atacar no momento.
-     * <p>
-     * Retorna false se o ataque ainda está em cooldown ou se a entidade não está
-     * em condições de atacar (ex: morta, imobilizada).
-     * </p>
-     * 
-     * @return true se pode atacar agora, false caso contrário
+     * @return true se o ataque está disponível, false se estiver em tempo de recarga (cooldown).
      */
     boolean podeAtacar();
+    
+    /**
+     * Obtém o tempo de recarga (cooldown) necessário entre dois ataques consecutivos.
+     * 
+     * @return O tempo de recarga em milissegundos.
+     */
+    int getTempoAtaque();
 }

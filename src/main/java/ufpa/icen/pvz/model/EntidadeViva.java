@@ -8,20 +8,20 @@ package ufpa.icen.pvz.model;
  * </p>
  */
 public abstract class EntidadeViva extends Entidade {
-    /** Pontos de vida atuais da entidade. */
-    protected int vida;
-    
     /** Limite máximo de pontos de vida. */
     protected int vidaMaxima;
+    
+    /** Pontos de vida atuais da entidade. */
+    protected int vida;
 
     /**
      * Construtor para entidades com sistema de vida.
      * 
-     * @param vidaMaxima pontos de vida máximos da entidade
-     * @param posicaoX posição horizontal
-     * @param posicaoY posição vertical
+     * @param posicaoX Posição horizontal inicial.
+     * @param posicaoY Posição vertical (linha) inicial.
+     * @param vidaMaxima Limite de pontos de vida da entidade.
      */
-    public EntidadeViva(int vidaMaxima, double posicaoX, int posicaoY) {
+    public EntidadeViva(double posicaoX, int posicaoY, int vidaMaxima) {
         super(posicaoX, posicaoY);
         this.vidaMaxima = vidaMaxima;
         this.vida = vidaMaxima;
@@ -36,10 +36,30 @@ public abstract class EntidadeViva extends Entidade {
      * @param dano quantidade de dano a ser aplicado
      */
     public void receberDano(int dano) {
+        if (!this.estaViva()) {
+            return;
+        }
         this.vida -= dano;
         if (this.vida <= 0) {
             this.vida = 0;
-            this.estado = EstadoEntidade.MORTA;
+            this.setEstado(EstadoEntidade.MORTA);
+        }
+    }
+
+    /**
+     * Restaura pontos de vida da entidade.
+     * <p>
+     * A cura não ressuscita entidades mortas e o total de vida nunca excede a {@link #vidaMaxima}.
+     * </p>
+     * 
+     * @param quantidade Quantidade de pontos de vida a recuperar.
+     */
+    public void curar(int quantidade) {
+        if (this.estaViva()) {
+            this.vida += quantidade;
+            if (this.vida > this.vidaMaxima) {
+                this.vida = this.vidaMaxima;
+            }
         }
     }
 
@@ -62,35 +82,12 @@ public abstract class EntidadeViva extends Entidade {
      * 
      * @return vida atual
      */
-    public int getVida() {
-        return vida;
-    }
+    public int getVida() { return vida; }
     
     /**
      * Obtém o limite máximo de pontos de vida.
      * 
      * @return vida máxima
      */
-    public int getVidaMaxima() {
-        return vidaMaxima;
-    }
-    
-    /**
-     * Define diretamente os pontos de vida.
-     * <p>
-     * Clampeia o valor entre 0 e vidaMaxima. Se atingir 0, marca como MORTA.
-     * </p>
-     * 
-     * @param vida novo valor de vida
-     */
-    public void setVida(int vida) {
-        this.vida = vida;
-        if (this.vida > this.vidaMaxima) {
-            this.vida = this.vidaMaxima;
-        }
-        if (this.vida <= 0) {
-            this.vida = 0;
-            this.estado = EstadoEntidade.MORTA;
-        }
-    }
+    public int getVidaMaxima() { return vidaMaxima; }
 }
