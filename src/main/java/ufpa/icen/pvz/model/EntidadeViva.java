@@ -17,9 +17,9 @@ public abstract class EntidadeViva extends Entidade {
     /**
      * Construtor para entidades com sistema de vida.
      * 
-     * @param vidaMaxima pontos de vida máximos da entidade
-     * @param posicaoX posição horizontal
-     * @param posicaoY posição vertical
+     * @param posicaoX Posição horizontal inicial.
+     * @param posicaoY Posição vertical (linha) inicial.
+     * @param vidaMaxima Limite de pontos de vida da entidade.
      */
     public EntidadeViva(double posicaoX, int posicaoY, int vidaMaxima) {
         super(posicaoX, posicaoY);
@@ -46,6 +46,14 @@ public abstract class EntidadeViva extends Entidade {
         }
     }
 
+    /**
+     * Restaura pontos de vida da entidade.
+     * <p>
+     * A cura não ressuscita entidades mortas e o total de vida nunca excede a {@link #vidaMaxima}.
+     * </p>
+     * 
+     * @param quantidade Quantidade de pontos de vida a recuperar.
+     */
     public void curar(int quantidade) {
         if (this.estaViva()) {
             this.vida += quantidade;
