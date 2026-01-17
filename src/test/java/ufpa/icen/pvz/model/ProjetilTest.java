@@ -7,19 +7,27 @@ import org.junit.jupiter.api.Test;
 public class ProjetilTest {
     
     private Projetil projetil;
-    private static final double POSICAO_INICIAL_X = 9.0;
-    private static final int POSICAO_INICIAL_Y = 0;
 
     @BeforeEach
     public void setUp() {
-        projetil = new Projetil(Config.DANO_ATIRADOR, Config.VELOCIDADE_PROJETIL, POSICAO_INICIAL_X, POSICAO_INICIAL_Y);
+        projetil = new Projetil(1.0, 1, 10, 2.0);
     }
 
     @Test
     public void testMovimento() {
         projetil.mover();
-        double posicaoEsperada = POSICAO_INICIAL_X + Config.VELOCIDADE_PROJETIL;
+        double posicaoEsperada = 1.0 + projetil.getVelocidade();
+        assertTrue(projetil.getPosicaoX() > 1.0, "A posição X do projetil deve ter aumentado após o movimento.");
         assertEquals(posicaoEsperada, projetil.getPosicaoX(), 0.01, "A posição X do projetil após o movimento está incorreta.");
-        assertEquals(POSICAO_INICIAL_Y, projetil.getPosicaoY(), "A posição Y do projetil deve permanecer inalterada.");
+        assertEquals(1, projetil.getPosicaoY(), "A posição Y do projetil deve permanecer inalterada.");
+    }
+
+    @Test
+    public void testAtingir() {
+        int vidaAlvo = 50;
+        EntidadeViva alvo = new EntidadeViva(5.0, 1, vidaAlvo) {};
+        
+        projetil.atingir(alvo);
+        assertEquals(vidaAlvo - projetil.getDano(), alvo.getVida(), "O alvo deve ter recebido dano do projetil.");
     }
 }
