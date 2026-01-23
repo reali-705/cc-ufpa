@@ -1,4 +1,6 @@
-package ufpa.icen.pvz.model;
+package ufpa.icen.pvz.model.interfaces;
+
+import ufpa.icen.pvz.model.entidades.EntidadeViva;
 
 /**
  * Interface para entidades que causam efeito (geralmente dano) ao colidir fisicamente com outras.

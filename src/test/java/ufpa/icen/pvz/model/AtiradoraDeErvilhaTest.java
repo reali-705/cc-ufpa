@@ -4,6 +4,11 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import ufpa.icen.pvz.config.Config;
+import ufpa.icen.pvz.model.entidades.Projetil;
+import ufpa.icen.pvz.model.entidades.plantas.AtiradoraDeErvilha;
+import ufpa.icen.pvz.model.enums.EstadoEntidade;
+
 public class AtiradoraDeErvilhaTest {
     
     private AtiradoraDeErvilha planta;

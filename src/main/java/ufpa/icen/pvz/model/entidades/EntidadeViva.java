@@ -1,4 +1,6 @@
-package ufpa.icen.pvz.model;
+package ufpa.icen.pvz.model.entidades;
+
+import ufpa.icen.pvz.model.enums.EstadoEntidade;
 
 /**
  * Classe abstrata para entidades que possuem sistema de vida (HP).

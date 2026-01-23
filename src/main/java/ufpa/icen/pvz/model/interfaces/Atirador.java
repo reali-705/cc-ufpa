@@ -1,4 +1,6 @@
-package ufpa.icen.pvz.model;
+package ufpa.icen.pvz.model.interfaces;
+
+import ufpa.icen.pvz.model.entidades.Projetil;
 
 /**
  * Interface para entidades que atacam à distância lançando projéteis.

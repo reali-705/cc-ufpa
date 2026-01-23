@@ -1,4 +1,4 @@
-package ufpa.icen.pvz.model;
+package ufpa.icen.pvz.config;
 
 /**
  * Classe de configuração do jogo Plants vs Zombies.

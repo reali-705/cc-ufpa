@@ -1,4 +1,7 @@
-package ufpa.icen.pvz.model;
+package ufpa.icen.pvz.model.entidades.plantas;
+
+import ufpa.icen.pvz.config.Config;
+import ufpa.icen.pvz.model.entidades.EntidadeViva;
 
 /**
  * Classe abstrata que serve de base para todas as plantas do jogo.

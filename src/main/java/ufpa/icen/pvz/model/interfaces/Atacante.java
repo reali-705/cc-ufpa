@@ -1,4 +1,4 @@
-package ufpa.icen.pvz.model;
+package ufpa.icen.pvz.model.interfaces;
 
 /**
  * Interface que define o contrato para entidades que podem realizar ataques.

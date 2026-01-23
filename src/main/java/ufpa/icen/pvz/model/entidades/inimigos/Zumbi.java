@@ -1,4 +1,10 @@
-package ufpa.icen.pvz.model;
+package ufpa.icen.pvz.model.entidades.inimigos;
+
+import ufpa.icen.pvz.config.Config;
+import ufpa.icen.pvz.model.entidades.EntidadeViva;
+import ufpa.icen.pvz.model.interfaces.Atacante;
+import ufpa.icen.pvz.model.interfaces.Impactante;
+import ufpa.icen.pvz.model.interfaces.Movivel;
 
 /**
  * Representa um zumbi inimigo no jogo.

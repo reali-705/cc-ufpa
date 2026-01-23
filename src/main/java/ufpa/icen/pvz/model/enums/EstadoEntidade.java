@@ -1,4 +1,4 @@
-package ufpa.icen.pvz.model;
+package ufpa.icen.pvz.model.enums;
 
 /**
  * Representa os possíveis estados de uma entidade no jogo.

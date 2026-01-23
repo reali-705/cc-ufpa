@@ -1,4 +1,7 @@
-package ufpa.icen.pvz.model;
+package ufpa.icen.pvz.model.entidades;
+
+import ufpa.icen.pvz.model.interfaces.Impactante;
+import ufpa.icen.pvz.model.interfaces.Movivel;
 
 /**
  * Representa um projétil disparado por plantas.

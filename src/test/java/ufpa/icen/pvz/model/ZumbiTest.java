@@ -4,6 +4,11 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import ufpa.icen.pvz.config.Config;
+import ufpa.icen.pvz.model.entidades.EntidadeViva;
+import ufpa.icen.pvz.model.entidades.inimigos.Zumbi;
+import ufpa.icen.pvz.model.enums.EstadoEntidade;
+
 public class ZumbiTest {
     
     private Zumbi zumbi;

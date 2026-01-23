@@ -1,4 +1,9 @@
-package ufpa.icen.pvz.model;
+package ufpa.icen.pvz.model.entidades.plantas;
+
+import ufpa.icen.pvz.config.Config;
+import ufpa.icen.pvz.model.entidades.Projetil;
+import ufpa.icen.pvz.model.interfaces.Atacante;
+import ufpa.icen.pvz.model.interfaces.Atirador;
 
 /**
  * Representa a planta "Atiradora de Ervilha" (Peashooter).
