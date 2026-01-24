@@ -7,8 +7,8 @@ public class GameController implements Runnable {
     private Thread gameThread;
     private boolean rodando;
     private GameEstados estadoAtual;
-    private final int FPS = 60;
-    private final int UPS = 60;
+    private static final int FPS = 60;
+    private static final int UPS = 60;
     private Nivel nivelAtual;
 
     public GameController() {
@@ -97,6 +97,7 @@ public class GameController implements Runnable {
     }
     
     private void pausarJogo() {
+        // Lógica deverá ser aperfeiçoada posteriormente
         if (estadoAtual == GameEstados.JOGANDO) {
             estadoAtual = GameEstados.PAUSADO;
             System.out.println("Jogo pausado.");
