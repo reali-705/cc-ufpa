@@ -1,4 +1,6 @@
-package ufpa.icen.pvz.model;
+package ufpa.icen.pvz.model.entidades;
+
+import ufpa.icen.pvz.model.enums.EstadoEntidade;
 
 /**
  * Classe abstrata base para todas as entidades renderizáveis do jogo.

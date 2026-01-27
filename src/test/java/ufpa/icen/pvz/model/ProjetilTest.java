@@ -4,6 +4,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import ufpa.icen.pvz.model.entidades.EntidadeViva;
+import ufpa.icen.pvz.model.entidades.Projetil;
+
 public class ProjetilTest {
     
     private Projetil projetil;
