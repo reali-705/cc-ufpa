@@ -1,0 +1,93 @@
+package ufpa.icen.pvz.model;
+
+/**
+ * Classe abstrata para entidades que possuem sistema de vida (HP).
+ * <p>
+ * Estende {@link Entidade} e adiciona conceitos de vida máxima, vida atual,
+ * e morte. Serve como base para Plantas e Zumbis.
+ * </p>
+ */
+public abstract class EntidadeViva extends Entidade {
+    /** Limite máximo de pontos de vida. */
+    protected int vidaMaxima;
+    
+    /** Pontos de vida atuais da entidade. */
+    protected int vida;
+
+    /**
+     * Construtor para entidades com sistema de vida.
+     * 
+     * @param posicaoX Posição horizontal inicial.
+     * @param posicaoY Posição vertical (linha) inicial.
+     * @param vidaMaxima Limite de pontos de vida da entidade.
+     */
+    public EntidadeViva(double posicaoX, int posicaoY, int vidaMaxima) {
+        super(posicaoX, posicaoY);
+        this.vidaMaxima = vidaMaxima;
+        this.vida = vidaMaxima;
+    }
+
+    /**
+     * Aplica dano à entidade, reduzindo sua vida.
+     * <p>
+     * Se a vida chegar a zero ou menos, o estado é automaticamente alterado para MORTA.
+     * </p>
+     * 
+     * @param dano quantidade de dano a ser aplicado
+     */
+    public void receberDano(int dano) {
+        if (!this.estaViva()) {
+            return;
+        }
+        this.vida -= dano;
+        if (this.vida <= 0) {
+            this.vida = 0;
+            this.setEstado(EstadoEntidade.MORTA);
+        }
+    }
+
+    /**
+     * Restaura pontos de vida da entidade.
+     * <p>
+     * A cura não ressuscita entidades mortas e o total de vida nunca excede a {@link #vidaMaxima}.
+     * </p>
+     * 
+     * @param quantidade Quantidade de pontos de vida a recuperar.
+     */
+    public void curar(int quantidade) {
+        if (this.estaViva()) {
+            this.vida += quantidade;
+            if (this.vida > this.vidaMaxima) {
+                this.vida = this.vidaMaxima;
+            }
+        }
+    }
+
+    /**
+     * Verifica se a entidade está viva.
+     * <p>
+     * Helper que encapsula a lógica de verificação de vida e estado.
+     * </p>
+     * 
+     * @return true se a entidade está viva, false caso contrário
+     */
+    public boolean estaViva() {
+        return this.vida > 0 && this.estado != EstadoEntidade.MORTA;
+    }
+
+    // ===== Getters e Setters =====
+
+    /**
+     * Obtém os pontos de vida atuais.
+     * 
+     * @return vida atual
+     */
+    public int getVida() { return vida; }
+    
+    /**
+     * Obtém o limite máximo de pontos de vida.
+     * 
+     * @return vida máxima
+     */
+    public int getVidaMaxima() { return vidaMaxima; }
+}
