@@ -11,12 +11,17 @@ public class GameView {
         telajogo = new JFrame("Plants vs Zombies");
         telajogo.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         telajogo.setSize(800, 600);
-        telajogo.setVisible(true);
         telajogo.setLocationRelativeTo(null);
+        telajogo.setResizable(false);
 
+        // Adiciona o MenuCenario
+        MenuCenario menuCenario = new MenuCenario();
+        telajogo.getContentPane().add(menuCenario);
+
+        telajogo.setVisible(true);
     }
 
-    // Exemplo de uso (remova depois de testar)
+   
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> new GameView());
     }

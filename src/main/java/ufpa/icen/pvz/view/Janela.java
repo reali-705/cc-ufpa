@@ -11,7 +11,7 @@ public class Janela extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setVisible(true);
-        this.cenario = new Cenario();
+        this.cenario = new MenuCenario();
         add(cenario);
     }
     
