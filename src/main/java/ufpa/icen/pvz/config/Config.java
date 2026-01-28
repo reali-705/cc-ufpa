@@ -23,7 +23,7 @@ public class Config {
     public static final int RECURSOS_INICIAIS = 50;
     
     /** Quantidade de sóis gerados periodicamente. */
-    public static final int RECURSOS_POR_CICLO = 25;
+    public static final int RECURSOS_POR_CICLO = 5;
 
     // Configurações de Tempo (milissegundos)
     /** Duração de cada ciclo de jogo em milissegundos. */
@@ -31,6 +31,16 @@ public class Config {
     
     /** Intervalo de tempo entre o surgimento de zumbis. */
     public static final int TEMPO_SPAWN_ZUMBIS = 5000;
+
+    /**
+     * Calcula o tempo de spawn dos zumbis baseado na dificuldade.
+     * @param dificuldade Nível de dificuldade atual (1, 2, 3...)
+     * @return Tempo em ms entre spawns.
+     */
+    public static long calcularTempoSpawn(int dificuldade) {
+        // Reduz 500ms para cada nivel de dificuldade, com mínimo de 1 segundo
+        return Math.max(1000, TEMPO_SPAWN_ZUMBIS - ((dificuldade - 1) * 500));
+    }
 
     // Configurações de Zumbis
     /** Estrutura de dados para atributos de Zumbis. */
