@@ -16,7 +16,7 @@ public class Linha {
     private final List<Projetil> projetis = new ArrayList<>();
 
     // adicionar na config
-    private static final double margemColisao = 0.5;
+    private static final double MARGEM_COLISAO = 0.5;
 
     private final double tamanho;
     private final int indice;
@@ -28,16 +28,16 @@ public class Linha {
 
     public boolean adicionarPlanta(double posicaoX, Class<? extends Planta> tipoPlanta) {
         if (posicaoX < 0 || posicaoX > tamanho) {
-            throw new IllegalArgumentException("Posição X fora dos limites da linha.");
+            System.err.println("Posição inválida tentando adicionar planta.");
+            return false;
         }
 
         int colunaDesejada = (int) posicaoX;
-        boolean ocupado = plantas.stream()
-            .anyMatch(planta -> (int) planta.getPosicaoX() == colunaDesejada);
-        
-        if (ocupado) {
-            System.out.println("Já existe uma planta na coluna " + colunaDesejada + ". Não é possível adicionar outra.");
-            return false;
+        for (Planta planta : plantas) {
+            if ((int) planta.getPosicaoX() == colunaDesejada) {
+                System.out.println("Já existe uma planta na coluna " + colunaDesejada + ". Não é possível adicionar outra.");
+                return false;
+            }
         }
         
         try {
@@ -79,8 +79,14 @@ public class Linha {
         }
         for (Planta planta : plantas) {
             if (planta instanceof Atirador atirador) {
-                boolean zumbiNaFrente = zumbis.stream()
-                    .anyMatch(zumbi -> zumbi.getPosicaoX() >= planta.getPosicaoX());
+                boolean zumbiNaFrente = false;
+
+                for (Zumbi zumbi : zumbis) {
+                    if (zumbi.getPosicaoX() > planta.getPosicaoX()) {
+                        zumbiNaFrente = true;
+                        break;
+                    }
+                }
 
                 if (zumbiNaFrente) {
                     Projetil projetil = atirador.atirar();
@@ -100,7 +106,7 @@ public class Linha {
                 continue;
             }
             for (Zumbi zumbi : zumbis) {
-                if (Math.abs(projetil.getPosicaoX() - zumbi.getPosicaoX()) < margemColisao) {
+                if (Math.abs(projetil.getPosicaoX() - zumbi.getPosicaoX()) < MARGEM_COLISAO) {
                     projetil.atingir(zumbi);
                     projetil.setEstado(EstadoEntidade.MORTA); // passar para logica do atingir
                     break;
@@ -126,7 +132,7 @@ public class Linha {
                 if (!planta.estaViva()) {
                     continue;
                 }
-                if (Math.abs(zumbi.getPosicaoX() - planta.getPosicaoX()) < margemColisao) {
+                if (Math.abs(zumbi.getPosicaoX() - planta.getPosicaoX()) < MARGEM_COLISAO) {
                     zumbi.setEstado(EstadoEntidade.ATACANDO); // deve ser passado para a logica do atingir
                     zumbi.atingir(planta);
                     atacou = true;
@@ -136,7 +142,7 @@ public class Linha {
                     break;
                 }
             }
-            if (!atacou) {
+            if (!atacou && zumbi.getEstado() == EstadoEntidade.ATACANDO) {
                 zumbi.setEstado(EstadoEntidade.MOVENDO);
             }
         }
