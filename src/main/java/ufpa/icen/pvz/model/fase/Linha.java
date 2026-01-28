@@ -108,7 +108,9 @@ public class Linha {
 
     private void atualizarProjeteis() {
         for (Projetil projetil : projetis) {
-                    projetil.setEstado(EstadoEntidade.MORTA); // TODO: mover mudança de estado para a lógica de Projetil.atingir(Zumbi)
+            // TODO: mover mudança de estado para a lógica de Projetil.atingir(Zumbi)
+            projetil.setEstado(EstadoEntidade.MORTA);
+            
             if (projetil.getPosicaoX() > tamanho) {
                 projetil.setEstado(EstadoEntidade.MORTA);
                 continue;
@@ -141,7 +143,8 @@ public class Linha {
                     continue;
                 }
                 if (Math.abs(zumbi.getPosicaoX() - planta.getPosicaoX()) < MARGEM_COLISAO) {
-                    zumbi.setEstado(EstadoEntidade.ATACANDO); // TODO: deve ser passado para a logica do atingir
+                    // TODO: deve ser passado para a logica do atingir
+                    zumbi.setEstado(EstadoEntidade.ATACANDO);
                     zumbi.atingir(planta);
                     atacou = true;
                     if (!planta.estaViva()) {
