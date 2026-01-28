@@ -9,7 +9,15 @@ import ufpa.icen.pvz.model.entidades.plantas.Planta;
 import ufpa.icen.pvz.model.enums.EstadoEntidade;
 import ufpa.icen.pvz.model.interfaces.Atirador;
 
-/** */
+/**
+ * Representa uma linha do campo de jogo, responsável por gerenciar os
+ * zumbis, plantas e projéteis presentes nessa linha.
+ * <p>
+ * A classe controla a criação e armazenamento das entidades na linha,
+ * atualiza seus estados a cada ciclo de jogo (movimentação, disparos,
+ * ataques) e realiza a detecção de colisões e remoção de entidades
+ * que foram destruídas ou saíram de jogo.
+ */
 public class Linha {
     private final List<Zumbi> zumbis = new ArrayList<>();
     private final List<Planta> plantas = new ArrayList<>();
@@ -21,14 +29,14 @@ public class Linha {
     private final double tamanho;
     private final int indice;
 
-    public Linha(double tamanho,int indice) {
+    public Linha(double tamanho, int indice) {
         this.tamanho = tamanho;
         this.indice = indice;
     }
 
     public boolean adicionarPlanta(double posicaoX, Class<? extends Planta> tipoPlanta) {
         if (posicaoX < 0 || posicaoX > tamanho) {
-            System.err.println("Posição inválida tentando adicionar planta.");
+            System.err.println("Posição " + posicaoX + " inválida (deve estar entre 0 e " + tamanho + ").");
             return false;
         }
 
@@ -41,10 +49,10 @@ public class Linha {
         }
         
         try {
-            Planta novPlanta = tipoPlanta
+            Planta novaPlanta = tipoPlanta
                 .getDeclaredConstructor(double.class, int.class)
                 .newInstance(posicaoX, this.indice);
-            plantas.add(novPlanta);
+            plantas.add(novaPlanta);
         } catch (Exception e) {
             e.printStackTrace();
             return false;
@@ -100,7 +108,7 @@ public class Linha {
 
     private void atualizarProjeteis() {
         for (Projetil projetil : projetis) {
-            projetil.mover();
+                    projetil.setEstado(EstadoEntidade.MORTA); // TODO: mover mudança de estado para a lógica de Projetil.atingir(Zumbi)
             if (projetil.getPosicaoX() > tamanho) {
                 projetil.setEstado(EstadoEntidade.MORTA);
                 continue;
@@ -133,7 +141,7 @@ public class Linha {
                     continue;
                 }
                 if (Math.abs(zumbi.getPosicaoX() - planta.getPosicaoX()) < MARGEM_COLISAO) {
-                    zumbi.setEstado(EstadoEntidade.ATACANDO); // deve ser passado para a logica do atingir
+                    zumbi.setEstado(EstadoEntidade.ATACANDO); // TODO: deve ser passado para a logica do atingir
                     zumbi.atingir(planta);
                     atacou = true;
                     if (!planta.estaViva()) {
