@@ -1,5 +1,7 @@
 # Diagrama de Classes - Plants vs Zombies
 
+[🏠 README](../../README.md)
+
 ## Visão Geral
 
 Este documento apresenta o diagrama de classes completo do jogo Plants vs Zombies em Java.
@@ -242,3 +244,8 @@ classDiagram
 - **Template Method**: Classes abstratas (Entidade, EntidadeViva, Planta) definem estrutura base
 - **Strategy**: Interfaces (Movivel, Atacante, Atirador, Impactante) definem comportamentos intercambiáveis
 - **Game Loop**: GameController implementa o padrão de loop de jogo com FPS e UPS fixos
+
+---
+
+| [⬆️ Voltar ao topo](#diagrama-de-classes---plants-vs-zombies) | [🏠 README](../../README.md) | [➡️ Próximo: Arquitetura](architecture.md) |
+| --- | --- | --- |
