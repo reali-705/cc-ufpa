@@ -63,11 +63,14 @@ public class Linha {
         }
     }
 
-    public void atualizar() {
+    public boolean atualizar() {
         atualizarPlantas();
         atualizarProjeteis();
-        atualizarZumbis();
+        if (atualizarZumbis()) {
+            return true;
+        }
         limparMortos();
+        return false;
     }
 
     private void atualizarPlantas() {
@@ -106,14 +109,13 @@ public class Linha {
         }
     }
 
-    private void atualizarZumbis() {
+    private boolean atualizarZumbis() {
         for (Zumbi zumbi : zumbis) {
             if (!zumbi.estaViva()) {
                 continue;
             }
             if (zumbi.getPosicaoX() <= 0) {
-                // Lógica para quando o zumbi alcança a casa (perder vida, fim de jogo, etc)
-                continue;
+                return true; // zumbi venceu
             }
             if (zumbi.getEstado() == EstadoEntidade.MOVENDO) {
                 zumbi.mover();
@@ -138,6 +140,7 @@ public class Linha {
                 zumbi.setEstado(EstadoEntidade.MOVENDO);
             }
         }
+        return false;
     }
 
     // analisar melhor forma para verificar entidades mortas/destruidas
