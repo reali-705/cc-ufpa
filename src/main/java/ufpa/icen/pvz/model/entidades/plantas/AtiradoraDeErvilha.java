@@ -2,6 +2,7 @@ package ufpa.icen.pvz.model.entidades.plantas;
 
 import ufpa.icen.pvz.config.Config;
 import ufpa.icen.pvz.model.entidades.Projetil;
+import ufpa.icen.pvz.model.enums.TipoPlanta;
 import ufpa.icen.pvz.model.interfaces.Atacante;
 import ufpa.icen.pvz.model.interfaces.Atirador;
 
@@ -35,33 +36,14 @@ public class AtiradoraDeErvilha extends Planta implements Atirador, Atacante {
      * @param posicaoY posição vertical (linha do tabuleiro)
      */
     public AtiradoraDeErvilha(double posicaoX, int posicaoY) {
-        super(posicaoX, posicaoY, Config.ATIRADORA_DE_ERVILHA);
-        Config.StatusAtaquePlanta statusAtaque = Config.ATIRADORA_DE_ERVILHA_ATAQUE;
+        super(posicaoX, posicaoY, TipoPlanta.ATIRADORA_DE_ERVILHA);
+        TipoPlanta.StatusAtaque statusAtaque = TipoPlanta.ATIRADORA_DE_ERVILHA.getStatusAtaque();
+        if (statusAtaque == null) {
+            throw new IllegalStateException("Status de ataque não definido para Atiradora de Ervilha.");
+        }
         this.dano = statusAtaque.dano();
         this.velocidadeProjetil = statusAtaque.velocidadeProjetil();
         this.tempoAtaque = statusAtaque.tempoAtaque();
-    }
-
-    /**
-     * Construtor da Atiradora de Ervilha com configurações personalizadas.
-     * <p>
-     * Permite a criação de variações da planta ou para fins de testes unitários.
-     * </p>
-     * 
-     * @param posicaoX Posição horizontal inicial.
-     * @param posicaoY Linha (Y) onde a planta será colocada.
-     * @param statusBasico Record contendo atributos básicos (vida, custo, recarga).
-     * @param statusAtaque Record contendo atributos de combate (dano, velocidade do projétil, intervalo de ataque).
-     */
-    public AtiradoraDeErvilha(
-        double posicaoX, int posicaoY,
-        Config.StatusBasicoPlanta statusBasico,
-        Config.StatusAtaquePlanta statusAtaque
-    ) {
-        super(posicaoX, posicaoY, statusBasico);
-        this.dano = statusAtaque.dano();
-        this.tempoAtaque = statusAtaque.tempoAtaque();
-        this.velocidadeProjetil = statusAtaque.velocidadeProjetil();
     }
 
     /**
