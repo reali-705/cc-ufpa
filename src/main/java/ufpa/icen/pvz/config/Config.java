@@ -42,14 +42,6 @@ public class Config {
         return Math.max(1000, TEMPO_SPAWN_ZUMBIS - ((dificuldade - 1) * 500));
     }
 
-    // Configurações de Zumbis
-    /** Estrutura de dados para atributos de Zumbis. */
-    public record StatusBasicoZumbi(int vida, int dano, int tempoAtaque, double velocidade) {}
-
-    // Configurações de Zumbi Padrão
-    /** Definições padrão para o Zumbi comum. */
-    public static final StatusBasicoZumbi ZUMBI_PADRAO = new StatusBasicoZumbi(100, 10, 1500, 0.5);
-
     // Construtor privado para evitar instanciação
     private Config() {
         throw new UnsupportedOperationException("Classe de configuração não pode ser instanciada.");

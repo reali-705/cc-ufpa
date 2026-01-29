@@ -1,7 +1,7 @@
 package ufpa.icen.pvz.model.entidades.inimigos;
 
-import ufpa.icen.pvz.config.Config;
 import ufpa.icen.pvz.model.entidades.EntidadeViva;
+import ufpa.icen.pvz.model.enums.TipoZumbi;
 import ufpa.icen.pvz.model.interfaces.Atacante;
 import ufpa.icen.pvz.model.interfaces.Impactante;
 import ufpa.icen.pvz.model.interfaces.Movivel;
@@ -32,27 +32,21 @@ public class Zumbi extends EntidadeViva implements Movivel, Atacante, Impactante
      * @param posicaoY A linha (Y) onde o zumbi irá surgir.
      */
     public Zumbi(double posicaoX, int posicaoY) {
-        super(posicaoX, posicaoY, Config.ZUMBI_PADRAO.vida());
-        this.velocidade = Config.ZUMBI_PADRAO.velocidade();
-        this.dano = Config.ZUMBI_PADRAO.dano();
-        this.tempoAtaque = Config.ZUMBI_PADRAO.tempoAtaque();
+        this(posicaoX, posicaoY, TipoZumbi.COMUM);
     }
-
+    
     /**
-     * Cria um novo Zumbi com configurações personalizadas.
-     * <p>
-     * Utilizado principalmente para testes ou variações de zumbis.
-     * </p>
+     * Cria um novo Zumbi com base no tipo especificado.
      * 
-     * @param posicaoX A posição horizontal inicial.
-     * @param posicaoY A linha (Y) inicial.
-     * @param status Record contendo os atributos base (vida, dano, velocidade, etc).
+     * @param posicaoX A posição horizontal inicial no tabuleiro.
+     * @param posicaoY A linha (Y) onde o zumbi irá surgir.
+     * @param tipoZumbi O tipo de zumbi a ser criado, definindo suas características.
      */
-    public Zumbi(double posicaoX, int posicaoY, Config.StatusBasicoZumbi status) {
-        super(posicaoX, posicaoY, status.vida());
-        this.velocidade = status.velocidade();
-        this.dano = status.dano();
-        this.tempoAtaque = status.tempoAtaque();
+    public Zumbi(double posicaoX, int posicaoY, TipoZumbi tipoZumbi) {
+        super(posicaoX, posicaoY, tipoZumbi.getVida());
+        this.velocidade = tipoZumbi.getVelocidade();
+        this.dano = tipoZumbi.getDano();
+        this.tempoAtaque = tipoZumbi.getTempoAtaque();
     }
     
     /**
