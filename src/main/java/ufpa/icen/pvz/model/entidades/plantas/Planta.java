@@ -1,7 +1,7 @@
 package ufpa.icen.pvz.model.entidades.plantas;
 
-import ufpa.icen.pvz.config.Config;
 import ufpa.icen.pvz.model.entidades.EntidadeViva;
+import ufpa.icen.pvz.model.enums.TipoPlanta;
 
 /**
  * Classe abstrata que serve de base para todas as plantas do jogo.
@@ -22,12 +22,12 @@ abstract public class Planta extends EntidadeViva {
      * 
      * @param posicaoX Posição horizontal no tabuleiro.
      * @param posicaoY Linha (Y) onde a planta será instanciada.
-     * @param status Record contendo as configurações base (vida, custo, recarga).
+     * @param tipoPlanta Enum contendo as configurações base (vida, custo, recarga).
      */
-    public Planta(double posicaoX, int posicaoY, Config.StatusBasicoPlanta status) {
-        super(posicaoX, posicaoY, status.vida());
-        this.custo = status.custo();
-        this.tempoPlantarNovamente = status.tempoRecarga();
+    public Planta(double posicaoX, int posicaoY, TipoPlanta tipoPlanta) {
+        super(posicaoX, posicaoY, tipoPlanta.getVida());
+        this.custo = tipoPlanta.getCusto();
+        this.tempoPlantarNovamente = tipoPlanta.getTempoRecarga();
     }
 
     /**

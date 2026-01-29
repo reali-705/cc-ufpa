@@ -7,6 +7,7 @@ import ufpa.icen.pvz.model.entidades.Projetil;
 import ufpa.icen.pvz.model.entidades.inimigos.Zumbi;
 import ufpa.icen.pvz.model.entidades.plantas.Planta;
 import ufpa.icen.pvz.model.enums.EstadoEntidade;
+import ufpa.icen.pvz.model.enums.TipoPlanta;
 import ufpa.icen.pvz.model.interfaces.Atirador;
 
 /**
@@ -34,7 +35,7 @@ public class Linha {
         this.indice = indice;
     }
 
-    public boolean adicionarPlanta(double posicaoX, Class<? extends Planta> tipoPlanta) {
+    public boolean adicionarPlanta(double posicaoX, TipoPlanta tipoPlanta) {
         if (posicaoX < 0 || posicaoX > tamanho) {
             System.err.println("Posição " + posicaoX + " inválida (deve estar entre 0 e " + tamanho + ").");
             return false;
@@ -49,15 +50,13 @@ public class Linha {
         }
         
         try {
-            Planta novaPlanta = tipoPlanta
-                .getDeclaredConstructor(double.class, int.class)
-                .newInstance(posicaoX, this.indice);
+            Planta novaPlanta = tipoPlanta.criar(posicaoX, colunaDesejada);
             plantas.add(novaPlanta);
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
-        return true;
     }
 
     public void adicionarZumbi(Class<? extends Zumbi> tipoZumbi) {

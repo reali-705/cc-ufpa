@@ -5,6 +5,7 @@ import java.util.List;
 
 import ufpa.icen.pvz.model.entidades.inimigos.Zumbi;
 import ufpa.icen.pvz.model.entidades.plantas.Planta;
+import ufpa.icen.pvz.model.enums.TipoPlanta;
 
 public class Grid {
     private final List<Linha> linhas;
@@ -27,7 +28,7 @@ public class Grid {
         return false;
     }
 
-    public boolean adicionarPlanta(int indiceLinha, double posicaoX, Class<? extends Planta> tipoPlanta) {
+    public boolean adicionarPlanta(int indiceLinha, double posicaoX, TipoPlanta tipoPlanta) {
         if (indiceLinha < 0 || indiceLinha >= linhas.size()) {
             return false;
         }

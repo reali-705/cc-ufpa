@@ -5,6 +5,7 @@ import java.util.Random;
 import ufpa.icen.pvz.config.Config;
 import ufpa.icen.pvz.model.entidades.inimigos.Zumbi;
 import ufpa.icen.pvz.model.entidades.plantas.Planta;
+import ufpa.icen.pvz.model.enums.TipoPlanta;
 
 public class Nivel {
     private int dificuldade;
@@ -54,13 +55,12 @@ public class Nivel {
         System.out.println("Spawnando um novo zumbi!");
     }
 
-    public boolean tentarPlantar(int linha, double coluna, Class<? extends Planta> tipoPlanta) {
+    public boolean tentarPlantar(int linha, double coluna, TipoPlanta tipoPlanta) {
         try {
-            // TODO: analisar a possibilidade da classe copia
-            int custoPlanta = (int) tipoPlanta.getMethod("getCusto").invoke(null);
+            int custoPlanta = tipoPlanta.getCusto();
 
             if (recursosJogador < custoPlanta) {
-                System.out.println("Recursos insuficientes para plantar!");
+                System.out.println("Recursos insuficientes!");
                 return false;
             }
                 

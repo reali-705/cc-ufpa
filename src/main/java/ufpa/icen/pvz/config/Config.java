@@ -49,20 +49,6 @@ public class Config {
     // Configurações de Zumbi Padrão
     /** Definições padrão para o Zumbi comum. */
     public static final StatusBasicoZumbi ZUMBI_PADRAO = new StatusBasicoZumbi(100, 10, 1500, 0.5);
-    
-    // Configurações de Plantas
-    /** Estrutura de dados para atributos básicos de Plantas. */
-    public record StatusBasicoPlanta(int vida, int custo, int tempoRecarga) {}
-    
-    /** Estrutura de dados para atributos de ataque de Plantas. */
-    public record StatusAtaquePlanta(int dano, int tempoAtaque, double velocidadeProjetil) {}
-
-    // Configurações da Atiradora de Ervilha
-    /** Status base da Atiradora de Ervilha. */
-    public static final StatusBasicoPlanta ATIRADORA_DE_ERVILHA = new StatusBasicoPlanta(50, 50, 3000);
-    
-    /** Status de ataque da Atiradora de Ervilha. */
-    public static final StatusAtaquePlanta ATIRADORA_DE_ERVILHA_ATAQUE = new StatusAtaquePlanta(20, 1000, 1.5);
 
     // Construtor privado para evitar instanciação
     private Config() {
