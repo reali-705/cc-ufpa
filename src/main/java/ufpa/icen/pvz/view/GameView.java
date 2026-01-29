@@ -15,7 +15,7 @@ public class GameView {
         telajogo.setResizable(false);
 
         // Adiciona o MenuCenario
-        MenuCenario menuCenario = new MenuCenario();
+        GameCenario menuCenario = new GameCenario();
         telajogo.getContentPane().add(menuCenario);
 
         telajogo.setVisible(true);
