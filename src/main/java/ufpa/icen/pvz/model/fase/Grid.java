@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ufpa.icen.pvz.model.entidades.inimigos.Zumbi;
-import ufpa.icen.pvz.model.entidades.plantas.Planta;
 import ufpa.icen.pvz.model.enums.TipoPlanta;
 
 public class Grid {
