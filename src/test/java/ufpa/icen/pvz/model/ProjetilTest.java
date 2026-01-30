@@ -1,40 +1,71 @@
 package ufpa.icen.pvz.model;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import ufpa.icen.pvz.model.entidades.EntidadeViva;
 import ufpa.icen.pvz.model.entidades.Projetil;
 
 public class ProjetilTest {
     
     private Projetil projetil;
+    private final double POSICAO_X_INICIAL = 1.0;
+    private final int POSICAO_Y_INICIAL = 1;
+    private final int DANO = 10;
+    private final double VELOCIDADE = 2.0;
+    private final double DELTA = 0.01;
 
     @BeforeEach
     public void setUp() {
-        // Cria um projétil para testes (dano=10, vel=2.0)
-        projetil = new Projetil(1.0, 1, 10, 2.0);
+        // Inicializa um novo projétil antes de cada teste com dano 10 e velocidade 2.0
+        projetil = new Projetil(POSICAO_X_INICIAL, POSICAO_Y_INICIAL, DANO, VELOCIDADE);
     }
 
     @Test
     public void testMovimento() {
-        // Move e verifica nova posição
+        // Verifica se o projétil se move para a direita (X aumenta)
         projetil.mover();
-        double posicaoEsperada = 1.0 + projetil.getVelocidade();
-        assertTrue(projetil.getPosicaoX() > 1.0, "A posição X do projetil deve ter aumentado após o movimento.");
-        assertEquals(posicaoEsperada, projetil.getPosicaoX(), 0.01, "A posição X do projetil após o movimento está incorreta.");
-        assertEquals(1, projetil.getPosicaoY(), "A posição Y do projetil deve permanecer inalterada.");
+        double posicaoEsperada = POSICAO_X_INICIAL + VELOCIDADE;
+        
+        Assertions.assertTrue(
+            projetil.getPosicaoX() > POSICAO_X_INICIAL,
+            "A posição X do projétil deve ter aumentado após o movimento."
+        );
+        Assertions.assertEquals(
+            posicaoEsperada, projetil.getPosicaoX(), DELTA,
+            "A posição X do projétil após o movimento está incorreta."
+        );
+        Assertions.assertEquals(
+            POSICAO_Y_INICIAL, projetil.getPosicaoY(),
+            "A posição Y do projétil deve permanecer inalterada."
+        );
     }
 
     @Test
     public void testAtingir() {
-        // Cria alvo dummy
+        // Verifica se causa dano ao atingir um alvo próximo
         int vidaAlvo = 50;
-        EntidadeViva alvo = new EntidadeViva(5.0, 1, vidaAlvo) {};
+        // Alvo na mesma posição para garantir impacto
+        EntidadeViva alvo = new EntidadeViva(POSICAO_X_INICIAL, POSICAO_Y_INICIAL, vidaAlvo) {};
         
-        // Impacta e verifica dano
         projetil.atingir(alvo);
-        assertEquals(vidaAlvo - projetil.getDano(), alvo.getVida(), "O alvo deve ter recebido dano do projetil.");
+        Assertions.assertEquals(
+            vidaAlvo - DANO, alvo.getVida(),
+            "O alvo deve ter recebido dano do projétil."
+        );
+    }
+
+    @Test
+    public void testAtingirForaDoAlcance() {
+        // Verifica se ignora alvos distantes (segurança do método atingir)
+        int vidaAlvo = 50;
+        // Posiciona alvo longe (distância > 1.0)
+        EntidadeViva alvo = new EntidadeViva(POSICAO_X_INICIAL + 5.0, POSICAO_Y_INICIAL, vidaAlvo) {};
+        
+        projetil.atingir(alvo);
+        Assertions.assertEquals(
+            vidaAlvo, alvo.getVida(),
+            "O alvo NÃO deve receber dano se estiver longe."
+        );
     }
 }
