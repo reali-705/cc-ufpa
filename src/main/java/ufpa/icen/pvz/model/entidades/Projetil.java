@@ -52,6 +52,7 @@ public class Projetil extends Entidade implements Movivel, Impactante {
      */
     @Override
     public void atingir(EntidadeViva outra) {
+        if (Math.abs(outra.getPosicaoX() - this.posicaoX) > 1.0) { return; } // Segurança: só atinge se estiver próximo
         outra.receberDano(dano);
     }
     
