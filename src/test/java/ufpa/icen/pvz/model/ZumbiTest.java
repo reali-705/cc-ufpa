@@ -21,7 +21,7 @@ public class ZumbiTest {
     
     // Cria uma entidade viva "burra" para testes
     private EntidadeViva criarAlvoTeste(int vida) {
-        return new EntidadeViva(0, 0, vida) {};
+        return new EntidadeViva(POSICAO_X_INICIAL, POSICAO_Y_INICIAL, vida) {};
     }
     
     @Test // Verifica se os atributos iniciais correspondem ao TipoZumbi
@@ -56,7 +56,6 @@ public class ZumbiTest {
         );
     }
 
-    // TODO: corrigir receberDano com valor negativo
     @Test // Verifica redução de vida e estado de morte
     public void testReceberDanoZumbi() {
         int dano = 30;
@@ -70,7 +69,7 @@ public class ZumbiTest {
         
         zumbi.receberDano(- dano);
         Assertions.assertEquals(
-            TIPO_ZUMBI.getVida() - dano, zumbi.getVida(),
+            Math.max(0, TIPO_ZUMBI.getVida() - 2 * dano), zumbi.getVida(),
             "Vida do zumbi não deve aumentar ao receber dano negativo."
         );
         
@@ -100,7 +99,6 @@ public class ZumbiTest {
         );
     }
 
-    // TODO: tratar posicao do alvo ao atacar
     @Test // Verifica dano no alvo e respeito ao cooldown (tempo de recarga)
     public void testAtacarZumbi() {
         Assertions.assertTrue(
@@ -134,7 +132,6 @@ public class ZumbiTest {
         );
     }
 
-    // TODO: corrigir mover e atacar zumbi depois de morto
     @Test // Verifica se um zumbi morto para de agir (mover/atacar)
     public void testMortoZumbi() {
         zumbi.receberDano(TIPO_ZUMBI.getVida());

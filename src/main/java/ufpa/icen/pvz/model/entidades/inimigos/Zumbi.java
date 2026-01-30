@@ -57,6 +57,7 @@ public class Zumbi extends EntidadeViva implements Movivel, Atacante, Impactante
      */
     @Override
     public void mover() {
+        if (!this.estaViva()) { return; }
         this.posicaoX -= this.velocidade;
     }
     
@@ -87,6 +88,7 @@ public class Zumbi extends EntidadeViva implements Movivel, Atacante, Impactante
     @Override
     public void atingir(EntidadeViva outra) {
         if (!podeAtacar()) { return; }
+        if (Math.abs(outra.getPosicaoX() - this.getPosicaoX()) > 1.0) { return; } // Verifica alcance de ataque
         outra.receberDano(dano);
         this.ultimoAtaque = System.currentTimeMillis();
     }

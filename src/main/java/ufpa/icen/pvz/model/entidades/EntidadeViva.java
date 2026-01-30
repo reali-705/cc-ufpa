@@ -41,7 +41,7 @@ public abstract class EntidadeViva extends Entidade {
         if (!this.estaViva()) {
             return;
         }
-        this.vida -= dano;
+        this.vida -= Math.abs(dano);
         if (this.vida <= 0) {
             this.vida = 0;
             this.setEstado(EstadoEntidade.MORTA);
@@ -58,7 +58,7 @@ public abstract class EntidadeViva extends Entidade {
      */
     public void curar(int quantidade) {
         if (this.estaViva()) {
-            this.vida += quantidade;
+            this.vida += Math.abs(quantidade);
             if (this.vida > this.vidaMaxima) {
                 this.vida = this.vidaMaxima;
             }
