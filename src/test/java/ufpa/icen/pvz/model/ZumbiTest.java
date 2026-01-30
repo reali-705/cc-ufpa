@@ -14,17 +14,17 @@ public class ZumbiTest {
     private final TipoZumbi TIPO_ZUMBI = TipoZumbi.COMUM;
     private final double DELTA = 0.01;
 
-    @BeforeEach
+    @BeforeEach // Inicializa um novo zumbi antes de cada teste
     public void setUp() {
         zumbi = new Zumbi(POSICAO_X_INICIAL, POSICAO_Y_INICIAL);
     }
     
+    // Cria uma entidade viva "burra" para testes
     private EntidadeViva criarAlvoTeste(int vida) {
-        // Cria uma entidade viva "burra" para testes
         return new EntidadeViva(0, 0, vida) {};
     }
     
-    @Test
+    @Test // Verifica se os atributos iniciais correspondem ao TipoZumbi
     public void testCriacaoZumbiComum() {
         Assertions.assertEquals(
             POSICAO_X_INICIAL, zumbi.getPosicaoX(), 0.01,
@@ -56,7 +56,8 @@ public class ZumbiTest {
         );
     }
 
-    @Test
+    // TODO: corrigir receberDano com valor negativo
+    @Test // Verifica redução de vida e estado de morte
     public void testReceberDanoZumbi() {
         int dano = 30;
         int danoFatal = TIPO_ZUMBI.getVida();
@@ -67,7 +68,6 @@ public class ZumbiTest {
             "Vida do zumbi após receber dano está incorreta."
         );
         
-        // TODO: corrigir receberDano com valor negativo
         zumbi.receberDano(- dano);
         Assertions.assertEquals(
             TIPO_ZUMBI.getVida() - dano, zumbi.getVida(),
@@ -86,7 +86,7 @@ public class ZumbiTest {
 
     }
 
-    @Test
+    @Test // Verifica se o zumbi anda para a esquerda corretamente
     public void testMovimentoZumbi() {
         zumbi.mover();
         double posicaoXEsperada = POSICAO_X_INICIAL - TIPO_ZUMBI.getVelocidade();
@@ -100,9 +100,9 @@ public class ZumbiTest {
         );
     }
 
-    @Test
+    // TODO: tratar posicao do alvo ao atacar
+    @Test // Verifica dano no alvo e respeito ao cooldown (tempo de recarga)
     public void testAtacarZumbi() {
-        // Primeiro ataque deve ser possível
         Assertions.assertTrue(
             zumbi.podeAtacar(),
             "Zumbi deve poder atacar inicialmente."
@@ -117,13 +117,11 @@ public class ZumbiTest {
             "Vida do alvo após ataque do zumbi está incorreta."
         );
         
-        // Ataque imediato não deve ser possível
         Assertions.assertFalse(
             zumbi.podeAtacar(),
             "Zumbi não deve poder atacar novamente imediatamente."
         );
         
-        // Simula espera suficiente para o próximo ataque
         try {
             Thread.sleep(TIPO_ZUMBI.getTempoAtaque() + 50);
         } catch (InterruptedException e) {
@@ -136,7 +134,8 @@ public class ZumbiTest {
         );
     }
 
-    @Test
+    // TODO: corrigir mover e atacar zumbi depois de morto
+    @Test // Verifica se um zumbi morto para de agir (mover/atacar)
     public void testMortoZumbi() {
         zumbi.receberDano(TIPO_ZUMBI.getVida());
         Assertions.assertFalse(
@@ -144,14 +143,12 @@ public class ZumbiTest {
             "Zumbi deve estar morto após receber dano fatal."
         );
 
-        // TODO: corrigir movimento de zumbi morto
         zumbi.mover();
         Assertions.assertEquals(
             POSICAO_X_INICIAL, zumbi.getPosicaoX(), DELTA,
             "Zumbi morto não deve se mover."
         );
 
-        // TODO: corrigir ataque de zumbi morto
         int vidaAlvo = 100;
         EntidadeViva alvo = criarAlvoTeste(vidaAlvo);
         zumbi.atingir(alvo);
