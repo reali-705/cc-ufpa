@@ -3,8 +3,8 @@ package ufpa.icen.pvz.model.fase;
 import java.util.Random;
 
 import ufpa.icen.pvz.config.Config;
-import ufpa.icen.pvz.model.entidades.inimigos.Zumbi;
 import ufpa.icen.pvz.model.enums.TipoPlanta;
+import ufpa.icen.pvz.model.enums.TipoZumbi;
 
 public class Nivel {
     private int dificuldade;
@@ -50,7 +50,7 @@ public class Nivel {
 
     private void spawnarZumbi() {
         int indiceLinha = random.nextInt(Config.ALTURA_TABULEIRO);
-        grid.adicionarZumbi(indiceLinha, Zumbi.class);
+        grid.adicionarZumbi(indiceLinha, TipoZumbi.COMUM);
         System.out.println("Spawnando um novo zumbi!");
     }
 

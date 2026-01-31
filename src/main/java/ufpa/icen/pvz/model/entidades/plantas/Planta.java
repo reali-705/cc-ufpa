@@ -12,10 +12,10 @@ import ufpa.icen.pvz.model.enums.TipoPlanta;
  */
 abstract public class Planta extends EntidadeViva {
     /** Custo em sóis para plantar. */
-    protected int custo;
+    protected final int custo;
 
     /** Tempo de recarga necessário antes de plantar novamente. */
-    protected int tempoPlantarNovamente;
+    protected final int cooldownPlantio;
 
     /**
      * Construtor base para plantas.
@@ -27,7 +27,7 @@ abstract public class Planta extends EntidadeViva {
     public Planta(double posicaoX, int posicaoY, TipoPlanta tipoPlanta) {
         super(posicaoX, posicaoY, tipoPlanta.getVida());
         this.custo = tipoPlanta.getCusto();
-        this.tempoPlantarNovamente = tipoPlanta.getTempoRecarga();
+        this.cooldownPlantio = tipoPlanta.getCooldownPlantio();
     }
 
     /**
@@ -40,5 +40,5 @@ abstract public class Planta extends EntidadeViva {
      * Obtém o tempo necessário para poder plantar esta unidade novamente.
      * @return Tempo de recarga em milissegundos.
      */
-    public int getTempoPlantarNovamente() { return tempoPlantarNovamente; }
+    public int getCooldownPlantio() { return cooldownPlantio; }
 }

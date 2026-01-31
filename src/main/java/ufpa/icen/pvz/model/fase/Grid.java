@@ -3,8 +3,8 @@ package ufpa.icen.pvz.model.fase;
 import java.util.ArrayList;
 import java.util.List;
 
-import ufpa.icen.pvz.model.entidades.inimigos.Zumbi;
 import ufpa.icen.pvz.model.enums.TipoPlanta;
+import ufpa.icen.pvz.model.enums.TipoZumbi;
 
 public class Grid {
     private final List<Linha> linhas;
@@ -34,7 +34,7 @@ public class Grid {
         return linhas.get(indiceLinha).adicionarPlanta(posicaoX, tipoPlanta);
     }
 
-    public void adicionarZumbi(int indiceLinha, Class<? extends Zumbi> tipoZumbi) {
+    public void adicionarZumbi(int indiceLinha, TipoZumbi tipoZumbi) {
         if (indiceLinha < 0 || indiceLinha >= linhas.size()) {
             return;
         }

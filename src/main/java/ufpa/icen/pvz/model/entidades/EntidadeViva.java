@@ -11,10 +11,12 @@ import ufpa.icen.pvz.model.enums.EstadoEntidade;
  */
 public abstract class EntidadeViva extends Entidade {
     /** Limite máximo de pontos de vida. */
-    protected int vidaMaxima;
+    protected final int vidaMaxima;
     
     /** Pontos de vida atuais da entidade. */
     protected int vida;
+
+    protected int contador;
 
     /**
      * Construtor para entidades com sistema de vida.
@@ -32,7 +34,7 @@ public abstract class EntidadeViva extends Entidade {
     /**
      * Aplica dano à entidade, reduzindo sua vida.
      * <p>
-     * Se a vida chegar a zero ou menos, o estado é automaticamente alterado para MORTA.
+     * Se a vida chegar a zero ou menos, o estado é automaticamente alterado para INATIVA.
      * </p>
      * 
      * @param dano quantidade de dano a ser aplicado
@@ -44,24 +46,7 @@ public abstract class EntidadeViva extends Entidade {
         this.vida -= Math.abs(dano);
         if (this.vida <= 0) {
             this.vida = 0;
-            this.setEstado(EstadoEntidade.MORTA);
-        }
-    }
-
-    /**
-     * Restaura pontos de vida da entidade.
-     * <p>
-     * A cura não ressuscita entidades mortas e o total de vida nunca excede a {@link #vidaMaxima}.
-     * </p>
-     * 
-     * @param quantidade Quantidade de pontos de vida a recuperar.
-     */
-    public void curar(int quantidade) {
-        if (this.estaViva()) {
-            this.vida += Math.abs(quantidade);
-            if (this.vida > this.vidaMaxima) {
-                this.vida = this.vidaMaxima;
-            }
+            this.setEstado(EstadoEntidade.INATIVA);
         }
     }
 
@@ -74,7 +59,7 @@ public abstract class EntidadeViva extends Entidade {
      * @return true se a entidade está viva, false caso contrário
      */
     public boolean estaViva() {
-        return this.vida > 0 && this.estado != EstadoEntidade.MORTA;
+        return this.vida > 0 && this.estado != EstadoEntidade.INATIVA;
     }
 
     // ===== Getters e Setters =====
@@ -92,4 +77,6 @@ public abstract class EntidadeViva extends Entidade {
      * @return vida máxima
      */
     public int getVidaMaxima() { return vidaMaxima; }
+
+    public int getContador() { return contador; }
 }

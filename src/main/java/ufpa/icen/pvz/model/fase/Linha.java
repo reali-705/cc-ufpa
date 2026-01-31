@@ -6,8 +6,8 @@ import java.util.List;
 import ufpa.icen.pvz.model.entidades.Projetil;
 import ufpa.icen.pvz.model.entidades.inimigos.Zumbi;
 import ufpa.icen.pvz.model.entidades.plantas.Planta;
-import ufpa.icen.pvz.model.enums.EstadoEntidade;
 import ufpa.icen.pvz.model.enums.TipoPlanta;
+import ufpa.icen.pvz.model.enums.TipoZumbi;
 import ufpa.icen.pvz.model.interfaces.Atirador;
 
 /**
@@ -59,11 +59,9 @@ public class Linha {
         }
     }
 
-    public void adicionarZumbi(Class<? extends Zumbi> tipoZumbi) {
+    public void adicionarZumbi(TipoZumbi tipoZumbi) {
         try {
-            Zumbi novoZumbi = tipoZumbi
-                .getDeclaredConstructor(double.class, int.class)
-                .newInstance(tamanho, this.indice);
+            Zumbi novoZumbi = tipoZumbi.criar(tamanho, this.indice);
             zumbis.add(novoZumbi);
         } catch (Exception e) {
             e.printStackTrace();
@@ -89,7 +87,7 @@ public class Linha {
                 boolean zumbiNaFrente = false;
 
                 for (Zumbi zumbi : zumbis) {
-                    if (zumbi.getPosicaoX() > planta.getPosicaoX()) {
+                    if (zumbi.getPosicaoX() >= planta.getPosicaoX()) {
                         zumbiNaFrente = true;
                         break;
                     }
@@ -101,26 +99,24 @@ public class Linha {
                         projetis.add(projetil);
                     }
                 }
+
+                planta.atualizar();
             }
         }
     }
 
     private void atualizarProjeteis() {
-        for (Projetil projetil : projetis) {
-            // TODO: mover mudança de estado para a lógica de Projetil.atingir(Zumbi)
-            projetil.setEstado(EstadoEntidade.MORTA);
-            
+        for (Projetil projetil : projetis) {            
             if (projetil.getPosicaoX() > tamanho) {
-                projetil.setEstado(EstadoEntidade.MORTA);
                 continue;
             }
             for (Zumbi zumbi : zumbis) {
                 if (Math.abs(projetil.getPosicaoX() - zumbi.getPosicaoX()) < MARGEM_COLISAO) {
-                    projetil.atingir(zumbi);
-                    projetil.setEstado(EstadoEntidade.MORTA); // passar para logica do atingir
+                    projetil.setAlvo(zumbi);
                     break;
                 }
             }
+            projetil.atualizar();
         }
     }
 
@@ -132,29 +128,16 @@ public class Linha {
             if (zumbi.getPosicaoX() <= 0) {
                 return true; // zumbi venceu
             }
-            if (zumbi.getEstado() == EstadoEntidade.MOVENDO) {
-                zumbi.mover();
-            }
-
-            boolean atacou = false;
             for (Planta planta : plantas) {
                 if (!planta.estaViva()) {
                     continue;
                 }
                 if (Math.abs(zumbi.getPosicaoX() - planta.getPosicaoX()) < MARGEM_COLISAO) {
-                    // TODO: deve ser passado para a logica do atingir
-                    zumbi.setEstado(EstadoEntidade.ATACANDO);
-                    zumbi.atingir(planta);
-                    atacou = true;
-                    if (!planta.estaViva()) {
-                        zumbi.setEstado(EstadoEntidade.MOVENDO);
-                    }
+                    zumbi.setAlvo(planta);
                     break;
                 }
             }
-            if (!atacou && zumbi.getEstado() == EstadoEntidade.ATACANDO) {
-                zumbi.setEstado(EstadoEntidade.MOVENDO);
-            }
+            zumbi.atualizar();
         }
         return false;
     }
@@ -163,6 +146,6 @@ public class Linha {
     private void limparMortos() {
         zumbis.removeIf(zumbi -> !zumbi.estaViva());
         plantas.removeIf(planta -> !planta.estaViva());
-        projetis.removeIf(projetil -> projetil.getEstado() == EstadoEntidade.MORTA);
+        projetis.removeIf(projetil -> !projetil.estaAtiva(tamanho));
     }
 }
