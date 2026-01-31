@@ -2,22 +2,22 @@ package ufpa.icen.pvz.view;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+
 import ufpa.icen.pvz.assets.Assets;
 
-/**
- * Personagem: classe de modelo independente da view.
- * Guarda posição, imagem e operações básicas (desenhar, mover, etc).
- */
 public class PersonagemFrontEnd {
+
     private int x;
     private int y;
     private final BufferedImage imagem;
 
     public PersonagemFrontEnd(String pathImagem, int x, int y) {
         System.out.println("Carregando personagem: " + pathImagem);
+
         this.imagem = Assets.get(pathImagem);
         this.x = x;
         this.y = y;
+
         if (this.imagem == null) {
             System.err.println("Personagem: imagem não encontrada em " + pathImagem);
         }
@@ -39,10 +39,17 @@ public class PersonagemFrontEnd {
         this.y = y;
     }
 
-    // getters úteis para a view
-    public int getX() { return x; }
-    public int getY() { return y; }
-    public BufferedImage getImagem() { return imagem; }
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public BufferedImage getImagem() {
+        return imagem;
+    }
 
     public int getLargura() {
         return imagem != null ? imagem.getWidth() : 0;
