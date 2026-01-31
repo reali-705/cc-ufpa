@@ -7,15 +7,7 @@ package ufpa.icen.pvz.model.interfaces;
  * constante de movimento.
  * </p>
  */
-public interface Movivel {
-    /**
-     * Move a entidade de acordo com sua velocidade.
-     * <p>
-     * Deve ser chamado a cada tick do jogo para atualizar a posição.
-     * </p>
-     */
-    void mover();
-
+public interface Movel {
     /**
      * Obtém a velocidade de deslocamento da entidade.
      * 

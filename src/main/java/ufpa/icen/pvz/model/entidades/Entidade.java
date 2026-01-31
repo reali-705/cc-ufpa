@@ -28,8 +28,10 @@ public abstract class Entidade {
     public Entidade(double posicaoX, int posicaoY) {
         this.posicaoX = posicaoX;
         this.posicaoY = posicaoY;
-        this.estado = EstadoEntidade.VIVA;
+        this.estado = EstadoEntidade.PRONTA;
     }
+
+    public abstract void atualizar();
 
     // ===== Getters e Setters =====
     
@@ -41,7 +43,7 @@ public abstract class Entidade {
      * 
      * @param estado O novo estado a ser atribuído.
      */
-    public void setEstado(EstadoEntidade estado) {
+    protected void setEstado(EstadoEntidade estado) {
         this.estado = estado;
     }
 

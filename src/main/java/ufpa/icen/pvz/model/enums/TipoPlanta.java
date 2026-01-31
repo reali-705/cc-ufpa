@@ -9,53 +9,53 @@ public enum TipoPlanta {
      * Seguir os modelos para adicionar mais tipos de plantas
      * 
      * Padrão (sem ataque ou geração)
-     * NOME_PLANTA(custo, vida, tempoRecarga, null, null)
+     * NOME_PLANTA(custo, vida, contadorPlantio, null, null)
      *
      * Atiradora (sem geração)
-     * NOME_PLANTA(custo, vida, tempoRecarga, null, null)
+     * NOME_PLANTA(custo, vida, contadorPlantio, null, null)
      *
      * Produtora (sem ataque)
-     * NOME_PLANTA(custo, vida, tempoRecarga, null, new StatusGeracao(solGerado, tempoGeracao))
+     * NOME_PLANTA(custo, vida, contadorPlantio, null, new StatusGeracao(solGerado, tempoGeracao))
      */
 
     ATIRADORA_DE_ERVILHA(
-        50, 50, 3000,
-        new StatusAtaque(20, 1500, 2.0)
+        50, 50, 10,
+        new StatusAtaque(20, 5, 2.0)
     );
 
     // --- Registros ---
-    public record StatusAtaque(int dano, int tempoAtaque, double velocidadeProjetil) {}
+    public record StatusAtaque(int dano, int cooldownAtaque, double velocidadeProjetil) {}
     public record StatusGeracao(int solGerado, int tempoGeracao) {}
 
     // Atributos comuns a todas as plantas
     private final int custo;
     private final int vida;
-    private final int tempoRecarga;
+    private final int cooldownPlantio;
     // opcionais
     private final StatusAtaque statusAtaque;
     private final StatusGeracao statusGeracao;
 
     // --- Construtor Completo ---
-    private TipoPlanta(int custo, int vida, int tempoRecarga, StatusAtaque statusAtaque, StatusGeracao statusGeracao) {
+    private TipoPlanta(int custo, int vida, int cooldownPlantio, StatusAtaque statusAtaque, StatusGeracao statusGeracao) {
         this.custo = custo;
         this.vida = vida;
-        this.tempoRecarga = tempoRecarga;
+        this.cooldownPlantio = cooldownPlantio;
         this.statusAtaque = statusAtaque;
         this.statusGeracao = statusGeracao;
     }
     
     // --- Construtores Específicos ---
     // Planta Padrão
-    TipoPlanta(int custo, int vida, int tempoRecarga) {
-        this(custo, vida, tempoRecarga, null, null);
+    TipoPlanta(int custo, int vida, int cooldownPlantio) {
+        this(custo, vida, cooldownPlantio, null, null);
     }
     // Planta Atiradora
-    TipoPlanta(int custo, int vida, int tempoRecarga, StatusAtaque statusAtaque) {
-        this(custo, vida, tempoRecarga, statusAtaque, null);
+    TipoPlanta(int custo, int vida, int cooldownPlantio, StatusAtaque statusAtaque) {
+        this(custo, vida, cooldownPlantio, statusAtaque, null);
     }
     // Planta Produtora
-    TipoPlanta(int custo, int vida, int tempoRecarga, StatusGeracao statusGeracao) {
-        this(custo, vida, tempoRecarga, null, statusGeracao);
+    TipoPlanta(int custo, int vida, int cooldownPlantio, StatusGeracao statusGeracao) {
+        this(custo, vida, cooldownPlantio, null, statusGeracao);
     }
 
     // --- Fábrica de Plantas ---
@@ -70,7 +70,7 @@ public enum TipoPlanta {
     // --- Getters ---
     public int getCusto() { return custo; }
     public int getVida() { return vida; }
-    public int getTempoRecarga() { return tempoRecarga; }
+    public int getCooldownPlantio() { return cooldownPlantio; }
     public StatusAtaque getStatusAtaque() { return statusAtaque; }
     public StatusGeracao getStatusGeracao() { return statusGeracao; }
 }

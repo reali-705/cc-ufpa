@@ -10,20 +10,7 @@ import ufpa.icen.pvz.model.entidades.EntidadeViva;
  * </p>
  */
 public interface Impactante {
-    /**
-     * Aplica o efeito do impacto na entidade alvo.
-     * <p>
-     * A implementação deve definir como o dano ou efeito é transferido para a entidade colidida.
-     * </p>
-     * 
-     * @param outra A entidade viva que sofreu o impacto.
-     */
-    void atingir(EntidadeViva outra);
+    void setAlvo(EntidadeViva alvo);
 
-    /**
-     * Obtém a quantidade de dano base que este impacto causa.
-     * 
-     * @return Valor do dano em pontos de vida.
-     */
-    int getDano();
+    EntidadeViva getAlvo();
 }
