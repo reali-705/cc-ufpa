@@ -1,45 +1,48 @@
 package ufpa.icen.pvz.view;
 
 import ufpa.icen.pvz.view.cenario.GameCenario;
-import ufpa.icen.pvz.view.tiles.tiles;
+import ufpa.icen.pvz.view.tiles.Tiles;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class GameView extends JFrame {
 
     public GameView() {
         super("Plants vs Zombies");
 
-        int larguraGrid = 960;
-        int larguraPainel = 180;
-        int altura = 640;
-
-        // Tamanho total = grid + painel
-        setSize(larguraGrid + larguraPainel, altura);
-        setLayout(null);
-        setLocationRelativeTo(null);
+        // ------------------------
+        // Configuração da janela
+        // ------------------------
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
 
-        // ------------------------
-        // Grid do jogo
-        // ------------------------
-        GameCenario gameCenario = new GameCenario();
-        gameCenario.setBounds(0, 0, larguraGrid, altura);
-        add(gameCenario);
+        // Container principal com BorderLayout
+        JPanel mainPanel = new JPanel(new BorderLayout());
+        setContentPane(mainPanel);
 
         // ------------------------
-        // Painel lateral de seleção
+        // Grid do jogo (centro)
         // ------------------------
-        tiles painel = new tiles();
-        painel.setBounds(larguraGrid, 0, larguraPainel, altura); // dentro da janela agora
-        add(painel);
+        GameCenario gameCenario = new GameCenario();
+        mainPanel.add(gameCenario, BorderLayout.CENTER);
+
+        // ------------------------
+        // Painel lateral de seleção (direita)
+        // ------------------------
+        Tiles painel = new Tiles();
+        painel.setPreferredSize(new Dimension(180, 640));
+        mainPanel.add(painel, BorderLayout.EAST);
 
         // Listener para selecionar planta
         painel.setPlantClickListener(spritePath -> {
             System.out.println("Selecionou: " + spritePath);
+            gameCenario.setPlantaSelecionada(spritePath);
         });
 
+        // Ajusta o tamanho da janela ao tamanho dos componentes
+        pack();
+        setLocationRelativeTo(null); // centraliza a janela
         setVisible(true);
     }
 

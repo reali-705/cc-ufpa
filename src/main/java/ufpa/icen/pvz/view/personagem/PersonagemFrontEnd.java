@@ -14,7 +14,6 @@ import ufpa.icen.pvz.view.GridFront.GridFrontend;
  * - Converter célula -> pixel via GridFrontend
  * - Desenhar o sprite
  *
- * NÃO contém regra de jogo.
  */
 public abstract class PersonagemFrontEnd {
 

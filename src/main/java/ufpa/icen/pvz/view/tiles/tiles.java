@@ -10,10 +10,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Painel lateral de seleção de plantas (versão robusta).
- */
-public class tiles extends JPanel {
+
+public class Tiles extends JPanel {
 
     private final List<PlantaSlot> slots = new ArrayList<>();
     private PlantaSlot selecionado;
@@ -24,7 +22,7 @@ public class tiles extends JPanel {
 
     private PlantClickListener listener;
 
-    public tiles() {
+    public Tiles() {
         setLayout(null);
         setBackground(new Color(30, 30, 30)); // cor escura de fundo
         setOpaque(true);

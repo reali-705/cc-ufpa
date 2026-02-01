@@ -8,6 +8,8 @@ import ufpa.icen.pvz.view.personagem.PlantaFrontEnd;
 import ufpa.icen.pvz.view.personagem.ZumbiFrontend;
 
 import javax.swing.*;
+
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.awt.event.*;
@@ -26,14 +28,16 @@ public class GameCenario extends Cenario {
     private GridFrontend grid;
     private boolean showGrid = true;
 
-    // -----------------------
-    // 🔥 CONSTRUTOR (ESSENCIAL)
-    // -----------------------
+    // --- NOVO: planta selecionada pelo painel lateral (padrão: null)
+    private String plantaSelecionada = null;
+
     public GameCenario() {
-        configurar();
-        criarComponentes();
-        adicionarEventos();
-    }
+    setPreferredSize(new Dimension(960, 640)); // largura x altura da grid
+    configurar();
+    criarComponentes();
+    adicionarEventos();
+}
+
 
     // -----------------------
     // Configuração
@@ -121,7 +125,13 @@ public class GameCenario extends Cenario {
         int col = grid.pixelToCol(mx);
 
         if (grid.isValidCell(row, col)) {
-            adicionarPlanta(row, col);
+            // Se o painel lateral definiu uma planta (sprite), usa-a.
+            // Caso contrário, mantém o comportamento antigo (desenharPlanta).
+            if (plantaSelecionada != null) {
+                adicionarPlanta(row, col, plantaSelecionada);
+            } else {
+                desenharPlanta(row, col);
+            }
         }
     }
 
@@ -185,7 +195,8 @@ public class GameCenario extends Cenario {
     // API frontend-only
     // -----------------------
 
-    public <PlantaFrontend> void desenharPlanta(int row, int col) {
+    // Mantive sua função existente (compatibilidade)
+    public void desenharPlanta(int row, int col) {
         SwingUtilities.invokeLater(() -> {
             if (!grid.isValidCell(row, col)) return;
 
@@ -224,6 +235,30 @@ public class GameCenario extends Cenario {
             zumbis.removeIf(z ->
                     z.getLinha() == row && z.getColuna() == col
             );
+            repaint();
+        });
+    }
+
+   
+
+    /**
+     * Define qual sprite será usado quando o jogador clicar no grid para criar plantas.
+     * Chamado por GameView/Tiles.
+     */
+    public void setPlantaSelecionada(String spritePath) {
+        this.plantaSelecionada = spritePath;
+    }
+
+    /**
+     * Cria/adiciona uma planta usando o spritePath fornecido.
+     */
+    public void adicionarPlanta(int row, int col, String spritePath) {
+        SwingUtilities.invokeLater(() -> {
+            if (!grid.isValidCell(row, col) || spritePath == null) return;
+
+            PlantaFrontEnd planta = new PlantaFrontEnd(spritePath, row, col, grid);
+            plantas.add(planta);
+            selecionado = planta;
             repaint();
         });
     }
