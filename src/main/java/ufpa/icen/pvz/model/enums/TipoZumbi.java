@@ -4,7 +4,7 @@ import ufpa.icen.pvz.model.entidades.inimigos.Zumbi;
 
 public enum TipoZumbi {
     
-    COMUM(100, 10, 10, 0.5);
+    COMUM(100, 15, 10, 0.25);
 
     public final int vida;
     public final int dano;
