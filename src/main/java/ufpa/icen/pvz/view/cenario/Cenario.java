@@ -1,4 +1,4 @@
-package ufpa.icen.pvz.view;
+package ufpa.icen.pvz.view.cenario;
 
 import javax.swing.JPanel;
 

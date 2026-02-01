@@ -1,4 +1,4 @@
-package ufpa.icen.pvz.view;
+package ufpa.icen.pvz.view.cenario;
 
 import ufpa.icen.pvz.assets.Assets;
 

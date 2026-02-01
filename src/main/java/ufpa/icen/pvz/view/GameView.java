@@ -3,6 +3,8 @@ package ufpa.icen.pvz.view;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
+import ufpa.icen.pvz.view.cenario.GameCenario;
+
 public class GameView {
     private JFrame telajogo;
 

@@ -1,8 +1,9 @@
-package ufpa.icen.pvz.view;
+package ufpa.icen.pvz.view.personagem;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import ufpa.icen.pvz.assets.Assets;
+import ufpa.icen.pvz.view.GridFrontend.GridFrontend;
 
 
 /**

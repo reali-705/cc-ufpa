@@ -1,4 +1,4 @@
-package ufpa.icen.pvz.view;
+package ufpa.icen.pvz.view.cenario;
 import javax.swing.JFrame;
 // setSize(960, 720);
 
