@@ -1,30 +1,49 @@
 package ufpa.icen.pvz.view;
 
-import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
-
 import ufpa.icen.pvz.view.cenario.GameCenario;
+import ufpa.icen.pvz.view.tiles.tiles;
 
-public class GameView {
-    private JFrame telajogo;
+import javax.swing.*;
+
+public class GameView extends JFrame {
 
     public GameView() {
-        // Cria a janela principal
-        telajogo = new JFrame("Plants vs Zombies");
-        telajogo.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        telajogo.setSize(800, 600);
-        telajogo.setLocationRelativeTo(null);
-        telajogo.setResizable(false);
+        super("Plants vs Zombies");
 
-        // Adiciona o MenuCenario
-        GameCenario menuCenario = new GameCenario();
-        telajogo.getContentPane().add(menuCenario);
+        int larguraGrid = 960;
+        int larguraPainel = 180;
+        int altura = 640;
 
-        telajogo.setVisible(true);
+        // Tamanho total = grid + painel
+        setSize(larguraGrid + larguraPainel, altura);
+        setLayout(null);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setResizable(false);
+
+        // ------------------------
+        // Grid do jogo
+        // ------------------------
+        GameCenario gameCenario = new GameCenario();
+        gameCenario.setBounds(0, 0, larguraGrid, altura);
+        add(gameCenario);
+
+        // ------------------------
+        // Painel lateral de seleção
+        // ------------------------
+        tiles painel = new tiles();
+        painel.setBounds(larguraGrid, 0, larguraPainel, altura); // dentro da janela agora
+        add(painel);
+
+        // Listener para selecionar planta
+        painel.setPlantClickListener(spritePath -> {
+            System.out.println("Selecionou: " + spritePath);
+        });
+
+        setVisible(true);
     }
 
-   
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new GameView());
+        SwingUtilities.invokeLater(GameView::new);
     }
 }

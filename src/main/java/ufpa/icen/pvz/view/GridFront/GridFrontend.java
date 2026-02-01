@@ -1,5 +1,5 @@
 // arquivo: ufpa.icen.pvz.grid.Grid.java
-package ufpa.icen.pvz.view.GridFrontend;
+package ufpa.icen.pvz.view.GridFront;
 
 /**
  * Classe auxiliar que representa o tabuleiro (grid) e faz conversões.

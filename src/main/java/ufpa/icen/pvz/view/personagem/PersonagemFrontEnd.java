@@ -2,38 +2,41 @@ package ufpa.icen.pvz.view.personagem;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import ufpa.icen.pvz.assets.Assets;
-import ufpa.icen.pvz.view.GridFrontend.GridFrontend;
 
+import ufpa.icen.pvz.assets.Assets;
+import ufpa.icen.pvz.view.GridFront.GridFrontend;
 
 /**
- * PersonagemFrontEnd 
+ * Classe base abstrata para qualquer entidade visual no grid.
  *
- * - Guarda apenas (linha, coluna) e um GridFrontend para conversões célula <-> pixel.
-    * - Responsável por desenhar o sprite na posição correta.
+ * Responsabilidades:
+ * - Guardar posição (linha, coluna)
+ * - Converter célula -> pixel via GridFrontend
+ * - Desenhar o sprite
+ *
+ * NÃO contém regra de jogo.
  */
-public class PersonagemFrontEnd {
+public abstract class PersonagemFrontEnd {
 
-    private int linha;
-    private int coluna;
-    private final GridFrontend grid;
-    private final BufferedImage imagem;
+    protected int linha;
+    protected int coluna;
 
-    /**
-     * Construtor GRID-only.
-     *
-     * @param pathImagem caminho para o asset (passado para Assets.get)
-     * @param linha linha inicial (0-index)
-     * @param coluna coluna inicial (0-index)
-     * @param grid instancia do GridFrontend que será usada para conversões
-     * @throws IllegalArgumentException se grid for null ou (linha,coluna) inválidos
-     */
-    public PersonagemFrontEnd(String pathImagem, int linha, int coluna, GridFrontend grid) {
+    protected final GridFrontend grid;
+    protected final BufferedImage imagem;
+
+    protected PersonagemFrontEnd(
+            String pathImagem,
+            int linha,
+            int coluna,
+            GridFrontend grid
+    ) {
         if (grid == null) {
             throw new IllegalArgumentException("GridFrontend não pode ser null.");
         }
         if (!grid.isValidCell(linha, coluna)) {
-            throw new IllegalArgumentException("Posição inicial inválida: (" + linha + "," + coluna + ")");
+            throw new IllegalArgumentException(
+                "Posição inicial inválida: (" + linha + "," + coluna + ")"
+            );
         }
 
         this.imagem = Assets.get(pathImagem);
@@ -42,75 +45,79 @@ public class PersonagemFrontEnd {
         this.coluna = coluna;
 
         if (this.imagem == null) {
-            System.err.println("Personagem: imagem não encontrada em " + pathImagem);
+            System.err.println("Imagem não encontrada: " + pathImagem);
         }
     }
 
-    /**
-     * Desenha o sprite na posição derivada do grid (centralizado dentro da célula).
-     */
+    // -----------------------
+    // Desenho
+    // -----------------------
+
     public void desenhar(Graphics g) {
         if (imagem == null) return;
 
-        int drawX = getX();
-        int drawY = getY();
-
-        g.drawImage(imagem, drawX, drawY, getLargura(), getAltura(), null);
+        g.drawImage(
+            imagem,
+            getX(),
+            getY(),
+            getLargura(),
+            getAltura(),
+            null
+        );
     }
 
-    /**
-     * Move o personagem por células (dRow, dCol).
-     * Retorna true se o movimento foi aplicado (celula válida), false caso contrário.
-     *
-     * IMPORTANT: este método apenas valida limites do GridFrontend. Para regras de jogo
-     * (ocupação, colisão, custos etc.) consulte o backend antes de chamar.
-     */
-    public boolean moveGrid(int dRow, int dCol, GridFrontend gridArg) {
-        GridFrontend g = (gridArg != null) ? gridArg : this.grid;
-        if (g == null) return false;
+    // -----------------------
+    // Movimento (apenas grid)
+    // -----------------------
 
-        int nRow = this.linha + dRow;
-        int nCol = this.coluna + dCol;
+    public boolean moveGrid(int dRow, int dCol) {
+        int nRow = linha + dRow;
+        int nCol = coluna + dCol;
 
-        if (!g.isValidCell(nRow, nCol)) {
+        if (!grid.isValidCell(nRow, nCol)) {
             return false;
         }
 
-        this.linha = nRow;
-        this.coluna = nCol;
+        linha = nRow;
+        coluna = nCol;
         return true;
     }
 
-    /**
-     * Define a posição do personagem no grid (usa validação do GridFrontend).
-     */
     public void setGridPos(int linha, int coluna) {
         if (!grid.isValidCell(linha, coluna)) {
-            throw new IllegalArgumentException("Posição inválida: (" + linha + "," + coluna + ")");
+            throw new IllegalArgumentException(
+                "Posição inválida: (" + linha + "," + coluna + ")"
+            );
         }
         this.linha = linha;
         this.coluna = coluna;
     }
 
     // -----------------------
-    // Conversões / getters em pixels
+    // Conversão célula -> pixel
     // -----------------------
 
-    /**
-     * Retorna a coordenada X (pixel) do topo-esquerdo do sprite (centralizado na célula).
-     */
     public int getX() {
         int px = grid.cellToPixelX(coluna);
         return px + (grid.getCellSize() - getLargura()) / 2;
     }
 
-    /**
-     * Retorna a coordenada Y (pixel) do topo-esquerdo do sprite (centralizado na célula).
-     */
     public int getY() {
         int py = grid.cellToPixelY(linha);
         return py + (grid.getCellSize() - getAltura()) / 2;
     }
+
+    public int getCenterX() {
+        return grid.cellCenterX(coluna);
+    }
+
+    public int getCenterY() {
+        return grid.cellCenterY(linha);
+    }
+
+    // -----------------------
+    // Sprite
+    // -----------------------
 
     public BufferedImage getImagem() {
         return imagem;
@@ -124,19 +131,19 @@ public class PersonagemFrontEnd {
         return imagem != null ? imagem.getHeight() : 0;
     }
 
-    /**
-     * Verifica se um ponto em pixels está dentro do sprite (usado para seleção por clique).
-     */
+    // -----------------------
+    // Interação (clique)
+    // -----------------------
+
     public boolean contain(int px, int py) {
         int left = getX();
         int top = getY();
-        int right = left + getLargura();
-        int bottom = top + getAltura();
-        return px >= left && px <= right && py >= top && py <= bottom;
+        return px >= left && px <= left + getLargura()
+            && py >= top && py <= top + getAltura();
     }
 
     // -----------------------
-    // Info do grid
+    // Info
     // -----------------------
 
     public int getLinha() {
@@ -149,23 +156,5 @@ public class PersonagemFrontEnd {
 
     public GridFrontend getGrid() {
         return grid;
-    }
-
-    // -----------------------
-    // Utilitários 
-    // -----------------------
-
-    /**
-     * Retorna o centro X em pixels da célula (útil para efeitos / alinhamentos).
-     */
-    public int getCenterX() {
-        return grid.cellCenterX(coluna);
-    }
-
-    /**
-     * Retorna o centro Y em pixels da célula (útil para efeitos / alinhamentos).
-     */
-    public int getCenterY() {
-        return grid.cellCenterY(linha);
     }
 }

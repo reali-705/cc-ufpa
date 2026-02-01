@@ -1,5 +1,5 @@
 // arquivo: ufpa.icen.pvz.grid.GridPreset.java
-package ufpa.icen.pvz.view.GridFrontend;
+package ufpa.icen.pvz.view.GridFront;
 
 /**
  * Presets para o tamanho da célula e valores padrão de grid.

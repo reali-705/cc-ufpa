@@ -1,15 +1,10 @@
 package ufpa.icen.pvz.view.cenario;
-
 import javax.swing.JPanel;
-
 public abstract class Cenario extends JPanel {
-    
-    public Cenario() {
-        configurar();
-        criarComponentes();
-        adicionarEventos();
+
+    protected Cenario() {
     }
-    
+
     protected abstract void configurar();
     protected abstract void criarComponentes();
     protected abstract void adicionarEventos();
