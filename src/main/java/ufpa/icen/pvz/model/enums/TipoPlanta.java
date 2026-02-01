@@ -19,8 +19,8 @@ public enum TipoPlanta {
      */
 
     ATIRADORA_DE_ERVILHA(
-        50, 50, 10,
-        new StatusAtaque(20, 5, 2.0)
+        50, 75, 10,
+        new StatusAtaque(20, 5, 0.75)
     );
 
     // --- Registros ---

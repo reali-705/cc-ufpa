@@ -12,8 +12,12 @@ import ufpa.icen.pvz.model.enums.TipoZumbi;
 
 public class Grid {
     private final Linha[] linhas;
+    private final double tamanhoLinha;
+    private final int quantidadeLinhas;
 
     public Grid(int quantidadeLinhas, double tamanhoLinha) {
+        this.quantidadeLinhas = quantidadeLinhas;
+        this.tamanhoLinha = tamanhoLinha;
         linhas = new Linha[quantidadeLinhas];
         for (int i = 0; i < quantidadeLinhas; i++) {
             linhas[i] = new Linha(tamanhoLinha, i);
@@ -32,14 +36,14 @@ public class Grid {
     }
 
     public boolean adicionarPlanta(int indiceLinha, double posicaoX, TipoPlanta tipoPlanta) {
-        if (indiceLinha < 0 || indiceLinha >= linhas.length) {
+        if (indiceLinha < 0 || indiceLinha >= quantidadeLinhas) {
             return false;
         }
         return linhas[indiceLinha].adicionarPlanta(posicaoX, tipoPlanta);
     }
 
     public void adicionarZumbi(int indiceLinha, TipoZumbi tipoZumbi) {
-        if (indiceLinha < 0 || indiceLinha >= linhas.length) {
+        if (indiceLinha < 0 || indiceLinha >= quantidadeLinhas) {
             return;
         }
         linhas[indiceLinha].adicionarZumbi(tipoZumbi);
@@ -84,4 +88,7 @@ public class Grid {
         }
         return plantas;
     }
+
+    public int getQuantidadeLinhas() { return quantidadeLinhas; }
+    public double getTamanhoLinha() { return tamanhoLinha; }
 }
