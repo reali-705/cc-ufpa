@@ -47,6 +47,7 @@ public class Nivel {
             spawnarZumbi();
         }
 
+        // TODO adicionar Girassol que gera recursos
         if (contador % cooldownRecursos == 0) {
             recursosJogador += recursosPorCiclo;
         }
@@ -65,6 +66,7 @@ public class Nivel {
         return false;
     }
 
+    // TODO adicionar um delay entre os zumbis da horda
     private void spawnarZumbi() {
         for (int i = 0; i < tamanhoHorda; i++) {
             int indiceLinha = random.nextInt(grid.getQuantidadeLinhas());
