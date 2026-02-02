@@ -1,49 +1,46 @@
 package ufpa.icen.pvz.view;
 
+import ufpa.icen.pvz.config.CenarioConfig;
 import ufpa.icen.pvz.view.cenario.GameCenario;
+import ufpa.icen.pvz.view.cenario.Janela;
 import ufpa.icen.pvz.view.tiles.Tiles;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class GameView extends JFrame {
+public class GameView {
 
     public GameView() {
-        super("Plants vs Zombies");
-
-        // ------------------------
-        // Configuração da janela
-        // ------------------------
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setResizable(false);
-
-        // Container principal com BorderLayout
-        JPanel mainPanel = new JPanel(new BorderLayout());
-        setContentPane(mainPanel);
-
-        // ------------------------
-        // Grid do jogo (centro)
-        // ------------------------
+        // Cria o cenário e o painel lateral
         GameCenario gameCenario = new GameCenario();
-        mainPanel.add(gameCenario, BorderLayout.CENTER);
-
-        // ------------------------
-        // Painel lateral de seleção (direita)
-        // ------------------------
         Tiles painel = new Tiles();
-        painel.setPreferredSize(new Dimension(180, 640));
-        mainPanel.add(painel, BorderLayout.EAST);
 
-        // Listener para selecionar planta
+        // Pega os tamanhos da enum CenarioConfig
+        int larguraGrid = CenarioConfig.GRID_LARGURA.getValor();
+        int alturaGrid = CenarioConfig.GRID_ALTURA.getValor();
+        int larguraPainel = CenarioConfig.PAINEL_LARGURA.getValor();
+
+        JPanel mainPanel = new JPanel(null);
+        mainPanel.setPreferredSize(new Dimension(larguraGrid + larguraPainel, alturaGrid));
+
+        // Define bounds fixos para o grid e o painel
+        gameCenario.setBounds(0, 0, larguraGrid, alturaGrid);
+        mainPanel.add(gameCenario);
+
+        painel.setBounds(larguraGrid, 0, larguraPainel, alturaGrid);
+        mainPanel.add(painel);
+
         painel.setPlantClickListener(spritePath -> {
             System.out.println("Selecionou: " + spritePath);
             gameCenario.setPlantaSelecionada(spritePath);
         });
 
-        // Ajusta o tamanho da janela ao tamanho dos componentes
-        pack();
-        setLocationRelativeTo(null); // centraliza a janela
-        setVisible(true);
+        new Janela(
+                "Plants vs Zombies",
+                larguraGrid + larguraPainel,
+                alturaGrid,
+                mainPanel
+        );
     }
 
     public static void main(String[] args) {

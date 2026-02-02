@@ -1,18 +1,21 @@
 package ufpa.icen.pvz.view.cenario;
-import javax.swing.JFrame;
-// setSize(960, 720);
 
-public class Janela extends JFrame{
-    Cenario cenario;
-    public Janela(String titulo, int largura, int altura){
-        // Configurações básicas da janela
+import javax.swing.*;
+import java.awt.*;
+
+public class Janela extends JFrame {
+
+    public Janela(String titulo, int largura, int altura, JPanel conteudo) {
         super(titulo);
-        setSize(largura, altura);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setResizable(false);
+
+        // Adiciona o conteúdo (GameCenario + painel lateral)
+        setContentPane(conteudo);
+
+        setPreferredSize(new Dimension(largura, altura));
+        pack(); // ajusta ao tamanho do conteúdo
         setLocationRelativeTo(null);
         setVisible(true);
-        this.cenario = new GameCenario();
-        add(cenario);
     }
-    
 }
