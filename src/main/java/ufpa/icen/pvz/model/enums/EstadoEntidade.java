@@ -8,23 +8,8 @@ package ufpa.icen.pvz.model.enums;
  * </p>
  */
 public enum EstadoEntidade {
-    /**
-     * Entidade está ativa e viva, aguardando execução de ações.
-     */
-    VIVA,
-    
-    /**
-     * Entidade está no processo de realizar um ataque.
-     */
-    ATACANDO,
-    
-    /**
-     * Entidade está em movimento no tabuleiro.
-     */
+    INATIVA,
+    PRONTA,
+    ESPERANDO,
     MOVENDO,
-    
-    /**
-     * Entidade foi eliminada e será removida do jogo.
-     */
-    MORTA
 }
