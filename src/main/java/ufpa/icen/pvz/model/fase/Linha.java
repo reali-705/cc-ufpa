@@ -73,14 +73,12 @@ public class Linha {
     }
 
     private void atualizarPlantas() {
-        if (zumbis.isEmpty()) {
-            return;
-        }
         for (Planta planta : plantas) {
             if (planta == null || !planta.estaViva()) {
                 continue;
             }
-            if (planta instanceof Atirador atirador) {
+            
+            if (!zumbis.isEmpty() && planta instanceof Atirador atirador) {
                 for (Zumbi zumbi : zumbis) {
                     if (zumbi.getPosicaoX() >= planta.getPosicaoX()) {
                         Projetil projetil = atirador.atirar();
@@ -91,6 +89,7 @@ public class Linha {
                     }
                 }
             }
+            
             planta.atualizar();
         }
     }
@@ -132,7 +131,6 @@ public class Linha {
         return false;
     }
 
-    // analisar melhor forma para verificar entidades mortas/destruidas
     private void limparMortos() {
         zumbis.removeIf(zumbi -> !zumbi.estaViva());
         projetis.removeIf(projetil -> !projetil.estaAtiva(tamanho));
