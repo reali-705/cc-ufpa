@@ -2,6 +2,7 @@ package ufpa.icen.pvz.view.cenario;
 
 import ufpa.icen.pvz.view.GridFront.GridFrontend;
 import ufpa.icen.pvz.view.personagem.PersonagemFrontEnd;
+import ufpa.icen.pvz.view.personagem.ProjetilFrontend;
 import ufpa.icen.pvz.controller.EntityManagerFrontend;
 
 import java.awt.Graphics;
@@ -24,17 +25,30 @@ public class GameRenderer {
     public boolean isShowGrid() { return showGrid; }
 
     public void render(Graphics g) {
+        // Fundo
         if (fundoImage != null) {
             int largura = grid.getCols() * grid.getCellSize() + grid.getOffsetX();
             int altura  = grid.getRows() * grid.getCellSize() + grid.getOffsetY();
             g.drawImage(fundoImage, 0, 0, largura, altura, null);
         }
 
+        // Grid
         if (showGrid) drawGridLines(g);
 
-        // Desenha entidades
-        for (PersonagemFrontEnd p : entities.getPlantas()) p.desenhar(g);
-        for (PersonagemFrontEnd z : entities.getZumbis()) z.desenhar(g);
+        // Desenha plantas
+        for (PersonagemFrontEnd p : entities.getPlantas()) {
+            p.desenhar(g);
+        }
+
+        // Desenha zumbis
+        for (PersonagemFrontEnd z : entities.getZumbis()) {
+            z.desenhar(g);
+        }
+
+        // Desenha projeteis
+        for (ProjetilFrontend proj : entities.getProjeteis()) {
+            proj.desenhar(g);
+        }
     }
 
     private void drawGridLines(Graphics g) {

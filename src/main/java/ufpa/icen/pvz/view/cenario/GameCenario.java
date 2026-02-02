@@ -6,9 +6,7 @@ import ufpa.icen.pvz.controller.EntityManagerFrontend;
 import ufpa.icen.pvz.controller.InputHandler;
 import ufpa.icen.pvz.view.GridFront.GridFrontend;
 import ufpa.icen.pvz.view.GridFront.GridPreset;
-import ufpa.icen.pvz.view.personagem.PersonagemFrontEnd;
-import ufpa.icen.pvz.view.personagem.PlantaFrontEnd;
-import ufpa.icen.pvz.view.personagem.ZumbiFrontend;
+import ufpa.icen.pvz.view.personagem.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,6 +14,16 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+/**
+ * GameCenario: classe que delega render para GameRenderer,
+ * input para InputHandler e guarda entidades via EntityManagerFrontend.
+ *
+ * Observação importante:
+ * - ProjetilFrontend aqui é apenas visual; a lógica (movimento/colisão) pertence
+ *   ao backend. Quando você tiver a classe backend Projetil, rode um loop
+ *   de atualização lá e chame atualizarPosicaoProjetil(...) para sincronizar a posição.
+ *   
+ */
 public class GameCenario extends Cenario implements IgameFrontend {
 
     private final GridFrontend grid;
@@ -27,10 +35,12 @@ public class GameCenario extends Cenario implements IgameFrontend {
 
     public GameCenario() {
         this.grid = new GridFrontend(GridPreset.MEDIUM);
-        this.entities = new EntityManagerFrontend(new ArrayList<>(), new ArrayList<>());
+        // três listas: plantas, zumbis, projeteis (frontend)
+        this.entities = new EntityManagerFrontend(new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
         this.input = new InputHandler(grid, entities);
         this.renderer = new GameRenderer(grid, entities);
 
+        // clique no grid cria planta (usa plantaSelecionada atual)
         input.setOnClick((row, col) -> invokeOnEdt(() -> criarPlanta(row, col, plantaSelecionada)));
 
         setPreferredSize(new Dimension(960, 640));
@@ -51,6 +61,7 @@ public class GameCenario extends Cenario implements IgameFrontend {
         BufferedImage fundo = Assets.get("/assets/fundo.png");
         renderer.setFundo(fundo);
 
+        // planta inicial central
         int row = grid.getRows() / 2;
         int col = grid.getCols() / 2;
         PlantaFrontEnd inicial = new PlantaFrontEnd(plantaSelecionada, row, col, grid);
@@ -81,8 +92,10 @@ public class GameCenario extends Cenario implements IgameFrontend {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+        // GameRenderer cuida de fundo, grid e entidades (inclusive projeteis)
         renderer.render(g);
 
+        // destaque do selecionado
         PersonagemFrontEnd sel = getSelecionado();
         if (sel != null) {
             Color old = g.getColor();
@@ -92,6 +105,9 @@ public class GameCenario extends Cenario implements IgameFrontend {
         }
     }
 
+    // -----------------------
+    // IgameFrontend overrides
+    // -----------------------
     @Override
     public PersonagemFrontEnd getSelecionado() {
         PersonagemFrontEnd sel = input.getSelecionado();
@@ -129,6 +145,14 @@ public class GameCenario extends Cenario implements IgameFrontend {
     }
 
     @Override
+    public void apagarPlanta(int row, int col) {
+        invokeOnEdt(() -> {
+            entities.removePlantaAt(row, col);
+            repaint();
+        });
+    }
+
+    @Override
     public void criarZumbi(int row, int col, String spritePath) {
         if (!grid.isValidCell(row, col) || spritePath == null) return;
         invokeOnEdt(() -> {
@@ -139,17 +163,43 @@ public class GameCenario extends Cenario implements IgameFrontend {
     }
 
     @Override
-    public void apagarPlanta(int row, int col) {
+    public void apagarZumbi(int row, int col) {
         invokeOnEdt(() -> {
-            entities.removePlantaAt(row, col);
+            entities.removeZumbiAt(row, col);
+            repaint();
+        });
+    }
+
+    /**
+     * Cria um projetil frontend (visual) — sem backend.
+     * Quando você implementar o backend do projetil, faça o loop de atualização
+     * no backend e chame atualizarPosicaoProjetil(...) para sincronizar a posição.
+     */
+    @Override
+    public void criarProjetil(int row, int col, String spritePath) {
+        if (!grid.isValidCell(row, col) || spritePath == null) return;
+        invokeOnEdt(() -> {
+            ProjetilFrontend pf = new ProjetilFrontend(row, col, spritePath, grid);
+            entities.addProjetil(pf);
             repaint();
         });
     }
 
     @Override
-    public void apagarZumbi(int row, int col) {
+    public void apagarProjetil(int row, int col) {
         invokeOnEdt(() -> {
-            entities.removeZumbiAt(row, col);
+            entities.removeProjetilAt(row, col);
+            repaint();
+        });
+    }
+
+    /**
+     * Sincroniza posição do projetil frontend com o backend.
+     * Chame isto a partir do seu game-loop/backend depois de atualizar o backend.
+     */
+    public void atualizarPosicaoProjetil(ProjetilFrontend pf, int row, int col) {
+        invokeOnEdt(() -> {
+            pf.atualizarPosicao(row, col);
             repaint();
         });
     }
@@ -165,6 +215,9 @@ public class GameCenario extends Cenario implements IgameFrontend {
         this.plantaSelecionada = spritePath;
     }
 
+    // -----------------------
+    // Utilitário EDT
+    // -----------------------
     private static void invokeOnEdt(Runnable r) {
         if (SwingUtilities.isEventDispatchThread()) r.run();
         else SwingUtilities.invokeLater(r);

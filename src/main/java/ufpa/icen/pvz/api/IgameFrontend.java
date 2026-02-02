@@ -11,6 +11,7 @@ public interface IgameFrontend {
     void moverSelecionado(int dRow, int dCol);
     void criarPlanta(int row, int col, String spritePath);
     void apagarPlanta(int row, int col);
+    
 
     // Zumbis
     void criarZumbi(int row, int col, String spritePath);
@@ -18,6 +19,10 @@ public interface IgameFrontend {
 
     // Visual
     void toggleGrid();
+
+    //projeteis 
+    void criarProjetil(int row, int col, String spritePath);
+    void apagarProjetil(int row, int col);
 
     // Configuração
     void setPlantaSelecionada(String spritePath);
