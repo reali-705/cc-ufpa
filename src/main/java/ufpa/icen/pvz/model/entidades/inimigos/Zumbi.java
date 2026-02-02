@@ -1,10 +1,11 @@
 package ufpa.icen.pvz.model.entidades.inimigos;
 
-import ufpa.icen.pvz.config.Config;
 import ufpa.icen.pvz.model.entidades.EntidadeViva;
+import ufpa.icen.pvz.model.enums.EstadoEntidade;
+import ufpa.icen.pvz.model.enums.TipoZumbi;
 import ufpa.icen.pvz.model.interfaces.Atacante;
 import ufpa.icen.pvz.model.interfaces.Impactante;
-import ufpa.icen.pvz.model.interfaces.Movivel;
+import ufpa.icen.pvz.model.interfaces.Movel;
 
 /**
  * Representa um zumbi inimigo no jogo.
@@ -12,7 +13,7 @@ import ufpa.icen.pvz.model.interfaces.Movivel;
  * Zumbis se movem em direção à casa e atacam plantas que encontrarem no caminho.
  * </p>
  */
-public class Zumbi extends EntidadeViva implements Movivel, Atacante, Impactante {
+public class Zumbi extends EntidadeViva implements Movel, Atacante, Impactante {
     /** Velocidade de movimento do zumbi. */
     private double velocidade;
 
@@ -20,10 +21,9 @@ public class Zumbi extends EntidadeViva implements Movivel, Atacante, Impactante
     private int dano;
 
     /** Tempo entre ataques do zumbi. */
-    private int tempoAtaque;
+    private int cooldownAtaque;
 
-    /** Timestamp do último ataque realizado. */
-    private long ultimoAtaque = 0;
+    private EntidadeViva alvo;
     
     /**
      * Cria um novo Zumbi com configurações padrão (vida, dano e velocidade definidos em Config).
@@ -32,72 +32,78 @@ public class Zumbi extends EntidadeViva implements Movivel, Atacante, Impactante
      * @param posicaoY A linha (Y) onde o zumbi irá surgir.
      */
     public Zumbi(double posicaoX, int posicaoY) {
-        super(posicaoX, posicaoY, Config.ZUMBI_PADRAO.vida());
-        this.velocidade = Config.ZUMBI_PADRAO.velocidade();
-        this.dano = Config.ZUMBI_PADRAO.dano();
-        this.tempoAtaque = Config.ZUMBI_PADRAO.tempoAtaque();
-    }
-
-    /**
-     * Cria um novo Zumbi com configurações personalizadas.
-     * <p>
-     * Utilizado principalmente para testes ou variações de zumbis.
-     * </p>
-     * 
-     * @param posicaoX A posição horizontal inicial.
-     * @param posicaoY A linha (Y) inicial.
-     * @param status Record contendo os atributos base (vida, dano, velocidade, etc).
-     */
-    public Zumbi(double posicaoX, int posicaoY, Config.StatusBasicoZumbi status) {
-        super(posicaoX, posicaoY, status.vida());
-        this.velocidade = status.velocidade();
-        this.dano = status.dano();
-        this.tempoAtaque = status.tempoAtaque();
+        this(posicaoX, posicaoY, TipoZumbi.COMUM);
     }
     
     /**
-     * Move o zumbi em direção à casa do jogador (esquerda).
-     * <p>
-     * A movimentação reduz a coordenada X baseada na velocidade atual.
-     * </p>
+     * Cria um novo Zumbi com base no tipo especificado.
+     * 
+     * @param posicaoX A posição horizontal inicial no tabuleiro.
+     * @param posicaoY A linha (Y) onde o zumbi irá surgir.
+     * @param tipoZumbi O tipo de zumbi a ser criado, definindo suas características.
      */
-    @Override
-    public void mover() {
+    public Zumbi(double posicaoX, int posicaoY, TipoZumbi tipoZumbi) {
+        super(posicaoX, posicaoY, tipoZumbi.getVida());
+        this.velocidade = tipoZumbi.getVelocidade();
+        this.dano = tipoZumbi.getDano();
+        this.cooldownAtaque = tipoZumbi.getCooldownAtaque();
+        this.contador = tipoZumbi.getCooldownAtaque();  // Pronto para atacar imediatamente
+        this.estado = EstadoEntidade.MOVENDO;
+    }
+
+    private void mover() {
+        contador += 1;
         this.posicaoX -= this.velocidade;
     }
+
+    private void prepararAtaque() {
+        contador += 1;
+        if (contador >= cooldownAtaque) {
+            setEstado(EstadoEntidade.PRONTA);
+            return;
+        }
+        setEstado(EstadoEntidade.ESPERANDO);
+    }
     
-    /**
-     * Verifica se o zumbi está apto a atacar no momento.
-     * <p>
-     * Critérios:
-     * 1. O zumbi deve estar vivo.
-     * 2. O tempo decorrido desde o último ataque deve ser maior que o tempo de recarga.
-     * </p>
-     * 
-     * @return true se o ataque está disponível, false caso contrário.
-     */
-    @Override
-    public boolean podeAtacar() {
-        if (!this.estaViva()) { return false; }
-        return (System.currentTimeMillis() - ultimoAtaque) >= tempoAtaque;
+    private void atingir() {
+        this.alvo.receberDano(dano);
+        setEstado(EstadoEntidade.ESPERANDO);
+        contador = 0;
     }
 
-    /**
-     * Executa o ataque contra outra entidade viva (como uma planta).
-     * <p>
-     * Se o ataque for bem-sucedido, o dano é aplicado e o cooldown é reiniciado.
-     * </p>
-     * 
-     * @param outra A entidade alvo que receberá o dano.
-     */
     @Override
-    public void atingir(EntidadeViva outra) {
-        if (!podeAtacar()) { return; }
-        outra.receberDano(dano);
-        this.ultimoAtaque = System.currentTimeMillis();
+    public void atualizar() {
+        switch (estado) {
+            case MOVENDO:
+                mover();
+                break;
+            case ESPERANDO:
+                prepararAtaque();
+                break;
+            case PRONTA:
+                atingir();
+                break;
+            default:
+                setEstado(EstadoEntidade.INATIVA);
+        }
+    }
+
+    public void setAlvo(EntidadeViva alvo) {
+        if (!estaViva()) {
+            this.alvo = null;
+            return;
+        }
+        if (alvo == null || !alvo.estaViva()) {
+            this.alvo = null;
+            setEstado(EstadoEntidade.MOVENDO);
+            return;
+        }
+        this.alvo = alvo;
+        prepararAtaque();
     }
 
     public double getVelocidade() { return velocidade; }
     public int getDano() { return dano; }
-    public int getTempoAtaque() { return tempoAtaque; }
+    public int getCooldownAtaque() { return cooldownAtaque; }
+    public EntidadeViva getAlvo() { return alvo; }
 }
