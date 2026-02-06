@@ -14,14 +14,9 @@ Este repositório contém os trabalhos e atividades práticas desenvolvidos para
 
 As atividades estão organizadas em diretórios conforme o tema abordado:
 
-- [**Árvores Balanceadas**](./arvores%20balanceadas/): Implementação completa de estruturas de árvores balanceadas com operações de inserção, remoção, busca e percursos.
+- [**Árvores Balanceadas**](./atividade_1/): Implementação completa de estruturas de árvores balanceadas com operações de inserção, remoção, busca e percursos.
 
-### Características Técnicas
-
-- **Python 3.10+** (type hints com union `|`)
-- Docstrings completas (PEP 257)
-- Validação de propriedades estruturais
-- Tratamento de casos especiais (nós nulos, raiz)
+- [**Desafios de Algoritmos**](./atividade_2/): Resolução dos desafios Jesse and Cookies e No Prefix Set.
 
 ---
 
