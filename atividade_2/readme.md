@@ -90,5 +90,5 @@ A utilização da Trie permite verificar **prefixos de forma incremental e efici
 - A solução identifica corretamente **o primeiro caso de BAD SET**.  
 - Permite processar **até centenas de milhares de palavras com tamanho limitado** em tempo aceitável para plataformas como HackerRank.  
 
-A escolha da Trie se mostra superior a métodos baseados em loops de comparação direta, oferecendo **simplicidade, clareza e eficiência**.
+A escolha da Trie se mostra superior a métodos baseados em loops de comparação direta e metodos mais sofisticados por se adequar a natureza do problema(busca de prefixos), oferecendo **simplicidade, clareza e eficiência**.
 
