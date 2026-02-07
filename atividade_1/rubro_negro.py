@@ -5,7 +5,7 @@ garantindo altura O(log n). Suporta busca, inserção, remoção e validação
 de altura-negra.
 """
 
-from binaria_de_busca import NoBST, ArvoreBST
+from atividade_1.binaria_de_busca import NoBST, ArvoreBST
 
 
 class NoRN(NoBST):

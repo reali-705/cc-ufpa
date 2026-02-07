@@ -4,7 +4,7 @@ Extende a BST com balanceamento automático por rotações após inserções
 ou remoções, garantindo altura O(log n).
 """
 
-from binaria_de_busca import NoBST, ArvoreBST
+from atividade_1.binaria_de_busca import NoBST, ArvoreBST
 
 
 class NoAVL(NoBST):

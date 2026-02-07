@@ -1,7 +1,7 @@
 """Módulo principal para manipulação de árvores balanceadas."""
 
-from avl import ArvoreAVL
-from rubro_negro import ArvoreRubroNegro
+from atividade_1.avl import ArvoreAVL
+from atividade_1.rubro_negro import ArvoreRubroNegro
 
 
 def escolher_opcao(opcoes: list) -> int:
