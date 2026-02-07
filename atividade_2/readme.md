@@ -93,7 +93,7 @@ A utilização da Trie permite verificar **prefixos de forma incremental e efici
 A escolha da Trie se mostra superior a métodos baseados em loops de comparação direta e metodos mais sofisticados por se adequar a natureza do problema(busca de prefixos), oferecendo **simplicidade, clareza e eficiência**.
 
 ---
-# Dificuldades
+### Dificuldades
 
 A interpretação do problema foi o ponto decisivo. A exigência da busca de PREFIXOS torna a Trie, uma estratégia simples, melhor que estratégias sofisticadas tipo a Boyer-Moore.
 
