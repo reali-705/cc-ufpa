@@ -57,6 +57,9 @@ public class Nivel {
         // Spawnar zumbi a cada 2 ciclos para evitar spawn instantâneo
         if (zumbisParaAdicionar > 0 && contador % 2 == 0) {
             int indiceLinha = random.nextInt(grid.getQuantidadeLinhas());
+            while (grid.getLinhas().get(indiceLinha) == null) {
+                indiceLinha = random.nextInt(grid.getQuantidadeLinhas());
+            }
             grid.adicionarZumbi(indiceLinha, TipoZumbi.COMUM);
             zumbisParaAdicionar--;
         }
