@@ -24,15 +24,18 @@ public class Grid {
         }
     }
 
-    public boolean atualizar() {
+    public int atualizar() {
+        int solGeradoTotal = 0;
         for (Linha linha : linhas) {
+            int solGerado = linha.atualizar();
             // Se algum zumbi alcançar a casa, o jogo acaba
-            if (linha.atualizar()) {
-                return true;
+            if (solGerado == -1) {
+                return -1;
             }
+            solGeradoTotal += solGerado;
         }
-        // Nenhum zumbi alcançou a casa
-        return false;
+        // Nenhum zumbi alcançou a casa, retornar o total de sol gerado
+        return solGeradoTotal;
     }
 
     public boolean adicionarPlanta(int indiceLinha, double posicaoX, TipoPlanta tipoPlanta) {
@@ -89,6 +92,11 @@ public class Grid {
         return plantas;
     }
 
-    public int getQuantidadeLinhas() { return quantidadeLinhas; }
-    public double getTamanhoLinha() { return tamanhoLinha; }
+    public int getQuantidadeLinhas() {
+        return quantidadeLinhas;
+    }
+
+    public double getTamanhoLinha() {
+        return tamanhoLinha;
+    }
 }

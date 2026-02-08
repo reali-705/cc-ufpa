@@ -10,6 +10,7 @@ import ufpa.icen.pvz.model.entidades.plantas.Planta;
 import ufpa.icen.pvz.model.enums.TipoPlanta;
 import ufpa.icen.pvz.model.enums.TipoZumbi;
 import ufpa.icen.pvz.model.interfaces.Atirador;
+import ufpa.icen.pvz.model.interfaces.Geradora;
 
 /**
  * Representa uma linha do campo de jogo, responsável por gerenciar os
@@ -48,7 +49,7 @@ public class Linha {
             System.out.println("Já existe uma planta viva na coluna: " + colunaDesejada);
             return false;
         }
-        
+
         plantas[colunaDesejada] = tipoPlanta.criar(posicaoX, colunaDesejada);
         return true;
     }
@@ -62,22 +63,24 @@ public class Linha {
         }
     }
 
-    public boolean atualizar() {
-        atualizarPlantas();
+    public int atualizar() {
+        int solGerado = atualizarPlantas();
         atualizarProjeteis();
         if (atualizarZumbis()) {
-            return true;
+            return -1; // zumbi venceu
         }
         limparMortos();
-        return false;
+        return solGerado;
     }
 
-    private void atualizarPlantas() {
+    private int atualizarPlantas() {
+        int solTotalGerado = 0;
+
         for (Planta planta : plantas) {
             if (planta == null || !planta.estaViva()) {
                 continue;
             }
-            
+
             if (!zumbis.isEmpty() && planta instanceof Atirador atirador) {
                 for (Zumbi zumbi : zumbis) {
                     if (zumbi.getPosicaoX() >= planta.getPosicaoX()) {
@@ -89,13 +92,21 @@ public class Linha {
                     }
                 }
             }
-            
+
+            if (planta instanceof Geradora geradora) {
+                int solGerado = geradora.gerarSol();
+                if (solGerado > 0) {
+                    solTotalGerado += solGerado;
+                }
+            }
+
             planta.atualizar();
         }
+        return solTotalGerado;
     }
 
     private void atualizarProjeteis() {
-        for (Projetil projetil : projetis) {            
+        for (Projetil projetil : projetis) {
             if (projetil.getPosicaoX() > tamanho) {
                 continue;
             }
@@ -141,9 +152,23 @@ public class Linha {
         }
     }
 
-    public double getTamanho() { return tamanho; }
-    public int getIndice() { return indice; }
-    public List<Zumbi> getZumbis() { return zumbis; }
-    public List<Projetil> getProjetis() { return projetis; }
-    public List<Planta> getPlantas() { return Arrays.asList(plantas); }
+    public double getTamanho() {
+        return tamanho;
+    }
+
+    public int getIndice() {
+        return indice;
+    }
+
+    public List<Zumbi> getZumbis() {
+        return zumbis;
+    }
+
+    public List<Projetil> getProjetis() {
+        return projetis;
+    }
+
+    public List<Planta> getPlantas() {
+        return Arrays.asList(plantas);
+    }
 }
