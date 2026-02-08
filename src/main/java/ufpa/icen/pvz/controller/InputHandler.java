@@ -4,11 +4,9 @@ import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.KeyEvent;
 import javax.swing.AbstractAction;
 import javax.swing.KeyStroke;
 import ufpa.icen.pvz.view.GridFront.GridFrontend;
-import ufpa.icen.pvz.controller.EntityManagerFrontend;
 import ufpa.icen.pvz.view.personagem.PersonagemFrontEnd;
 
 public class InputHandler {
