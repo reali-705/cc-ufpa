@@ -23,10 +23,11 @@ public class AtiradoraDeErvilha extends Planta implements Atirador, Atacante {
     /** Tempo entre ataques da atiradora de ervilha. */
     private final int cooldownAtaque;
 
-     /**
+    /**
      * Construtor da Atiradora de Ervilha com configurações padrão.
      * <p>
-     * Utiliza as constantes definidas em {@link Config} para definir vida, custo e dano.
+     * Utiliza as constantes definidas em {@link Config} para definir vida, custo e
+     * dano.
      * </p>
      * 
      * @param posicaoX posição horizontal (double para movimento contínuo)
@@ -76,13 +77,19 @@ public class AtiradoraDeErvilha extends Planta implements Atirador, Atacante {
 
     /**
      * Obtém o dano causado pelos projéteis desta planta.
+     * 
      * @return valor do dano.
      */
-    public int getDano() { return dano; }
-    
+    public int getDano() {
+        return dano;
+    }
+
     /**
      * Obtém o intervalo de tempo necessário entre ataques.
+     * 
      * @return tempo em milissegundos.
      */
-    public int getCooldownAtaque() { return cooldownAtaque; }
+    public int getCooldownAtaque() {
+        return cooldownAtaque;
+    }
 }
