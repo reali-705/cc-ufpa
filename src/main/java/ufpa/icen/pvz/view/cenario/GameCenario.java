@@ -3,7 +3,9 @@ package ufpa.icen.pvz.view.cenario;
 import ufpa.icen.pvz.api.IgameFrontend;
 import ufpa.icen.pvz.assets.Assets;
 import ufpa.icen.pvz.controller.EntityManagerFrontend;
+import ufpa.icen.pvz.controller.GameController;
 import ufpa.icen.pvz.controller.InputHandler;
+import ufpa.icen.pvz.model.enums.TipoPlanta;
 import ufpa.icen.pvz.view.GridFront.GridFrontend;
 import ufpa.icen.pvz.view.GridFront.GridPreset;
 import ufpa.icen.pvz.view.personagem.*;
@@ -30,6 +32,7 @@ public class GameCenario extends Cenario implements IgameFrontend {
     private final EntityManagerFrontend entities;
     private final InputHandler input;
     private final GameRenderer renderer;
+    private GameController controller;
 
     private String plantaSelecionada = "/assets/girassol.png";
 
@@ -40,8 +43,8 @@ public class GameCenario extends Cenario implements IgameFrontend {
         this.input = new InputHandler(grid, entities);
         this.renderer = new GameRenderer(grid, entities);
 
-        // clique no grid cria planta (usa plantaSelecionada atual)
-        input.setOnClick((row, col) -> invokeOnEdt(() -> criarPlanta(row, col, plantaSelecionada)));
+        // clique no grid solicita ao backend criar planta
+        input.setOnClick(this::solicitarPlanta);
 
         setPreferredSize(new Dimension(960, 640));
         configurar();
@@ -61,12 +64,7 @@ public class GameCenario extends Cenario implements IgameFrontend {
         BufferedImage fundo = Assets.get("/assets/fundo.png");
         renderer.setFundo(fundo);
 
-        // planta inicial central
-        int row = grid.getRows() / 2;
-        int col = grid.getCols() / 2;
-        PlantaFrontEnd inicial = new PlantaFrontEnd(plantaSelecionada, row, col, grid);
-        entities.addPlanta(inicial);
-        input.setSelecionado(inicial);
+        // A planta inicial deve ser criada pelo backend (GameController)
     }
 
     @Override
@@ -213,6 +211,28 @@ public class GameCenario extends Cenario implements IgameFrontend {
     @Override
     public void setPlantaSelecionada(String spritePath) {
         this.plantaSelecionada = spritePath;
+    }
+
+    public void setController(GameController controller) {
+        this.controller = controller;
+    }
+
+    private void solicitarPlanta(int row, int col) {
+        if (controller == null) {
+            return;
+        }
+        TipoPlanta tipoPlanta = tipoPlantaPorSprite(plantaSelecionada);
+        if (tipoPlanta == null) {
+            return;
+        }
+        controller.tentarPlantar(row, col, tipoPlanta);
+    }
+
+    private TipoPlanta tipoPlantaPorSprite(String spritePath) {
+        if ("/assets/disparaervilha.png".equals(spritePath)) {
+            return TipoPlanta.ATIRADORA_DE_ERVILHA;
+        }
+        return null;
     }
 
     // -----------------------

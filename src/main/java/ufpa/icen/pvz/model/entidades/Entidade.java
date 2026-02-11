@@ -10,14 +10,20 @@ import ufpa.icen.pvz.model.enums.EstadoEntidade;
  * </p>
  */
 public abstract class Entidade {
-    /** Posição horizontal da entidade (suporta valores contínuos para movimento fluido). */
+    /**
+     * Posição horizontal da entidade (suporta valores contínuos para movimento
+     * fluido).
+     */
     protected double posicaoX;
-    
+
     /** Posição vertical (linha do tabuleiro, sempre valor inteiro). */
     protected int posicaoY;
-    
+
     /** Estado atual da entidade. */
     protected EstadoEntidade estado;
+
+    protected static int proximo_id = 1;
+    protected final int id;
 
     /**
      * Construtor base para todas as entidades.
@@ -26,6 +32,7 @@ public abstract class Entidade {
      * @param posicaoY A linha do tabuleiro (0 a M).
      */
     public Entidade(double posicaoX, int posicaoY) {
+        this.id = proximo_id++;
         this.posicaoX = posicaoX;
         this.posicaoY = posicaoY;
         this.estado = EstadoEntidade.PRONTA;
@@ -34,7 +41,7 @@ public abstract class Entidade {
     public abstract void atualizar();
 
     // ===== Getters e Setters =====
-    
+
     /**
      * Define o estado atual da entidade.
      * <p>
@@ -52,19 +59,29 @@ public abstract class Entidade {
      * 
      * @return O valor do enum {@link EstadoEntidade} representando o status.
      */
-    public EstadoEntidade getEstado() { return estado; }
+    public EstadoEntidade getEstado() {
+        return estado;
+    }
 
     /**
      * Obtém a posição horizontal da entidade.
      * 
      * @return A coordenada X (pode ser fracionária para movimentos suaves).
      */
-    public double getPosicaoX() { return posicaoX; }
-    
+    public double getPosicaoX() {
+        return posicaoX;
+    }
+
     /**
      * Obtém a posição vertical da entidade.
      * 
      * @return O índice inteiro da linha onde a entidade está.
      */
-    public int getPosicaoY() { return posicaoY; }
+    public int getPosicaoY() {
+        return posicaoY;
+    }
+
+    public int getId() {
+        return id;
+    }
 }

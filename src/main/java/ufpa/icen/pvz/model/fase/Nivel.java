@@ -14,10 +14,12 @@ public class Nivel {
     private int recursosJogador;
     private final int recursosPorCiclo;
     private final int cooldownRecursos;
+    private String gameOver;
+
     private final int tamanhoHorda;
     private final int cooldownSpawnZumbi;
     private final int zumbisParaVencer;
-    private String gameOver;
+    private int zumbisParaAdicionar = 0;
 
     public Nivel(int dificuldade) {
         this.random = new Random();
@@ -25,7 +27,7 @@ public class Nivel {
 
         DificuldadeNivel.ConfigFase configFase = this.dificuldade.getConfigFase();
         this.grid = new Grid(configFase.altura(), configFase.largura());
-        
+
         DificuldadeNivel.ConfigRecursos configRecursos = this.dificuldade.getConfigRecursos();
         this.recursosJogador = configRecursos.recursosIniciais();
         this.recursosPorCiclo = configRecursos.recursosPorCiclo();
@@ -40,39 +42,50 @@ public class Nivel {
     public boolean atualizar() {
         this.contador++;
 
-        if (
-            contador % cooldownSpawnZumbi == 0 &&
-            contador / cooldownSpawnZumbi <= zumbisParaVencer / tamanhoHorda
-        ) {
-            spawnarZumbi();
-        }
+        spawnarZumbi();
 
-        // TODO adicionar Girassol que gera recursos
+        boolean recursosAdicionados = adicionarRecursos();
+
+        return verificarGameOver(recursosAdicionados);
+    }
+
+    private void spawnarZumbi() {
+        if (contador % cooldownSpawnZumbi == 0 &&
+                contador / cooldownSpawnZumbi <= zumbisParaVencer / tamanhoHorda) {
+            zumbisParaAdicionar += tamanhoHorda;
+        }
+        // Spawnar zumbi a cada 2 ciclos para evitar spawn instantâneo
+        if (zumbisParaAdicionar > 0 && contador % 2 == 0) {
+            int indiceLinha = random.nextInt(grid.getQuantidadeLinhas());
+            while (grid.getLinhas().get(indiceLinha) == null) {
+                indiceLinha = random.nextInt(grid.getQuantidadeLinhas());
+            }
+            grid.adicionarZumbi(indiceLinha, TipoZumbi.COMUM);
+            zumbisParaAdicionar--;
+        }
+    }
+
+    private boolean adicionarRecursos() {
+        int solGerado = grid.atualizar();
+        if (solGerado == -1) {
+            return false;
+        }
         if (contador % cooldownRecursos == 0) {
             recursosJogador += recursosPorCiclo;
         }
+        return true;
+    }
 
-        if (grid.atualizar()) {
+    private boolean verificarGameOver(boolean recursosAdicionados) {
+        if (!recursosAdicionados) {
             gameOver = "Um zumbi alcançou sua casa! Fim de jogo!";
             return true;
-        } else if (
-            grid.getZumbis().isEmpty() && 
-            contador / cooldownSpawnZumbi > zumbisParaVencer / tamanhoHorda
-        ) {
+        } else if (grid.getZumbis().isEmpty() &&
+                contador / cooldownSpawnZumbi > zumbisParaVencer / tamanhoHorda) {
             gameOver = "Todos os zumbis foram derrotados! Você venceu!";
             return true;
         }
-        
         return false;
-    }
-
-    // TODO adicionar um delay entre os zumbis da horda
-    private void spawnarZumbi() {
-        for (int i = 0; i < tamanhoHorda; i++) {
-            int indiceLinha = random.nextInt(grid.getQuantidadeLinhas());
-            grid.adicionarZumbi(indiceLinha, TipoZumbi.COMUM);
-        }
-
     }
 
     public boolean tentarPlantar(int linha, double coluna, TipoPlanta tipoPlanta) {
@@ -82,19 +95,33 @@ public class Nivel {
             System.out.println("Recursos insuficientes!");
             return false;
         }
-            
+
         if (grid.adicionarPlanta(linha, coluna, tipoPlanta)) {
             recursosJogador -= custoPlanta;
             System.out.println("Planta posicionada com sucesso!");
             return true;
         }
-        
+
         return false;
     }
 
-    public DificuldadeNivel getDificuldade() { return dificuldade; }
-    public int getRecursosJogador() { return recursosJogador; }
-    public Grid getGrid() { return grid; }
-    public int getContador() { return contador; }
-    public String getGameOver() { return gameOver; }
+    public DificuldadeNivel getDificuldade() {
+        return dificuldade;
+    }
+
+    public int getRecursosJogador() {
+        return recursosJogador;
+    }
+
+    public Grid getGrid() {
+        return grid;
+    }
+
+    public int getContador() {
+        return contador;
+    }
+
+    public String getGameOver() {
+        return gameOver;
+    }
 }

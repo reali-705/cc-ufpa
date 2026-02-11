@@ -13,7 +13,7 @@ public class LinhaTest {
     private final double TAMANHO = 5.0;
     private final double DELTA = 0.01;
     private Linha linha;
-    
+
     @BeforeEach
     public void setUp() {
         linha = new Linha(TAMANHO, INDICE);
@@ -22,84 +22,70 @@ public class LinhaTest {
     @Test
     public void testCriacaoLinha() {
         Assertions.assertEquals(
-            INDICE, linha.getIndice(),
-            "O índice da linha deve ser " + INDICE + "."
-        );
+                INDICE, linha.getIndice(),
+                "O índice da linha deve ser " + INDICE + ".");
         Assertions.assertEquals(
-            TAMANHO, linha.getTamanho(),
-            "O tamanho da linha deve ser " + TAMANHO + "."
-        );
+                TAMANHO, linha.getTamanho(),
+                "O tamanho da linha deve ser " + TAMANHO + ".");
         Assertions.assertTrue(
-            linha.getZumbis().isEmpty(),
-            "A lista de zumbis deve estar vazia ao criar a linha."
-        );
+                linha.getZumbis().isEmpty(),
+                "A lista de zumbis deve estar vazia ao criar a linha.");
         Assertions.assertTrue(
-            linha.getProjetis().isEmpty(),
-            "A lista de projéteis deve estar vazia ao criar a linha."
-        );
+                linha.getProjetis().isEmpty(),
+                "A lista de projéteis deve estar vazia ao criar a linha.");
         Assertions.assertEquals(
-            0, linha.getPlantas()
-                .stream()
-                .filter(p -> p != null && p.estaViva())
-                .count(),
-            "A lista de plantas deve estar vazia ao criar a linha."
-        );
+                0, linha.getPlantas()
+                        .stream()
+                        .filter(p -> p != null && p.estaViva())
+                        .count(),
+                "A lista de plantas deve estar vazia ao criar a linha.");
     }
 
     @Test
     public void testAdicionarEntidades() {
         linha.adicionarZumbi(TipoZumbi.COMUM);
         Assertions.assertEquals(
-            1, linha.getZumbis().size(),
-            "Deve haver 1 zumbi na linha após a adição."
-        );
+                1, linha.getZumbis().size(),
+                "Deve haver 1 zumbi na linha após a adição.");
 
         Assertions.assertTrue(
-            linha.adicionarPlanta(2.0, TipoPlanta.ATIRADORA_DE_ERVILHA),
-            "Deve ser possível adicionar uma planta na posição 2.0."
-        );
+                linha.adicionarPlanta(2.0, TipoPlanta.ATIRADORA_DE_ERVILHA),
+                "Deve ser possível adicionar uma planta na posição 2.0.");
         Assertions.assertEquals(
-            1, linha.getPlantas()
-                .stream()
-                .filter(p -> p != null && p.estaViva())
-                .count(),
-            "Deve haver 1 planta viva na linha após a adição."
-        );
+                1, linha.getPlantas()
+                        .stream()
+                        .filter(p -> p != null && p.estaViva())
+                        .count(),
+                "Deve haver 1 planta viva na linha após a adição.");
 
         Assertions.assertFalse(
-            linha.adicionarPlanta(2.0, TipoPlanta.ATIRADORA_DE_ERVILHA),
-            "Não deve ser possível adicionar uma planta na posição 2.0 novamente."
-        );
+                linha.adicionarPlanta(2.0, TipoPlanta.ATIRADORA_DE_ERVILHA),
+                "Não deve ser possível adicionar uma planta na posição 2.0 novamente.");
     }
 
     @Test
     public void testAtualizarLinha() {
         Assertions.assertFalse(
-            linha.atualizar(),
-            "Deve retornar false ao atualizar uma linha sem zumbis."
-        );
+                linha.atualizar() == -1,
+                "Deve retornar false ao atualizar uma linha sem zumbis.");
 
         linha.adicionarZumbi(TipoZumbi.COMUM);
         Zumbi zumbi = linha.getZumbis().get(0);
         Assertions.assertEquals(
-            TAMANHO, zumbi.getPosicaoX(), DELTA,
-            "O zumbi deve começar na posição X igual ao tamanho da linha."
-        );
+                TAMANHO, zumbi.getPosicaoX(), DELTA,
+                "O zumbi deve começar na posição X igual ao tamanho da linha.");
         Assertions.assertFalse(
-            linha.atualizar(),
-            "Deve retornar false ao atualizar uma linha com zumbis vivos."
-        );
+                linha.atualizar() == -1,
+                "Deve retornar false ao atualizar uma linha com zumbis vivos.");
         Assertions.assertTrue(
-            zumbi.getPosicaoX() < TAMANHO,
-            "O zumbi deve ter se movido para a esquerda após a atualização."
-        );
+                zumbi.getPosicaoX() < TAMANHO,
+                "O zumbi deve ter se movido para a esquerda após a atualização.");
 
         linha.adicionarPlanta(0.0, TipoPlanta.ATIRADORA_DE_ERVILHA);
         linha.atualizar();
         Assertions.assertTrue(
-            linha.getProjetis().size() > 0,
-            "Deve haver projéteis na linha após a atualização com planta atiradora."
-        );
+                linha.getProjetis().size() > 0,
+                "Deve haver projéteis na linha após a atualização com planta atiradora.");
     }
 
     @Test
@@ -110,11 +96,10 @@ public class LinhaTest {
         double velocidade = zumbi.getVelocidade();
 
         // Move o zumbi para a posição 0 para simular vitória
-        while (linha.atualizar() == false) {
+        while (linha.atualizar() == -1) {
             Assertions.assertEquals(
-                posicaoAntes - velocidade, zumbi.getPosicaoX(), DELTA,
-                "O zumbi deve se mover corretamente para a esquerda."
-            );
+                    posicaoAntes - velocidade, zumbi.getPosicaoX(), DELTA,
+                    "O zumbi deve se mover corretamente para a esquerda.");
             posicaoAntes = zumbi.getPosicaoX();
         }
     }
@@ -126,15 +111,14 @@ public class LinhaTest {
 
         // Atualiza até que o zumbi morra
         while (linha.getZumbis().size() > 0) {
-            if (linha.atualizar()) {
+            if (linha.atualizar() == -1) {
                 Assertions.fail("O zumbi não deveria vencer quando há uma planta atiradora.");
             }
         }
 
         Assertions.assertTrue(
-            linha.getZumbis().isEmpty(),
-            "A lista de zumbis deve estar vazia após o zumbi ser derrotado."
-        );
+                linha.getZumbis().isEmpty(),
+                "A lista de zumbis deve estar vazia após o zumbi ser derrotado.");
 
     }
 }

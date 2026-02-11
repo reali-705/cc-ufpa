@@ -1,11 +1,11 @@
 package ufpa.icen.pvz.model.enums;
 
 import ufpa.icen.pvz.model.entidades.plantas.AtiradoraDeErvilha;
+import ufpa.icen.pvz.model.entidades.plantas.Girassol;
 import ufpa.icen.pvz.model.entidades.plantas.Planta;
 
-
 public enum TipoPlanta {
-    /** 
+    /**
      * Seguir os modelos para adicionar mais tipos de plantas
      * 
      * Padrão (sem ataque ou geração)
@@ -15,17 +15,24 @@ public enum TipoPlanta {
      * NOME_PLANTA(custo, vida, contadorPlantio, null, null)
      *
      * Produtora (sem ataque)
-     * NOME_PLANTA(custo, vida, contadorPlantio, null, new StatusGeracao(solGerado, tempoGeracao))
+     * NOME_PLANTA(custo, vida, contadorPlantio, null, new StatusGeracao(solGerado,
+     * tempoGeracao))
      */
 
     ATIRADORA_DE_ERVILHA(
-        50, 75, 10,
-        new StatusAtaque(20, 5, 0.75)
-    );
+            50, 75, 10,
+            new StatusAtaque(20, 5, 0.75)),
+
+    GIRASSOL(
+            30, 50, 15,
+            new StatusGeracao(25, 20));
 
     // --- Registros ---
-    public record StatusAtaque(int dano, int cooldownAtaque, double velocidadeProjetil) {}
-    public record StatusGeracao(int solGerado, int tempoGeracao) {}
+    public record StatusAtaque(int dano, int cooldownAtaque, double velocidadeProjetil) {
+    }
+
+    public record StatusGeracao(int solGerado, int cooldownGeracao) {
+    }
 
     // Atributos comuns a todas as plantas
     private final int custo;
@@ -36,23 +43,27 @@ public enum TipoPlanta {
     private final StatusGeracao statusGeracao;
 
     // --- Construtor Completo ---
-    private TipoPlanta(int custo, int vida, int cooldownPlantio, StatusAtaque statusAtaque, StatusGeracao statusGeracao) {
+    private TipoPlanta(
+            int custo, int vida, int cooldownPlantio,
+            StatusAtaque statusAtaque, StatusGeracao statusGeracao) {
         this.custo = custo;
         this.vida = vida;
         this.cooldownPlantio = cooldownPlantio;
         this.statusAtaque = statusAtaque;
         this.statusGeracao = statusGeracao;
     }
-    
+
     // --- Construtores Específicos ---
     // Planta Padrão
     TipoPlanta(int custo, int vida, int cooldownPlantio) {
         this(custo, vida, cooldownPlantio, null, null);
     }
+
     // Planta Atiradora
     TipoPlanta(int custo, int vida, int cooldownPlantio, StatusAtaque statusAtaque) {
         this(custo, vida, cooldownPlantio, statusAtaque, null);
     }
+
     // Planta Produtora
     TipoPlanta(int custo, int vida, int cooldownPlantio, StatusGeracao statusGeracao) {
         this(custo, vida, cooldownPlantio, null, statusGeracao);
@@ -62,15 +73,30 @@ public enum TipoPlanta {
     public Planta criar(double posicaoX, int linha) {
         return switch (this) {
             case ATIRADORA_DE_ERVILHA -> new AtiradoraDeErvilha(posicaoX, linha);
+            case GIRASSOL -> new Girassol(posicaoX, linha);
             // Adicionar novos casos aqui para outras plantas
             default -> throw new IllegalArgumentException("Tipo de planta não suportado: " + this);
         };
     };
 
     // --- Getters ---
-    public int getCusto() { return custo; }
-    public int getVida() { return vida; }
-    public int getCooldownPlantio() { return cooldownPlantio; }
-    public StatusAtaque getStatusAtaque() { return statusAtaque; }
-    public StatusGeracao getStatusGeracao() { return statusGeracao; }
+    public int getCusto() {
+        return custo;
+    }
+
+    public int getVida() {
+        return vida;
+    }
+
+    public int getCooldownPlantio() {
+        return cooldownPlantio;
+    }
+
+    public StatusAtaque getStatusAtaque() {
+        return statusAtaque;
+    }
+
+    public StatusGeracao getStatusGeracao() {
+        return statusGeracao;
+    }
 }

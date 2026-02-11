@@ -6,10 +6,8 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class Tiles extends JPanel {
 
@@ -62,7 +60,7 @@ public class Tiles extends JPanel {
 
             // tenta carregar a imagem no construtor (uma só vez)
             try {
-                image = ImageIO.read(getClass().getResourceAsStream(spritePath));
+                image = ImageIO.read(getClass().getResourceAsStream(this.spritePath));
             } catch (Exception ex) {
                 image = null;
                 System.err.println("tiles: falha ao carregar " + spritePath + " -> " + ex.getMessage());

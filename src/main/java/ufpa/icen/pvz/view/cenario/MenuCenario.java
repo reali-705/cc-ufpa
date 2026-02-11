@@ -1,6 +1,4 @@
 package ufpa.icen.pvz.view.cenario;
-import javax.swing.JButton;
-import javax.swing.ImageIcon;
 import javax.swing.KeyStroke;
 import javax.swing.AbstractAction;
 import java.awt.image.BufferedImage;
