@@ -1,4 +1,4 @@
-from testes import *
+from atividade_1.testes import *
 
 # Configuração global para as entradas dos testes
 set_entradas(10, 110, 2)
