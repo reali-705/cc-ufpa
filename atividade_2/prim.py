@@ -18,8 +18,8 @@ class Prim:
         self.grafo = self._criar_grafo(arestas)
 
     def agm(
-        self, vertice_inicial: str
-    ) -> tuple[dict[str, list[tuple[str, int]]], int, int]:
+        self, vertice_inicial: str, verbose: bool = False
+    ) -> tuple[dict[str, list[tuple[str, int]]], int, int, int]:
         """
         Encontra a Árvore Geradora Mínima (AGM) usando o algoritmo de Prim.
 
@@ -27,8 +27,9 @@ class Prim:
             vertice_inicial (str): O vértice de partida para o algoritmo.
 
         Returns:
-            tuple[dict[str, list[tuple[str, int]]], int, int]: A AGM representada como um dicionário
-            de adjacências e o número de operações de push e pop no heap.
+            tuple[dict[str, list[tuple[str, int]]], int, int, int]:
+            A AGM representada como um dicionário de adjacências e
+            o número de operações de push, pop no heap e número de iterações.
         """
         # Resultado da AGM esperado
         agm: dict[str, list[tuple[str, int]]] = defaultdict(list)
@@ -36,7 +37,7 @@ class Prim:
         heap_pop = 0
 
         # Conjunto para rastrear os vértices visitados
-        visitados: set[str] = set(vertice_inicial)
+        visitados: set[str] = {vertice_inicial}
 
         # Adiciona as arestas do vértice inicial ao heap
         heap: list[tuple[int, str, str]] = []
@@ -44,7 +45,15 @@ class Prim:
             heapq.heappush(heap, (peso, vertice_inicial, vizinho))
             heap_push += 1
 
+        if verbose:
+            print(f"Vértice inicial: {vertice_inicial}")
+            print(f"Estado inicial do heap: {ppt.pformat(heap)}")
+            print(f"Grafo: {ppt.pformat(self.grafo)}\n")
+
+        iteracoes = 0
         while heap:
+            iteracoes += 1
+
             peso, vertice1, vertice2 = heapq.heappop(heap)
             heap_pop += 1
 
@@ -58,11 +67,16 @@ class Prim:
                         heapq.heappush(heap, (peso_vizinho, vertice2, vizinho))
                         heap_push += 1
 
-        return dict(agm), heap_push, heap_pop
+                if verbose:
+                    print(f"Iteração {iteracoes}:")
+                    print(f"Aresta escolhida: ({vertice1}, {vertice2}, {peso})")
+                    print(f"Estado atual do heap: {ppt.pformat(heap)}\n")
+
+        return dict(agm), heap_push, heap_pop, iteracoes
 
     def analise_complexidade(
-        self, arestas: list[tuple[str, str, int]]
-    ) -> tuple[float, int, int, dict[str, list[tuple[str, int]]]]:
+        self, arestas: list[tuple[str, str, int]] | None = None
+    ) -> tuple[float, int, int, int, dict[str, list[tuple[str, int]]]]:
         """
         Método para retornar informações necessárias sobre o algoritmo, como tempo e iterações
 
@@ -70,15 +84,16 @@ class Prim:
             arestas (list[tuple[str, str, int]]): Lista de arestas (vertice1, vertice2, peso).
 
         Returns:
-            tuple[float, int, int, dict[str, list[tuple[str, int]]]]: Resposta com tempo de execução
-            e número de operações de push e pop no heap e a AGM encontrada.
+            tuple[float, int, int, int, dict[str, list[tuple[str, int]]]]:
+            Resposta com tempo de execução e número de operações de push e pop no heap
+            e o número de iterações e a AGM encontrada.
         """
-        self.grafo = self._criar_grafo(arestas)
+        grafo = self._criar_grafo(arestas) if arestas else self.grafo
         tempo_inicial = time.perf_counter()
-        agm, heap_push, heap_pop = self.agm(next(iter(self.grafo)))
+        agm, heap_push, heap_pop, iteracoes = self.agm(next(iter(grafo)))
         tempo_final = time.perf_counter()
         tempo_total = tempo_final - tempo_inicial
-        return (tempo_total, heap_push, heap_pop, agm)
+        return (tempo_total, heap_push, heap_pop, iteracoes, agm)
 
     def _criar_grafo(
         self,
@@ -100,14 +115,14 @@ class Prim:
             grafo[vertice1].append((vertice2, peso))
             grafo[vertice2].append((vertice1, peso))
 
-        return grafo
+        return dict(grafo)
 
 
 def questao3():
     """
     Função principal para a atividade 2.
     """
-    print("Querstão 3: Implementação do algoritmo de Prim")
+    print("Querstão 3: Implementação do algoritmo de Prim".center(50, "="), end="\n\n")
 
     # Arestras (Vertice1, Vertice2, Peso)
     arestas = [
@@ -124,9 +139,12 @@ def questao3():
     prim = Prim(arestas)
     # A. Encontre manualmente uma árvore geradora mínima para o grafo abaixo
     # e use o programa para validar o resultado. Mostre o log da execução.
-    agm, _, _ = prim.agm("T")
-    print("Árvore Geradora Mínima (AGM) encontrada:")
-    ppt.pprint(agm)
+    agm, heap_push, heap_pop, iteracoes = prim.agm("T", verbose=True)
+    print("\n=== Resultado da AGM: ===\n")
+    print(f"Número de operações de push no heap: {heap_push}")
+    print(f"Número de operações de pop no heap: {heap_pop}")
+    print(f"Número de iterações: {iteracoes}")
+    print(f"Árvore Geradora Mínima (AGM) encontrada: {ppt.pformat(agm)}\n")
 
     # B. Qual a ordem de complexidade do programa?
     print(
