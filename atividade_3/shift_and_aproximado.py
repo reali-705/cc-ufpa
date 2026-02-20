@@ -2,8 +2,6 @@
 Módulo para a implementação do algoritmo Shift-And Aproximado.
 """
 
-# import time
-
 
 def preprocessar_chave(chave: str) -> dict[str, int]:
     """

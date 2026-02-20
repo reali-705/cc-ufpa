@@ -70,16 +70,19 @@ def escolher_tamanho_texto() -> int:
     Returns:
         int: O tamanho do texto escolhido pelo usuário.
     """
-    opcoes = ["500", "1000", "1500", "2000", "3000"]
+    opcoes = ["Sair", "500", "1000", "1500", "2000", "3000"]
     while True:
         try:
-            print("Escolha o tamanho do texto:")
+            print("\nEscolha o tamanho do texto:")
             print(gerar_menu_opcoes(opcoes))
             escolha = int(input("Digite o número correspondente ao tamanho do texto: "))
 
             if escolha < 0 or escolha > len(opcoes):
                 raise ValueError("Escolha inválida. Por favor, tente novamente.")
-            return int(opcoes[escolha - 1])
+            elif escolha == 0:
+                return 0
+
+            return int(opcoes[escolha])
         except ValueError as e:
             print(f"Erro: {e}\n")
 
@@ -93,7 +96,7 @@ def escolher_k() -> int:
     """
     while True:
         try:
-            k = int(input("Escolha o número máximo de erros permitidos (máximo 2): "))
+            k = int(input("\nEscolha o número máximo de erros permitidos (máximo 2): "))
             if k < 0 or k > 2:
                 raise ValueError("O número de erros deve ser um inteiro entre 0 e 2.")
             return k
@@ -110,7 +113,7 @@ def menu_principal() -> int:
     """
     while True:
         try:
-            print("Escolha uma opção:")
+            print("\nEscolha uma opção:")
             print(
                 gerar_menu_opcoes(["Gerar texto aleatório", "Gerar texto com padrão"])
             )
@@ -121,3 +124,29 @@ def menu_principal() -> int:
             return escolha
         except ValueError as e:
             print(f"Erro: {e}\n")
+
+
+def visualizar_resultados(
+    resultados: list[int], texto: str, padrao: str, delta_tempo: float
+) -> None:
+    """
+    Função para visualizar os resultados da busca.
+
+    Args:
+        resultados (list[int]): Uma lista de índices onde o padrão foi encontrado.
+        texto (str): O texto onde a busca foi realizada.
+        padrao (str): O padrão buscado.
+        delta_tempo (float): O tempo de execução da busca em segundos.
+    """
+    if resultados:
+        print("Padrão encontrado nos indices:")
+        for indice in resultados:
+            inicio = max(0, indice - len(padrao) - 3)
+            fim = min(len(texto), indice + 3)
+            print(
+                f"- Índice: {indice}, Contexto: '{texto[inicio:fim].replace("\n", " ")}'"
+            )
+    else:
+        print("Padrão não encontrado no texto.")
+
+    print(f"\nTempo de execução: {delta_tempo:.6f} segundos")
