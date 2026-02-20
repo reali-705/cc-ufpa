@@ -30,21 +30,48 @@ def gerar_texto_com_padrao(tamanho: int, padrao: str) -> str:
         padrao (str): O padrão que deve estar presente no texto.
 
     Returns:
-        str: Um texto aleatório contendo o padrão.
+        str: Um texto aleatório contendo o padrão exato,
+        com remoção, inserção e substituição de caracteres.
     """
     tamanho_padrao = len(padrao)
+    parte_texto = tamanho // 4
 
-    if tamanho_padrao > tamanho:
-        raise ValueError("O padrão não pode ser maior que o tamanho do texto.")
+    if tamanho_padrao > parte_texto:
+        raise ValueError("O padrão é maior que um quarto do tamanho do texto.")
 
     # Gerar uma parte aleatória do texto
-    texto = gerar_texto_aleatorio(tamanho - tamanho_padrao)
+    if tamanho_padrao > parte_texto // 2:  # Segurança extra contra sobrescrita
+        raise ValueError(
+            "O padrão é grande demais para a margem de segurança do texto."
+        )
 
-    # Inserir o padrão em uma posição aleatória do texto
-    indice = fake.random_int(min=0, max=len(texto))
-    texto_com_padrao = texto[:indice] + padrao + texto[indice:]
+    texto = list(gerar_texto_aleatorio(tamanho))
 
-    return texto_com_padrao
+    # O pivô sempre começará no centro do respectivo quadrante
+    # Quadrante 1: Exato
+    pivo = parte_texto // 2
+    texto[pivo : pivo + len(padrao)] = list(padrao)
+
+    # Quadrante 2: Remoção
+    pivo += parte_texto
+    padrao_remocao = padrao[: tamanho_padrao // 2] + padrao[tamanho_padrao // 2 + 1 :]
+    texto[pivo : pivo + len(padrao_remocao)] = list(padrao_remocao)
+
+    # Quadrante 3: Inserção
+    pivo += parte_texto
+    padrao_insercao = (
+        padrao[: tamanho_padrao // 2] + "X" + padrao[tamanho_padrao // 2 :]
+    )
+    texto[pivo : pivo + len(padrao_insercao)] = list(padrao_insercao)
+
+    # Quadrante 4: Substituição
+    pivo += parte_texto
+    padrao_substituicao = (
+        padrao[: tamanho_padrao // 2] + "Y" + padrao[tamanho_padrao // 2 + 1 :]
+    )
+    texto[pivo : pivo + len(padrao_substituicao)] = list(padrao_substituicao)
+
+    return "".join(texto)
 
 
 def gerar_menu_opcoes(opcoes: list[str]) -> str:
