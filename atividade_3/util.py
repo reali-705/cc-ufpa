@@ -2,11 +2,15 @@
 Módulo para funções auxiliares da implementação do algoritmo Shift-And Aproximado.
 """
 
+import time
 from faker import Faker
+
+import shift_and_aproximado
 
 fake = Faker()
 
 
+# --- Geração de texto ---
 def gerar_texto_aleatorio(tamanho: int) -> str:
     """
     Gera um texto aleatório de um determinado tamanho.
@@ -74,6 +78,7 @@ def gerar_texto_com_padrao(tamanho: int, padrao: str) -> str:
     return "".join(texto)
 
 
+# --- Gerador de menus ---
 def gerar_menu_opcoes(opcoes: list[str]) -> str:
     """
     Gera um menu de opcoes a partir de uma lista de opções.
@@ -104,7 +109,7 @@ def escolher_tamanho_texto() -> int:
             print(gerar_menu_opcoes(opcoes))
             escolha = int(input("Digite o número correspondente ao tamanho do texto: "))
 
-            if escolha < 0 or escolha > len(opcoes):
+            if escolha < 0 or escolha > len(opcoes) - 1:
                 raise ValueError("Escolha inválida. Por favor, tente novamente.")
             elif escolha == 0:
                 return 0
@@ -131,6 +136,62 @@ def escolher_k() -> int:
             print(f"Erro: {e}\n")
 
 
+def analise_de_testes_aleatorios(tamanho_texto: int) -> float:
+    """
+    Função para realizar uma análise de testes aleatórios.
+
+    Args:
+        tamanho_texto (int): O tamanho do texto a ser gerado para os testes.
+
+    returns:
+        float: O tempo médio dos testes aleatórios em segundos.
+    """
+    print("\n=== Análise de Testes Aleatórios ===\n")
+
+    while True:
+        try:
+            repeticoes = int(
+                input(
+                    "Digite o número de testes aleatórios (min: 1, max: 10) ou 0 para sair: "
+                )
+            )
+            if repeticoes < 0:
+                print(
+                    "O número de testes deve ser um inteiro positivo. Por favor, tente novamente.\n"
+                )
+            elif repeticoes > 10:
+                print(
+                    "O número de testes é muito alto. Por favor, escolha um número menor.\n"
+                )
+            elif repeticoes == 0:
+                return 0
+            else:
+                break
+        except ValueError:
+            print(
+                "Entrada inválida. Por favor, digite um número inteiro entre 1 e 10.\n"
+            )
+
+    k = escolher_k()
+
+    tempos: list[float] = []
+    for i in range(repeticoes):
+        padrao = fake.word()
+        texto = gerar_texto_com_padrao(tamanho_texto, padrao)
+
+        print(f"\nTeste {i + 1}: Padrão = '{padrao}'")
+
+        tempo_inicial = time.perf_counter()
+        resultados = shift_and_aproximado.buscar(texto, padrao, k)
+        tempo_final = time.perf_counter()
+
+        visualizar_resultados(resultados, texto, padrao, tempo_final - tempo_inicial)
+        tempos.append(tempo_final - tempo_inicial)
+
+    media_tempo = sum(tempos) / len(tempos) if tempos else 0
+    return media_tempo
+
+
 def menu_principal() -> int:
     """
     Docstring para menu_principal
@@ -139,20 +200,25 @@ def menu_principal() -> int:
     :rtype: int
     """
     while True:
+        opcoes = [
+            "Sair",
+            "Gerar texto aleatório",
+            "Gerar texto com padrão",
+            "Gerar testes aleatorios",
+        ]
         try:
             print("\nEscolha uma opção:")
-            print(
-                gerar_menu_opcoes(["Gerar texto aleatório", "Gerar texto com padrão"])
-            )
+            print(gerar_menu_opcoes(opcoes))
             escolha = int(input("Digite o número correspondente à opção desejada: "))
 
-            if escolha < 0 or escolha > 2:
+            if escolha < 0 or escolha > len(opcoes) - 1:
                 raise ValueError("Escolha inválida. Por favor, tente novamente.")
             return escolha
         except ValueError as e:
             print(f"Erro: {e}\n")
 
 
+# --- Visualização de resultados ---
 def visualizar_resultados(
     resultados: list[int], texto: str, padrao: str, delta_tempo: float
 ) -> None:

@@ -3,8 +3,9 @@ Módulo para executar a implementação do algoritmo Shift-And Aproximado.
 """
 
 import time
+
+import shift_and_aproximado
 import util
-from shift_and_aproximado import buscar
 
 
 def main():
@@ -32,6 +33,16 @@ def main():
                     tamanho_texto,
                     input("\nDigite o padrão a ser inserido no texto: "),
                 )
+            case 3:
+                tempo_medio = util.analise_de_testes_aleatorios(tamanho_texto)
+                if tempo_medio == 0:
+                    print("\nSaindo do programa...\n")
+                    return
+
+                print(
+                    f"\nTempo médio dos testes aleatórios: {tempo_medio:.6f} segundos"
+                )
+                continue
             case _:
                 print("\nOpção inválida. Por favor, tente novamente.\n")
                 continue
@@ -53,7 +64,7 @@ def main():
 
             # Buscar o padrão no texto usando o algoritmo Shift-And Aproximado
             tempo_inicial = time.perf_counter()
-            resultados = buscar(texto, padrao, k)
+            resultados = shift_and_aproximado.buscar(texto, padrao, k)
             tempo_final = time.perf_counter()
 
             util.visualizar_resultados(
