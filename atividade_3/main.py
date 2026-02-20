@@ -15,12 +15,13 @@ def main():
     while True:
         print("\n=== Algoritmo Shift-And Aproximado ===\n")
 
-        tipo_texto = util.menu_principal()
         tamanho_texto = util.escolher_tamanho_texto()
 
         if tamanho_texto == 0:
             print("\nSaindo do programa...\n")
             return
+
+        tipo_texto = util.menu_principal()
 
         match tipo_texto:
             case 0:
