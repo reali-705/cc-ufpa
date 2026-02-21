@@ -72,10 +72,16 @@ class Prim:
                     print(f"Aresta escolhida: ({vertice1}, {vertice2}, {peso})")
                     print(f"Estado atual do heap: {ppt.pformat(heap)}\n")
 
+            else:
+                if verbose:
+                    print(f"Iteração {iteracoes}:")
+                    print(f"Vértice já visitado: ({vertice1}, {vertice2}, {peso})")
+                    print(f"Estado atual do heap: {ppt.pformat(heap)}\n")
+
         return dict(agm), heap_push, heap_pop, iteracoes
 
     def analise_complexidade(
-        self, arestas: list[tuple[str, str, int]] | None = None
+        self, arestas: list[tuple[str, str, int]]
     ) -> tuple[float, int, int, int, dict[str, list[tuple[str, int]]]]:
         """
         Método para retornar informações necessárias sobre o algoritmo, como tempo e iterações
@@ -88,9 +94,9 @@ class Prim:
             Resposta com tempo de execução e número de operações de push e pop no heap
             e o número de iterações e a AGM encontrada.
         """
-        grafo = self._criar_grafo(arestas) if arestas else self.grafo
+        self.grafo = self._criar_grafo(arestas)
         tempo_inicial = time.perf_counter()
-        agm, heap_push, heap_pop, iteracoes = self.agm(next(iter(grafo)))
+        agm, heap_push, heap_pop, iteracoes = self.agm(next(iter(self.grafo)))
         tempo_final = time.perf_counter()
         tempo_total = tempo_final - tempo_inicial
         return (tempo_total, heap_push, heap_pop, iteracoes, agm)
