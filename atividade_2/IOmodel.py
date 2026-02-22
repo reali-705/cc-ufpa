@@ -2,6 +2,7 @@ from __future__ import annotations
 from enum import Enum
 from typing import Optional
 from pydantic import BaseModel, Field, field_validator, model_validator
+from atividade_2.Grafo import Grafo
 
 """
 A modelagem a seguir visa a modelagem da entrada e saída do problema. A função criar_benchmark gera uma amostra experimental a cada 
@@ -32,21 +33,10 @@ class Input(BaseModel):
     algoritmo: Algoritmo = Field(
         ..., description="Algoritmo a ser testado: 'prim' ou 'kruskal'"
     )
-    num_vertices: int = Field(
-        ..., ge=2, description="Número de vértices (inteiro >= 2)"
-    )
-    densidade: float = Field(
-        ..., ge=0.0, le=1.0, description="Densidade do grafo (0.0 <= densidade <= 1.0)"
-    )
-    num_arestas: Optional[int] = Field(
+    Grafo: Optional[Grafo] = Field(
         default=None,
-        ge=0,
-        description="(Opcional) Número absoluto de arestas. Se presente, será validado com num_vertices.",
-    )
-    seed: int = Field(..., ge=0, description="Semente do gerador aleatório (>=0)")
-    repeticoes: int = Field(
-        1, ge=1, description="Número de repetições do experimento (>=1)"
-    )
+        description="Grafo específico a ser usado; se None, um grafo aleatório será gerado com base em num_vertices e densidade"
+        )
 
     @field_validator("algoritmo", mode="before")
     def _algoritmo_nao_vazio(cls, v):
@@ -224,22 +214,3 @@ class Output(BaseModel):
 
         return self
 
-
-def criar_Benchmark(param: Input) -> Output:
-    raise NotImplementedError
-
-
-# TODO analisar melhor estrutura de aresta para formar grafos
-class Aresta:
-    """
-    Formato de aresta para representação interna do grafo.
-    Contém os vértices v1 e v2 e o peso da aresta.
-    """
-
-    def __init__(self, v1: int, v2: int, peso: float):
-        self.v1 = v1
-        self.v2 = v2
-        self.peso = peso
-
-    def __repr__(self):
-        return f"Aresta({self.v1}, {self.v2}, peso={self.peso:.2f})"

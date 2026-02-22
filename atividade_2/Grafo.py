@@ -25,8 +25,10 @@ class Grafo:
         self.arestas = [aresta for aresta in self.arestas if vertice not in aresta]
         self.densidade = len(self.arestas) / (len(self.vertices) * (len(self.vertices) - 1) / 2)
 
-    def gerar_grafo_aleatorio(self, num_vertices: int, densidade: float,peso_min: int, peso_max: int):
+    def gerar_grafo_aleatorio(self, num_vertices, densidade, peso_min, peso_max, seed=None):
         import random
+        if seed is not None:
+            random.seed(seed)
         self.vertices = [f"V{i}" for i in range(num_vertices)]
         self.arestas = []
         for i in range(num_vertices):
