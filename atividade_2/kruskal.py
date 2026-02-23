@@ -168,9 +168,9 @@ class Kruskal:
             tempo_execucao_total,
             arestas_analisadas,
             union_count,
-            find_count,
+            tempo_execucao_set_ops,
             mst_arestas,
-            peso_minimo,
+            tempo_execucao_total,
         )
 
     def kruskal(
