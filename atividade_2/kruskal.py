@@ -17,31 +17,36 @@ def quicksort(array: list[list]) -> list[list]:
 
 def kruskal(
     grafo: list[tuple[str, str, int]],
-) -> tuple[list[tuple[str, str, int]], float, int, int, int, int, int]:
+) -> tuple[list[tuple[str, str, int]], int, int, int, float, int, float]:
     """_summary_
 
     Args:
         grafo (list[tuple[str, str, int]]): _description_
 
     Returns:
-        tuple[list[tuple[str, str, int]], float, int, int, int, int, int]: _description_
+        tuple[list[tuple[str, str, int]], int, int, int, float, int, float]: _description_
     """
     # variaveis necessarias para analise ou resultado
     start_time = time.perf_counter()
-    solucao = []
+    solucao: list[tuple[str, str, int]] = []
     vertices = set()
-    analisadas, union_count, find_count, mst_arestas = 0, 0, 0, 0
+    arestas_analisadas, union_count, find_count, mst_arestas = 0, 0, 0, 0
+    tempo_execucao_set_ops = 0.0
 
     # faz um conjunto com todas os vertices unicas depois cria varios subconjuntos para cada vertice
     for u, v, w in grafo:
+        tempo_inicial_set_ops = time.perf_counter()
         vertices.update([u, v])
+        tempo_final_set_ops = time.perf_counter()
+        tempo_execucao_set_ops += tempo_final_set_ops - tempo_inicial_set_ops
+
     grupo = [{v} for v in vertices]
-    sorted_vertices = quicksort(grafo)
-    print("arestas organizadas", sorted_vertices)
+    sorted_arestas = quicksort(grafo)
+    print("arestas organizadas", sorted_arestas)
     # itera da menor aresta a maior aresta
     print("\n")
-    for u, v, p in sorted_vertices:
-        analisadas += 1
+    for u, v, p in sorted_arestas:
+        arestas_analisadas += 1
         for g in grupo:
             if u in g:
                 grupo_u = g
@@ -49,12 +54,16 @@ def kruskal(
                 grupo_v = g
         find_count += 2
         if grupo_u != grupo_v:
-            solucao.append([u, v, p])
+            solucao.append((u, v, p))
 
             # faz a união do conjunto depois remove o item solto
+            tempo_inicial_set_ops = time.perf_counter()
             grupo_u.update(grupo_v)
             grupo.remove(grupo_v)
-            print("estado do conjunto na iteração :", analisadas, "\n", grupo)
+            tempo_final_set_ops = time.perf_counter()
+            tempo_execucao_set_ops += tempo_final_set_ops - tempo_inicial_set_ops
+
+            print("estado do conjunto na iteração :", arestas_analisadas, "\n", grupo)
             union_count += 1
             mst_arestas += 1
 
@@ -64,16 +73,15 @@ def kruskal(
 
     end_time = time.perf_counter()
     tempo_execucao_total = end_time - start_time
-    peso_minimo = sum(map(lambda x: x[2], solucao))
     if len(solucao) == len(vertices) - 1:
         return (
             solucao,
-            tempo_execucao_total,
-            analisadas,
-            union_count,
+            arestas_analisadas,
             find_count,
+            union_count,
+            tempo_execucao_set_ops,
             mst_arestas,
-            peso_minimo,
+            tempo_execucao_total,
         )
     else:
         print("a solução não é uma agm")
@@ -82,17 +90,17 @@ def kruskal(
 print(
     kruskal(
         [
-            ["A", "B", 7],
-            ["A", "D", 5],
-            ["B", "C", 8],
-            ["B", "D", 9],
-            ["B", "E", 7],
-            ["C", "E", 555],
-            ["D", "E", 0],
-            ["D", "F", 6],
-            ["E", "F", 8],
-            ["E", "G", 9],
-            ["F", "G", 111],
+            ("A", "B", 7),
+            ("A", "D", 5),
+            ("B", "C", 8),
+            ("B", "D", 9),
+            ("B", "E", 7),
+            ("C", "E", 555),
+            ("D", "E", 0),
+            ("D", "F", 6),
+            ("E", "F", 8),
+            ("E", "G", 9),
+            ("F", "G", 111),
         ]
     )
 )
