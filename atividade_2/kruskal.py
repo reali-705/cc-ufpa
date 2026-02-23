@@ -63,12 +63,12 @@ def kruskal(
             break
 
     end_time = time.perf_counter()
-    elapsed_time = end_time - start_time
+    tempo_execucao_total = end_time - start_time
     peso_minimo = sum(map(lambda x: x[2], solucao))
     if len(solucao) == len(vertices) - 1:
         return (
             solucao,
-            elapsed_time,
+            tempo_execucao_total,
             analisadas,
             union_count,
             find_count,

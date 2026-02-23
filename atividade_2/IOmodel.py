@@ -23,11 +23,7 @@ class Input(BaseModel):
 
     Campos:
     - algoritmo: qual algoritmo executar ("prim" ou "kruskal").
-    - num_vertices: número de vértices do grafo (>= 2).
-    - densidade: proporção de arestas entre 0.0 e 1.0 (0 = sem arestas, 1 = grafo completo).
-    - num_arestas (opcional): número absoluto de arestas; se fornecido será validado contra num_vertices.
-    - seed: semente para gerador aleatório (>=0) para reprodutibilidade.
-    - repeticoes: quantas vezes repetir o experimento (>=1).
+    - Grafo: grafo específico a ser usado; se None, um grafo aleatório será gerado com base em num_vertices e densidade.
     """
 
     algoritmo: Algoritmo = Field(
@@ -38,60 +34,39 @@ class Input(BaseModel):
         description="Grafo específico a ser usado; se None, um grafo aleatório será gerado com base em num_vertices e densidade"
         )
 
-    @field_validator("algoritmo", mode="before")
-    def _algoritmo_nao_vazio(cls, v):
-        # garante que uma string vazia não seja passada (se o usuário passar raw string)
-        if isinstance(v, str) and not v.strip():
-            raise ValueError("O nome do algoritmo não pode ser vazio")
-        return v
-
-    @model_validator(mode="after")
-    def check_consistencia(self):
-        """
-        Valida relações entre campos:
-        - se num_arestas for dado, verifica 0 <= num_arestas <= max_edges
-        - densidade coerente com num_arestas se num_arestas informado (verifica proximidade).
-        """
-        max_edges = self.num_vertices * (self.num_vertices - 1) // 2
-        if self.num_arestas is not None:
-            if self.num_arestas > max_edges:
-                raise ValueError(
-                    f"num_arestas ({self.num_arestas}) não pode exceder o máximo possível ({max_edges})"
-                )
-            # checagem simples de coerência: densidade deve ser aproximada por num_arestas / max_edges
-            dens_from_arestas = self.num_arestas / max_edges if max_edges > 0 else 0.0
-            if abs(dens_from_arestas - self.densidade) > 0.02 and max_edges > 50:
-                # impedir proporção estranha de arestas por densidade
-                raise ValueError(
-                    "num_arestas e densidade parecem inconsistentes "
-                    f"(densidade={self.densidade:.4f} vs arestas/{max_edges}={dens_from_arestas:.4f})"
-                )
-        return self
-
 
 class Output(BaseModel):
     """
     Resultado/instrumentação de um único experimento (linha do dataset).
 
     Campos:
+    metadados da entrada(Grafo):
     - idx: índice do experimento / repetição (>=1).
     - algoritmo: algoritmo executado.
     - num_vertices: número de vértices do grafo.
     - num_arestas: número de arestas do grafo.
     - densidade: densidade real do grafo (0.0–1.0).
+    medições de desempenho:
     - arestas_analisadas: quantas arestas foram efetivamente examinadas pelo algoritmo.
     - vertices_visitados: quantos vértices foram 'tocados' / incluídos / analisados.
+    específicos de cada algoritmo (pode ser None se não aplicável):
+
+    kruskal:
+    - tempo_metodo_de_ordenacao: qual método de ordenação foi usado (ex: 'built-in', 'counting_sort', etc.)
     - find_calls: número de chamadas a `find` (Kruskal). None para Prim.
     - union_calls: número de chamadas a `union` (Kruskal). None para Prim.
+    - tempo_execucao_find: tempo gasto nas operações find (segundos). None se não medido.
+    - tempo_execucao_union: tempo gasto nas operações union (segundos). None se não medido.
+
+
+    prim:
     - relaxamentos: número de relaxamentos (quando aplicável). Pode ser None.
     - heap_push: número de operações de push (Prim, se usar heap). None para Kruskal.
     - heap_pop: número de operações de pop (Prim, se usar heap). None para Kruskal.
-    - arestas_mst: quantidade de arestas efetivamente adicionadas à MST (deve ser <= num_vertices-1).
-    - tempo_execucao_find: tempo gasto nas operações find (segundos). None se não medido.
-    - tempo_execucao_union: tempo gasto nas operações union (segundos). None se não medido.
     - tempo_execucao_heap_ops: tempo total gasto em operações de heap (segundos). None se não medido.
+    métricas comuns saida:
     - tempo_execucao_total: tempo total do algoritmo (segundos). Deve ser >= 0 e >= soma das partes conhecidas.
-    - memoria_bytes: memória usada em bytes (opcional).
+    - num_arestas_mst: número de arestas que compõem a árvore geradora mínima (≤ num_vertices - 1).
     """
 
     idx: int = Field(..., ge=1, description="Índice do experimento / repetição (>=1)")
