@@ -65,4 +65,7 @@ class Benchmark:
         print("entrada setada", self.entrada)
     def setar_saida(self, saida: Output):
         self.saida = saida
+def salvar_resultados(self, nome_arquivo: str):
+    df = pd.DataFrame([self.saida.dict()])
+    df.to_csv(nome_arquivo, index=False)
    
