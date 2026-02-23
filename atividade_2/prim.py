@@ -120,8 +120,6 @@ class Prim:
         tempo_final = time.perf_counter()
         tempo_total = tempo_final - tempo_inicial
         return (
-            arestas_analisadas,
-            vertices_visitados,
             heap_push,
             heap_pop,
             tempo_heap,

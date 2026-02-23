@@ -1,3 +1,4 @@
+from atividade_1.algoritmos import resultado
 from atividade_2.kruskal import Kruskal
 from atividade_2.Grafo import Grafo
 from atividade_2.IOmodel import Input, Output
@@ -16,33 +17,38 @@ class Benchmark:
     def executar_bench(self, entrada: Input)->Output:
         if entrada.algoritmo == "prim":
             resultado = Prim(entrada.Grafo).prim()
-        elif entrada.algoritmo == "kruskal":
-            resultado = Kruskal(entrada.Grafo).kruskal()
-        else:
-            raise ValueError("Algoritmo desconhecido")
-        if resultado is None:
-            raise ValueError("Resultado do algoritmo é None")
-        if entrada.algoritmo == "prim":
-            #DAdos Grafo
+
+            #Dados Grafo
             self.saida.algoritmo = entrada.algoritmo
             self.saida.num_vertices = len(entrada.Grafo.vertices)
             self.saida.num_arestas = len(entrada.Grafo.arestas)
             self.saida.densidade = entrada.Grafo.densidade
             #Dados Prim
-            self.saida.arestas_analisadas = resultado[2]
-            self.saida.vertices_visitados = resultado[3]
-            self.saida.heap_push = resultado[4]
-            self.saida.heap_pop = resultado[5]
-            self.saida.tempo_execucao_heap_ops = resultado[6]
-            self.saida.num_arestas_mst = resultado[7]
-            self.saida.tempo_execucao_total = resultado[1]
+            self.saida.heap_push = resultado[2]
+            self.saida.heap_pop = resultado[3]
+            self.saida.tempo_execucao_heap_ops = resultado[4]
+            self.saida.num_arestas_mst =resultado[5]
+            self.saida.tempo_execucao_total = resultado[6]   
         elif entrada.algoritmo == "kruskal":
+            resultado = Kruskal(entrada.Grafo).kruskal()
+
+            #Dados Grafo
+            self.saida.algoritmo = entrada.algoritmo
+            self.saida.num_vertices = len(entrada.Grafo.vertices)
+            self.saida.num_arestas = len(entrada.Grafo.arestas)
+            self.saida.densidade = entrada.Grafo.densidade
+            #Dados Kruskal
             self.saida.arestas_analisadas = resultado[2]
-            self.saida.vertices_visitados = resultado[3]
             self.saida.find_calls = resultado[4]
             self.saida.union_calls = resultado[5]
+            self.saida.tempo_execucao_set_ops = resultado[7]
             self.saida.num_arestas_mst = resultado[6]
             self.saida.tempo_execucao_total = resultado[1]
+        else:
+            raise ValueError("Algoritmo desconhecido")
+        if resultado is None:
+            raise ValueError("Resultado do algoritmo é None")
+        return self.saida
     def setar_entrada(self,
                        algoritmo: str,
                          num_vertices: int=None,

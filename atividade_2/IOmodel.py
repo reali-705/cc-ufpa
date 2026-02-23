@@ -1,7 +1,7 @@
 from __future__ import annotations
 from enum import Enum
 from typing import Optional
-from pydantic import BaseModel, Field, field_validator, model_validator
+from pydantic import BaseModel, Field, model_validator
 from atividade_2.Grafo import Grafo
 
 """
@@ -86,9 +86,7 @@ class Output(BaseModel):
     arestas_analisadas: int = Field(
         ..., ge=0, description="Quantas arestas foram examinadas pelo algoritmo"
     )
-    vertices_visitados: int = Field(
-        ..., ge=0, description="Quantos vértices foram visitados/tocados pelo algoritmo"
-    )
+
     find_calls: Optional[int] = Field(
         default=None,
         ge=0,
@@ -131,9 +129,7 @@ class Output(BaseModel):
     tempo_execucao_total: float = Field(
         ..., ge=0.0, description="Tempo total de execução do algoritmo (s)"
     )
-    memoria_bytes: Optional[int] = Field(
-        default=None, ge=0, description="Memória usada em bytes (opcional)"
-    )
+
 
     @model_validator(mode="after")
     def check_consistencia(self):
