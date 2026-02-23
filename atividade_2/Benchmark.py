@@ -12,9 +12,7 @@ class Benchmark:
         self.entrada = entrada
         self.saida = saida
 
-    # Métodos Benchmark    
-    def set_saida(self, saida: Output):
-        self.saida = saida
+
     def executar_bench(self, entrada: Input)->Output:
         if entrada.algoritmo == "prim":
             resultado = Prim(entrada.Grafo).prim()
@@ -25,11 +23,18 @@ class Benchmark:
         if resultado is None:
             raise ValueError("Resultado do algoritmo é None")
         if entrada.algoritmo == "prim":
-            self.saida.relaxamentos = resultado[2]
-            self.saida.heap_push = resultado[3]
-            self.saida.heap_pop = resultado[4]
-            self.saida.tempo_execucao_heap_ops = resultado[5]
-            self.saida.num_arestas_mst = resultado[6]
+            #DAdos Grafo
+            self.saida.algoritmo = entrada.algoritmo
+            self.saida.num_vertices = len(entrada.Grafo.vertices)
+            self.saida.num_arestas = len(entrada.Grafo.arestas)
+            self.saida.densidade = entrada.Grafo.densidade
+            #Dados Prim
+            self.saida.arestas_analisadas = resultado[2]
+            self.saida.vertices_visitados = resultado[3]
+            self.saida.heap_push = resultado[4]
+            self.saida.heap_pop = resultado[5]
+            self.saida.tempo_execucao_heap_ops = resultado[6]
+            self.saida.num_arestas_mst = resultado[7]
             self.saida.tempo_execucao_total = resultado[1]
         elif entrada.algoritmo == "kruskal":
             self.saida.arestas_analisadas = resultado[2]
@@ -65,7 +70,17 @@ class Benchmark:
         print("entrada setada", self.entrada)
     def setar_saida(self, saida: Output):
         self.saida = saida
+
+# recursos CSV
 def salvar_resultados(self, nome_arquivo: str):
     df = pd.DataFrame([self.saida.dict()])
     df.to_csv(nome_arquivo, index=False)
-   
+def carregar_resultados(self, nome_arquivo: str):
+    df = pd.read_csv(nome_arquivo)
+    self.saida = Output(**df.iloc[0].to_dict())   
+def exibir_resultados(self):
+    print("Resultados do Benchmark:")
+    print(self.saida.json(indent=4))
+def incrementar_tabela(self):
+    df = pd.DataFrame([self.saida.dict()])
+    self.tabela = pd.concat([self.tabela, df], ignore_index=True)
