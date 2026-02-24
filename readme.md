@@ -18,6 +18,8 @@ As atividades estão organizadas em diretórios conforme o tema abordado:
 
 - [**Desafios de Algoritmos**](./atividade_2/): Resolução dos desafios Jesse and Cookies e No Prefix Set.
 
+- [**Shift-And Aproximado**](./atividade_3/): Implementação do algoritmo Shift-And Aproximado para busca de padrões em texto com até `k` erros (inserção, remoção e substituição).
+
 ---
 
 ## 📝 Licença
