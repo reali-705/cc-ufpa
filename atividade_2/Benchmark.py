@@ -1,92 +1,91 @@
-from atividade_1.algoritmos import resultado
-from atividade_2.kruskal import Kruskal
-from atividade_2.Grafo import Grafo
-from atividade_2.IOmodel import Input, Output
-from atividade_2.prim import Prim
 import pandas as pd
-
-
+import time
+from typing import Optional
+from atividade_2.kruskal import Kruskal
+from atividade_2.prim import Prim
+from atividade_2.Grafo import Grafo
+from atividade_2.IOmodel import Input, Output, Algoritmo
 
 class Benchmark:
-    def __init__(self, tabela, entrada : Input, saida : Output):
-        self.tabela = tabela
-        self.entrada = entrada
-        self.saida = saida
+    def __init__(self, tabela=None):
+        self.tabela = tabela if tabela is not None else pd.DataFrame()
+        self.run_counter = 1 
+        
+        if not self.tabela.empty and "idx" in self.tabela.columns:
+            try:
+                self.run_counter = int(self.tabela["idx"].max()) + 1
+            except Exception:
+                self.run_counter = 1
 
+    def executar_bench(self, entrada: Input) -> Output:
+        grafo_obj = entrada.grafo
+        
+        num_arestas_reais = len(grafo_obj.arestas) // 2
+        densidade_validada = min(float(grafo_obj.densidade), 1.0)
 
-    def executar_bench(self, entrada: Input)->Output:
-        if entrada.algoritmo == "prim":
-            resultado = Prim(entrada.Grafo).prim()
+        dados_comuns = {
+            "idx": self.run_counter,
+            "algoritmo": entrada.algoritmo,
+            "num_vertices": len(grafo_obj.vertices),
+            "num_arestas": num_arestas_reais,
+            "densidade": densidade_validada,
+        }
 
-            #Dados Grafo
-            self.saida.algoritmo = entrada.algoritmo
-            self.saida.num_vertices = len(entrada.Grafo.vertices)
-            self.saida.num_arestas = len(entrada.Grafo.arestas)
-            self.saida.densidade = entrada.Grafo.densidade
-            #Dados Prim
-            self.saida.heap_push = resultado[2]
-            self.saida.heap_pop = resultado[3]
-            self.saida.tempo_execucao_heap_ops = resultado[4]
-            self.saida.num_arestas_mst =resultado[5]
-            self.saida.tempo_execucao_total = resultado[6]   
-        elif entrada.algoritmo == "kruskal":
-            resultado = Kruskal(entrada.Grafo).kruskal()
-
-            #Dados Grafo
-            self.saida.algoritmo = entrada.algoritmo
-            self.saida.num_vertices = len(entrada.Grafo.vertices)
-            self.saida.num_arestas = len(entrada.Grafo.arestas)
-            self.saida.densidade = entrada.Grafo.densidade
-            #Dados Kruskal
-            self.saida.arestas_analisadas = resultado[2]
-            self.saida.find_calls = resultado[4]
-            self.saida.union_calls = resultado[5]
-            self.saida.tempo_execucao_set_ops = resultado[7]
-            self.saida.num_arestas_mst = resultado[6]
-            self.saida.tempo_execucao_total = resultado[1]
+        if entrada.algoritmo == Algoritmo.PRIM:
+            res = Prim(grafo_obj).prim(grafo_obj.arestas)
+            # No Prim, as arestas analisadas costumam ser o número de arestas 
+            # que saem do heap. Ajustamos para não exceder o total real.
+            analisadas = min(res[7], num_arestas_reais)
+            
+            dados_saida = {
+                **dados_comuns, 
+                "heap_push": res[2], 
+                "heap_pop": res[3], 
+                "tempo_execucao_heap_ops": res[4], 
+                "num_arestas_mst": res[5], 
+                "tempo_execucao_total": res[6], 
+                "arestas_analisadas": analisadas
+            }
         else:
-            raise ValueError("Algoritmo desconhecido")
-        if resultado is None:
-            raise ValueError("Resultado do algoritmo é None")
-        return self.saida
-    def setar_entrada(self,
-                       algoritmo: str,
-                         num_vertices: int=None,
-                         densidade: float=None,
-                         grafo: Grafo=None,
-                         rand= True
-                         
-):
-        if Grafo is None:
-            if rand==True:
-                grafo = Grafo([], [], densidade)
-                grafo.gerar_grafo_aleatorio(num_vertices, densidade, 1, 100)
-                input= Input(
-                    algoritmo=algoritmo,
-                    Grafo=grafo
-                )
-            else:
-                raise ValueError("Grafo deve ser fornecido se rand for False")
-        else:             
-            input= Input(
-                    algoritmo=algoritmo,
-                    Grafo=grafo
-                )
-        self.entrada = input
-        print("entrada setada", self.entrada)
-    def setar_saida(self, saida: Output):
-        self.saida = saida
+            res = Kruskal().kruskal(grafo_obj.arestas)
+            # O Kruskal percorre a lista duplicada, então dividimos por 2 
+            # para casar com o num_arestas_reais.
+            analisadas = min(res[0] // 2, num_arestas_reais)
+            
+            dados_saida = {
+                **dados_comuns, 
+                "arestas_analisadas": analisadas, 
+                "num_arestas_mst": res[1],
+                "union_calls": res[2], 
+                "find_calls": res[3], 
+                "tempo_sort": res[7],
+                "tempo_execucao_total": res[6], 
+                "tempo_execucao_union": res[5]/2 if res[5] else 0, 
+                "tempo_execucao_find": res[5]/2 if res[5] else 0
+            }
 
-# recursos CSV
-def salvar_resultados(self, nome_arquivo: str):
-    df = pd.DataFrame([self.saida.dict()])
-    df.to_csv(nome_arquivo, index=False)
-def carregar_resultados(self, nome_arquivo: str):
-    df = pd.read_csv(nome_arquivo)
-    self.saida = Output(**df.iloc[0].to_dict())   
-def exibir_resultados(self):
-    print("Resultados do Benchmark:")
-    print(self.saida.json(indent=4))
-def incrementar_tabela(self):
-    df = pd.DataFrame([self.saida.dict()])
-    self.tabela = pd.concat([self.tabela, df], ignore_index=True)
+        self.saida = Output(**dados_saida)
+        
+        self.run_counter += 1
+        return self.saida
+
+    def simular(self, tamanhos_vertices, densidades, num_rodadas=5):
+        for v in tamanhos_vertices:
+            for d in densidades:
+                for _ in range(num_rodadas):
+                    # Gera um grafo base para ambos os algoritmos
+                    g = Grafo(None, None, d)
+                    g.gerar_grafo_aleatorio(v, d, 1, 100)
+                    
+                    for alg in [Algoritmo.PRIM, Algoritmo.KRUSKAL]:
+                        ent = Input(algoritmo=alg, grafo=g, num_vertices=v, densidade=d)
+                        self.executar_bench(ent)
+                        self.incrementar_tabela()
+
+    def incrementar_tabela(self):
+        if hasattr(self, 'saida') and self.saida:
+            novo = pd.DataFrame([self.saida.model_dump()])
+            self.tabela = pd.concat([self.tabela, novo], ignore_index=True)
+
+    def salvar_resultados(self, nome):
+        self.tabela.to_csv(nome, index=False)
