@@ -46,8 +46,8 @@ def rodar_experimentos():
     # Aqui você define o cenário de teste para comparar a complexidade assintótica
     configs = {
         "tamanhos_vertices": np.arange(10, 201, 10),  # Aumente para testar escalabilidade
-        "densidades": np.arange(0.03, 1.1, 0.1),         # Grafos esparsos vs densos
-        "num_rodadas": 1                                       # Amostragem estatística
+        "densidades": [0, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1. ],         # Grafos esparsos vs densos
+        "num_rodadas": 2                                       # Amostragem estatística
     }
 
     print(f"[*] Iniciando simulação de {len(configs['tamanhos_vertices']) * len(configs['densidades']) * configs['num_rodadas'] * 2} testes...")
