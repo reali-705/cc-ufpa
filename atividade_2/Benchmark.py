@@ -73,10 +73,23 @@ class Benchmark:
         for v in tamanhos_vertices:
             for d in densidades:
                 for _ in range(num_rodadas):
-                    # Gera um grafo base para ambos os algoritmos
+
                     g = Grafo(None, None, d)
-                    g.gerar_grafo_aleatorio(v, d, 1, 100)
-                    
+
+                    # d == 0 => gera uma árvore (cadeia) = caso "AGM óbvia"
+                    if abs(d) < 1e-9:
+                        g.gerar_grafo_melhor_caso_agm(
+                            num_vertices=v,
+                            densidade=0.0,        # pode passar 0 mesmo
+                            forma="cadeia",
+                            peso_mst_min=1,
+                            peso_mst_max=10,
+                            peso_extra_min=1000,  # irrelevante (não vai ter extras)
+                            peso_extra_max=2000
+                        )
+                    else:
+                        g.gerar_grafo_aleatorio(v, d, 1, 100)
+
                     for alg in [Algoritmo.PRIM, Algoritmo.KRUSKAL]:
                         ent = Input(algoritmo=alg, grafo=g, num_vertices=v, densidade=d)
                         self.executar_bench(ent)
