@@ -1,5 +1,6 @@
 import os
 import pandas as pd
+import numpy as np
 from atividade_2.Benchmark import Benchmark
 
 """
@@ -7,7 +8,7 @@ DOCUMENTAÇÃO DO BENCHMARK DE ALGORITMOS MST
 ==========================================
 Bem vindo :)
 Este script automatiza a coleta de métricas de desempenho para os algoritmos 
-de Prim e Kruskal (Árvore Geradora Mínima) \o/.
+de Prim e Kruskal (Árvore Geradora Mínima).
 
 COMO USAR:
 ----------
@@ -44,9 +45,9 @@ def rodar_experimentos():
     # Configuração do Experimento:
     # Aqui você define o cenário de teste para comparar a complexidade assintótica
     configs = {
-        "tamanhos_vertices": [10, 20, 50, 100],  # Aumente para testar escalabilidade
-        "densidades": [0.2, 0.5, 0.8],         # Grafos esparsos vs densos
-        "num_rodadas": 2                       # Amostragem estatística
+        "tamanhos_vertices": np.arange(10, 201, 10),  # Aumente para testar escalabilidade
+        "densidades": np.arange(0.03, 1.1, 0.1),         # Grafos esparsos vs densos
+        "num_rodadas": 1                                       # Amostragem estatística
     }
 
     print(f"[*] Iniciando simulação de {len(configs['tamanhos_vertices']) * len(configs['densidades']) * configs['num_rodadas'] * 2} testes...")
@@ -59,7 +60,7 @@ def rodar_experimentos():
         )
         
         # Salvamento dos dados:
-        bench.salvar_resultados(nome_arquivo)
+        bench.salvar_resultados(f"atividade_2/{nome_arquivo}")
         
         print("\n" + "="*40)
         print("SIMULAÇÃO FINALIZADA COM SUCESSO")
