@@ -406,9 +406,12 @@ grafo.gerar_grafo_aleatorio(
 
 ---
 
-## 👨‍💻 Autor
+## 👨‍💻 Autores
 
-Felipe Brasil (reali-705)
+## Autores
+* [Felipe Lisboa Brasil](https://github.com/FelipeBrasill)
+* [Leonardo Cunha Rocha]
+* [Alessandro Reali](https://github.com/reali-705)
 
 ---
 
