@@ -410,7 +410,7 @@ grafo.gerar_grafo_aleatorio(
 
 ## Autores
 * [Felipe Lisboa Brasil](https://github.com/FelipeBrasill)
-* [Leonardo Cunha Rocha]
+* [Leonardo Cunha Rocha](https://github.com/Leonardo08x)
 * [Alessandro Reali](https://github.com/reali-705)
 
 ---
