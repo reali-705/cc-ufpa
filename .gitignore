@@ -1,0 +1,56 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+ENV/
+.env
+
+# --- Java ---
+*.class
+*.jar
+*.war
+*.ear
+.project
+.classpath
+.settings/
+bin/
+target/
+*.tmp
+*.bak
+
+# --- JavaScript / TypeScript ---
+node_modules/
+dist/
+JavaScript/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.eslintcache
+
+# --- C / C++ ---
+*.o
+*.obj
+*.exe
+*.out
+*.app
+
+# --- Jupyter Notebook ---
+.ipynb_checkpoints/
+
+# --- Dados Acadêmicos (Input/Output) ---
+/data/input/*.txt
+/data/output/*.txt
+
+# --- Windows & Sistema ---
+Thumbs.db
+desktop.ini
+$RECYCLE.BIN/
+.DS_Store
+
+# --- IDEs ---
+.vscode/
+.idea/
+*.swp
