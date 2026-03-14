@@ -1,5 +1,10 @@
 # Análise de Algoritmos - Atividade 2: Algoritmos de Árvore Geradora Mínima
 
+> Esse projeto é parte do repositório centralizador de atividades acadêmicas da graduação em Ciência da Computação na UFPA.
+
+**Professor:** Nelson Cruz Sampaio Neto  
+**Semestre:** 2025.4
+
 ## 📋 Visão Geral
 
 Este projeto implementa e analisa dois algoritmos fundamentais para encontrar a **Árvore Geradora Mínima (AGM)** de um grafo não-direcionado ponderado:
@@ -408,13 +413,10 @@ grafo.gerar_grafo_aleatorio(
 
 ## 👨‍💻 Autores
 
-## Autores
 * [Felipe Lisboa Brasil](https://github.com/FelipeBrasill)
 * [Leonardo Cunha Rocha](https://github.com/Leonardo08x)
 * [Alessandro Reali](https://github.com/reali-705)
 
 ---
 
-## 📄 Licença
-
-Este projeto é fornecido para fins educacionais.
+> 🔙 [Voltar para o Repositório Central (CC-UFPA)](../../README.md)

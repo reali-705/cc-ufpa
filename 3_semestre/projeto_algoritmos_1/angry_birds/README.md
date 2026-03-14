@@ -60,7 +60,7 @@ activity 3/
 ├── tsconfig.json
 └── tsconfig.tsbuildinfo
 ```
-Nessa etapa o código principal foi elaborado em **TypeScript** localizado no diretório `activity 3/src/` e transpilado/compilado para **JavaScript** em `activity 3/dist/`, o arquivo `mian.ts` tem como estrutura unir todas as classes, implementar uma lógica que deixe o jogo funcional em uma *grid* dentro do arquivo `pagina_jogo.html`.
+Nessa etapa o código principal foi elaborado em **TypeScript** localizado no diretório `activity 3/src/` e transpilado/compilado para **JavaScript** em `activity 3/dist/`, o arquivo `main.ts` tem como estrutura unir todas as classes, implementar uma lógica que deixe o jogo funcional em uma *grid* dentro do arquivo `pagina_jogo.html`.
 + `classes/` diretório que abriga arquivos que possuem a estruta de cada classe no jogo de forma individual;
 + `estilo.css` é o arquivo que abriga as características e classes para os elementos do `pagina_jogo.html`;
 + `tsconfig.json` possui as configurações para a transpilação/compilação do **TypeScript** em **JavaScript**;
@@ -75,3 +75,7 @@ Adicionando um **JSON** para guardar array e utilizá-lo no código a partir da 
 
 ## ATIVIDADE 5
 Foi implementado um algoritmo de ordenação para o array de pontuação do jogo, para poder mostrar na tela do jogo as melhores pontuações, e uma pesquisa para o array de Passaros, para que o usuário possa selecionar qual pássaro ele pretende lançar. Para melhor descrição e organização dessa etapa do projeto, utilizarei o [Notion](https://www.notion.so/Angrys-Birds-Reali-208cabdba61180d68539e6b41af037a4). Para testar os algoritmos de ordenação e pesquisa foi feito um diretório `ambienteDeTestes` que contem a estrutura lógica e observa a diferença de tempo em *ms* de uma operação exibindo no terminal os valores para cada *array*.
+
+---
+
+> 🔙 [Voltar para o Repositório Central (CC-UFPA)](../../../README.md)

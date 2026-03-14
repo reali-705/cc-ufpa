@@ -1,10 +1,13 @@
 # Projeto de Algoritmos 2
 
+> Esse projeto é parte do repositório centralizador de atividades acadêmicas da graduação em Ciência da Computação na UFPA.
+
 Este repositório contém os trabalhos e atividades práticas desenvolvidos para a disciplina de Projeto de Algoritmos 2, com foco em estruturas de dados avançadas e algoritmos eficientes.
 
 **Instituição:** Universidade Federal do Pará (UFPA)  
 **Curso:** Bacharelado em Ciência da Computação  
 **Disciplina:** Projeto de Algoritmos 2  
+**Semestre:** 4º Semestre (2025.4)  
 **Professor:** Denis Lima Do Rosario  
 **Aluno:** Alessandro Reali Lopes Silva
 
@@ -22,6 +25,4 @@ As atividades estão organizadas em diretórios conforme o tema abordado:
 
 ---
 
-## 📝 Licença
-
-Este projeto é de uso acadêmico.
+> 🔙 [Voltar para o Repositório Central (CC-UFPA)](../../README.md)

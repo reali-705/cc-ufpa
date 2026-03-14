@@ -111,6 +111,6 @@ A estrutura de arquivos do projeto, incluindo a documentação, está organizada
 └── tsconfig.json
 ```
 
-## ✒️ Autor
+---
 
--   **Alessandro Reali Lopes Silva** - [alessandro.reali.3110@gmail.com](mailto:alessandro.reali.3110@gmail.com)
+> 🔙 [Voltar para o Repositório Central (CC-UFPA)](../../../README.md)

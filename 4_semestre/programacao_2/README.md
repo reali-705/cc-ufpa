@@ -1,12 +1,15 @@
 # Plantas vs. Zumbis (Clone)
 
+> Esse projeto é parte do repositório centralizador de atividades acadêmicas da graduação em Ciência da Computação na UFPA.
+
 Este projeto acadêmico é desenvolvido na Universidade Federal do Pará (UFPA) com foco nos pilares da **Programação Orientada a Objetos (POO)**, além de práticas de desenvolvimento como **TDD** e **MVC**.
 
 ## 🎓 Contexto Acadêmico
 
 - **Instituição:** Universidade Federal do Pará (UFPA)
 - **Instituto:** Instituto de Ciências Exatas e Naturais (ICEN)
-- **Disciplina:** Programação 2 (4º semestre)
+- **Disciplina:** Programação 2
+- **Semestre:** 4º semestre (2025.4)
 - **Professor:** Carlos Gustavo Resque dos Santos
 - **Equipe:**
   - **Alessandro Reali Lopes Silva** – [reali-705](https://github.com/reali-705)
@@ -143,3 +146,7 @@ pvz-java/
 ---
 
 [⬆️ Voltar ao topo](#plantas-vs-zumbis-clone)
+
+---
+
+> 🔙 [Voltar para o Repositório Central (CC-UFPA)](../../README.md)

@@ -69,14 +69,12 @@ Para executar a simulação e testar as regras apresentadas:
 1. Instale o ambiente SWI-Prolog.
 2. No diretório raiz do projeto, inicialize a interface via terminal:
 
-```bash
-swipl -s main.pl
-```
+    ```bash
+    swipl -s main.pl
+    ```
 
 3. O Menu Principal será carregado. Para testar o núcleo do algoritmo de recomendação, selecione a Opção 1 ou utilize comandos interativos, como:
 
 ```Prolog
 ?- melhores_recomendacoes(5000, '1080p', Top3).
 ```
-
----
