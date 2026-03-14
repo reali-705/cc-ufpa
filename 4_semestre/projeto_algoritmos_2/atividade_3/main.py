@@ -1,0 +1,85 @@
+"""
+Módulo para executar a implementação do algoritmo Shift-And Aproximado.
+"""
+
+import time
+
+import shift_and_aproximado
+import util
+
+
+def main():
+    """
+    Função principal do módulo main.
+    """
+    while True:
+        print("\n=== Algoritmo Shift-And Aproximado ===\n")
+
+        tamanho_texto = util.escolher_tamanho_texto()
+
+        if tamanho_texto == 0:
+            print("\nSaindo do programa...\n")
+            return
+
+        tipo_texto = util.menu_principal()
+
+        match tipo_texto:
+            case 0:
+                print("\nSaindo do programa...\n")
+                return
+            case 1:
+                texto = util.gerar_texto_aleatorio(tamanho_texto)
+            case 2:
+                texto = util.gerar_texto_com_padrao(
+                    tamanho_texto,
+                    input("\nDigite o padrão a ser inserido no texto: "),
+                )
+            case 3:
+                tempo_medio = util.analise_de_testes_aleatorios(tamanho_texto)
+                if tempo_medio == 0:
+                    print("\nSaindo do programa...\n")
+                    return
+
+                print(
+                    f"\nTempo médio dos testes aleatórios: {tempo_medio:.6f} segundos"
+                )
+                continue
+            case _:
+                print("\nOpção inválida. Por favor, tente novamente.\n")
+                continue
+
+        while True:
+            print(f"\nTexto gerado:\n{texto}\n")
+
+            k = util.escolher_k()
+            padrao = input("\nDigite o padrão de busca: ")
+
+            diferenciar = (
+                input("\nDeseja diferenciar maiúsculas de minúsculas? (s/n): ")
+                .strip()
+                .lower()
+            )
+            if diferenciar not in ["s", "sim"]:
+                padrao = padrao.lower()
+                texto = texto.lower()
+
+            # Buscar o padrão no texto usando o algoritmo Shift-And Aproximado
+            tempo_inicial = time.perf_counter()
+            resultados = shift_and_aproximado.buscar(texto, padrao, k)
+            tempo_final = time.perf_counter()
+
+            util.visualizar_resultados(
+                resultados, texto, padrao, tempo_final - tempo_inicial
+            )
+
+            repetir = (
+                input("\nDeseja realizar outra busca no mesmo texto? (s/n): ")
+                .strip()
+                .lower()
+            )
+            if repetir not in ["s", "sim"]:
+                break
+
+
+if __name__ == "__main__":
+    main()
