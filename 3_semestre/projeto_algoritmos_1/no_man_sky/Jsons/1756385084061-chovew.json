@@ -1,0 +1,75 @@
+{
+    "planeta": "{\"id\":\"Planeta: Terrestre (0)\",\"tipo\":\"Terrestre\",\"biomas\":[\"{\\\"id\\\":\\\"Planeta: Terrestre (0) - Bioma: Planície (0)\\\",\\\"tipo\\\":\\\"Planície\\\",\\\"recursos\\\":[{\\\"id\\\":\\\"2\\\",\\\"nome\\\":\\\"Minério de Cobre\\\",\\\"raridade\\\":0,\\\"tamanho\\\":1}]}\",\"{\\\"id\\\":\\\"Planeta: Terrestre (0) - Bioma: Pântano (1)\\\",\\\"tipo\\\":\\\"Pântano\\\",\\\"recursos\\\":[]}\",\"{\\\"id\\\":\\\"Planeta: Terrestre (0) - Bioma: Pântano (2)\\\",\\\"tipo\\\":\\\"Pântano\\\",\\\"recursos\\\":[{\\\"id\\\":\\\"9\\\",\\\"nome\\\":\\\"Folha de Alga\\\",\\\"raridade\\\":1,\\\"tamanho\\\":1},{\\\"id\\\":\\\"5\\\",\\\"nome\\\":\\\"Gás Hidrogênio\\\",\\\"raridade\\\":0,\\\"tamanho\\\":1}]}\",\"{\\\"id\\\":\\\"Planeta: Terrestre (0) - Bioma: Deserto (3)\\\",\\\"tipo\\\":\\\"Deserto\\\",\\\"recursos\\\":[{\\\"id\\\":\\\"5\\\",\\\"nome\\\":\\\"Gás Hidrogênio\\\",\\\"raridade\\\":0,\\\"tamanho\\\":1},{\\\"id\\\":\\\"6\\\",\\\"nome\\\":\\\"Gás Oxigênio\\\",\\\"raridade\\\":1,\\\"tamanho\\\":1},{\\\"id\\\":\\\"13\\\",\\\"nome\\\":\\\"Célula de Vácuo\\\",\\\"raridade\\\":2,\\\"tamanho\\\":2},{\\\"id\\\":\\\"2\\\",\\\"nome\\\":\\\"Minério de Cobre\\\",\\\"raridade\\\":0,\\\"tamanho\\\":1}]}\",\"{\\\"id\\\":\\\"Planeta: Terrestre (0) - Bioma: Floresta (4)\\\",\\\"tipo\\\":\\\"Floresta\\\",\\\"recursos\\\":[{\\\"id\\\":\\\"16\\\",\\\"nome\\\":\\\"Óleo Bruto\\\",\\\"raridade\\\":3,\\\"tamanho\\\":2},{\\\"id\\\":\\\"6\\\",\\\"nome\\\":\\\"Gás Oxigênio\\\",\\\"raridade\\\":1,\\\"tamanho\\\":1}]}\"],\"inimigos\":[\"{\\\"nome\\\":\\\"Fera das Rochas\\\",\\\"vida\\\":133,\\\"vidaMaxima\\\":136,\\\"escudo\\\":29,\\\"escudoMaximo\\\":29,\\\"dano\\\":23,\\\"resistencia\\\":4}\",\"{\\\"nome\\\":\\\"Fera das Rochas\\\",\\\"vida\\\":170,\\\"vidaMaxima\\\":170,\\\"escudo\\\":21,\\\"escudoMaximo\\\":21,\\\"dano\\\":20,\\\"resistencia\\\":4}\",\"{\\\"nome\\\":\\\"Fera das Rochas\\\",\\\"vida\\\":155,\\\"vidaMaxima\\\":155,\\\"escudo\\\":25,\\\"escudoMaximo\\\":25,\\\"dano\\\":16,\\\"resistencia\\\":4}\",\"{\\\"nome\\\":\\\"Sentinela Corrompida\\\",\\\"vida\\\":88,\\\"vidaMaxima\\\":88,\\\"escudo\\\":58,\\\"escudoMaximo\\\":58,\\\"dano\\\":12,\\\"resistencia\\\":8}\"]}",
+    "jogador": {
+        "nome": "chovew",
+        "vida": 79,
+        "vidaMaxima": 100,
+        "escudo": 12.5,
+        "escudoMaximo": 50,
+        "historico": [
+            "Planeta: Terrestre (0) - Bioma: Planície (0)",
+            "Planeta: Terrestre (0) - Bioma: Floresta (4)",
+            "Planeta: Terrestre (0) - Bioma: Planície (0)",
+            "Planeta: Terrestre (0) - Bioma: Pântano (1)",
+            "Planeta: Terrestre (0) - Bioma: Pântano (2)",
+            "Planeta: Terrestre (0) - Bioma: Deserto (3)",
+            "Planeta: Terrestre (0) - Bioma: Floresta (4)",
+            "Planeta: Terrestre (0) - Bioma: Planície (0)",
+            "Planeta: Terrestre (0) - Bioma: Pântano (1)",
+            "Planeta: Terrestre (0) - Bioma: Pântano (2)",
+            "Planeta: Terrestre (0) - Bioma: Deserto (3)"
+        ],
+        "inventario": {
+            "capacidadeMaxima": 100,
+            "capacidadeAtual": 36,
+            "slots": [
+                [
+                    {
+                        "id": "2",
+                        "nome": "Minério de Cobre",
+                        "raridade": 0,
+                        "tamanho": 1
+                    },
+                    10
+                ],
+                [
+                    {
+                        "id": "5",
+                        "nome": "Gás Hidrogênio",
+                        "raridade": 0,
+                        "tamanho": 1
+                    },
+                    15
+                ],
+                [
+                    {
+                        "id": "6",
+                        "nome": "Gás Oxigênio",
+                        "raridade": 1,
+                        "tamanho": 1
+                    },
+                    6
+                ],
+                [
+                    {
+                        "id": "9",
+                        "nome": "Folha de Alga",
+                        "raridade": 1,
+                        "tamanho": 1
+                    },
+                    3
+                ],
+                [
+                    {
+                        "id": "13",
+                        "nome": "Célula de Vácuo",
+                        "raridade": 2,
+                        "tamanho": 2
+                    },
+                    1
+                ]
+            ]
+        },
+        "moedas": 155
+    }
+}

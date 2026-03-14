@@ -1,0 +1,14 @@
+# Diretório do JavaScript transpilado
+JavaScript/
+
+# Node.js
+node_modules/
+
+# Arquivos de log npm
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDEs e Outros
+.vscode/
+.env
