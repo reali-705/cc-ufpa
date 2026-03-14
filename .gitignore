@@ -7,6 +7,9 @@ venv/
 env/
 ENV/
 .env
+.python-version
+.pytest_cache/
+.factorypath
 
 # --- Java ---
 *.class
