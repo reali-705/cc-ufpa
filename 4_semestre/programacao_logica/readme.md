@@ -4,19 +4,22 @@
 
 Este repositório tem o objetivo de registrar a evolução e a implementação de bases de conhecimento e regras lógicas usando a linguagem Prolog.
 
-## Universidade Federal do Pará (UFPA)
-
-**Curso:** Ciência da Computação  
-**Disciplina:** Programação em Lógica (EN05218)  
-**Semestre:** 4º Semestre (2025.4)  
-**Professor:** Josivan Rodrigues dos Reis  
-**Aluno:** Alessandro Reali Lopes Silva  
+**Instituição:** Universidade Federal do Pará (UFPA)
+**Curso:** Bacharelado em Ciência da Computação
+**Disciplina:** Programação em Lógica (EN05218)
+**Semestre:** 4º Semestre (2025.4)
+**Professor:** Josivan Rodrigues dos Reis
+**Aluno:** Alessandro Reali Lopes Silva
 
 ---
 
-## 🤖 Tecnologias Utilizadas
+## 🛠️ Ferramentas e Tecnologias
 
-- **Linguagem:** [Prolog](https://www.swi-prolog.org/) (utilizando a implementação **SWI-Prolog**)
+- **Linguagem:** [Prolog](https://www.swi-prolog.org/) — implementação **SWI-Prolog**
+- **Ambiente de Execução:** SWI-Prolog (`swipl` CLI)
+- **Bibliotecas:** Nenhuma externa; uso exclusivo de predicados nativos do SWI-Prolog (`findall`, `sort`, `assert`, `consult`, etc.)
+- **Gerenciamento de Dependências:** Não aplicável
+- **Controle de Versão:** Git
 
 ## 🗂️ Conteúdo
 

@@ -1,9 +1,13 @@
-# Análise de Algoritmos - Atividade 2: Algoritmos de Árvore Geradora Mínima
+# 📊 Análise de Algoritmos
 
 > Esse projeto é parte do repositório centralizador de atividades acadêmicas da graduação em Ciência da Computação na UFPA.
 
-**Professor:** Nelson Cruz Sampaio Neto  
-**Semestre:** 2025.4
+**Instituição:** Universidade Federal do Pará (UFPA)
+**Curso:** Bacharelado em Ciência da Computação
+**Disciplina:** Análise de Algoritmos
+**Semestre:** 4º Semestre (2025.4)
+**Professor:** Nelson Cruz Sampaio Neto
+**Aluno:** Alessandro Reali Lopes Silva (e equipe)
 
 ## 📋 Visão Geral
 
@@ -181,7 +185,7 @@ Arquivo principal de execução do projeto.
 
 ### Dependências Externas
 
-```
+```bash
 pandas>=1.3.0          # Manipulação de dados e DataFrames
 pydantic>=2.0.0        # Validação de modelos de dados
 jupyter>=1.0.0         # Para executar o dashboard
@@ -207,18 +211,6 @@ source venv/bin/activate
 
 # Instale as dependências
 pip install -r requirements.txt
-```
-
-### Arquivo requirements.txt
-
-Se não existir, crie com:
-
-```
-pandas>=1.3.0
-pydantic>=2.0.0
-jupyter>=1.0.0
-matplotlib>=3.3.0
-numpy>=1.20.0
 ```
 
 ---
@@ -441,6 +433,17 @@ grafo.gerar_grafo_aleatorio(
 2. **Deduplicação em Kruskal**: O algoritmo deduplica automaticamente
 3. **Complexidade**: Ambos algoritmos têm complexidade O(E log V) ou similar
 4. **Reprodutibilidade**: Use `seed` ao gerar grafos aleatórios para resultados reproduzíveis
+
+---
+
+## 🛠️ Ferramentas e Tecnologias
+
+- **Linguagem:** Python 3.x
+- **Ambiente de Execução:** Terminal / CLI, Jupyter Notebook
+- **Bibliotecas:** `pandas` (análise de resultados), `numpy` (operações numéricas), `pydantic` (modelos de I/O), `matplotlib` (visualização no dashboard)
+- **Ferramentas Adicionais:** Power BI (`.pbip` — visualização de dados), CSV (resultados de benchmark)
+- **Gerenciamento de Dependências:** pip
+- **Controle de Versão:** Git
 
 ---
 

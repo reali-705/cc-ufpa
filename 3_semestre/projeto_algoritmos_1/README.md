@@ -2,8 +2,12 @@
 
 > Esse projeto é parte do repositório centralizador de atividades acadêmicas da graduação em Ciência da Computação na UFPA.
 
-**Professor:** Claudomiro de Souza de Sales Junior  
-**Semestre:** 2025.2
+**Instituição:** Universidade Federal do Pará (UFPA)
+**Curso:** Bacharelado em Ciência da Computação
+**Disciplina:** Projeto de Algoritmos I
+**Semestre:** 3º Semestre (2025.2)
+**Professor:** Claudomiro de Souza de Sales Junior
+**Aluno:** Alessandro Reali Lopes Silva
 
 Este diretório contém os projetos práticos desenvolvidos para a disciplina de **Projeto de Algoritmos I**. O foco foi a transição da lógica básica para a implementação manual de estruturas de dados complexas aplicadas em lógica de jogos.
 
@@ -23,6 +27,19 @@ O projeto final da disciplina, focado na implementação **do zero** de estrutur
 - **Foco Acadêmico:** Implementação manual de **Tabela Hash** (Persistência), **Heap/Fila de Prioridade** (Encontros com inimigos), **Pilhas** e **Geração Procedural**.
 - **Destaques:** Backend em Node.js para salvamento de progresso e arquitetura baseada em contratos (Interfaces).
 - **Tecnologias:** TypeScript, Node.js, Express.
+
+---
+
+## 🛠️ Ferramentas e Tecnologias
+
+- **Linguagens:** TypeScript, JavaScript, HTML5, CSS3
+- **Ambiente de Execução:** Node.js (backend), Navegador (frontend)
+- **Bibliotecas:** `express` (servidor Node.js), `seedrandom` (geração procedural)
+- **Gerenciamento de Dependências:** npm / `package.json`
+- **Build:** tsc (TypeScript Compiler)
+- **Dev Server:** live-server
+- **Diagramas:** PlantUML
+- **Controle de Versão:** Git
 
 ---
 

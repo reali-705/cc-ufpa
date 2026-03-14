@@ -15,13 +15,6 @@ Este projeto acadêmico é desenvolvido na Universidade Federal do Pará (UFPA) 
   - **Alessandro Reali Lopes Silva** – [reali-705](https://github.com/reali-705)
   - **Felipe Lisboa Brasil** – [FelipeBrasill](https://github.com/FelipeBrasill)
 
-## 📑 Sumário
-
-- [Objetivos de Aprendizagem](#objetivos-de-aprendizagem)
-- [O Projeto](#o-projeto)
-- [Estado Atual](#estado-atual)
-- [Tecnologias e Ferramentas](#tecnologias-e-ferramentas)
-- [Documentação Técnica e Estrutura](#documentação-técnica-e-estrutura)
 
 ---
 
@@ -66,13 +59,15 @@ O projeto está em desenvolvimento iterativo. Acompanhe o progresso nos links ab
 - **[Issues Abertas](https://github.com/reali-705/pvz-java/issues)** – Tarefas em andamento e planejadas
 - **[Pull Requests](https://github.com/reali-705/pvz-java/pulls)** – Alterações submetidas para revisão
 
-## Tecnologias e Ferramentas
+## 🛠️ Ferramentas e Tecnologias
 
-- **Linguagem:** Java (JDK 25 com Target para JDK 17).
-- **Gerenciador de Dependências:** Maven.
-- **Testes Unitários:** JUnit 5 (Foco em TDD).
-- **Arquitetura:** MVC (Model-View-Controller).
-- **Interface Gráfica:** Swing ou JavaFX (a definir).
+- **Linguagem:** Java 17 (compilado com JDK 25, target JDK 17)
+- **Gerenciamento de Dependências:** Maven (`pom.xml`)
+- **Interface Gráfica:** Java Swing / AWT (JDK stdlib)
+- **Testes:** JUnit 5 (Jupiter) — foco em TDD
+- **Build:** Maven Surefire Plugin
+- **Arquitetura:** MVC (Model-View-Controller)
+- **Controle de Versão:** Git
 
 ## Documentação Técnica e Estrutura
 

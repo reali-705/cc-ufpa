@@ -25,4 +25,14 @@ As atividades estão organizadas em diretórios conforme o tema abordado:
 
 ---
 
+## 🛠️ Ferramentas e Tecnologias
+
+- **Linguagem:** Python 3.x
+- **Ambiente de Execução:** Terminal / CLI, Jupyter Notebook
+- **Bibliotecas:** `faker` (geração de dados), `graphviz` (visualização de grafos e árvores), `IPython.display` (renderização no notebook), `heapq` (stdlib — filas de prioridade)
+- **Gerenciamento de Dependências:** pip / `requirements.txt`
+- **Controle de Versão:** Git
+
+---
+
 > 🔙 [Voltar para o Repositório Central (CC-UFPA)](https://github.com/reali-705/cc-ufpa)

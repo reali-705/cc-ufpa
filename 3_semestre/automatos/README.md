@@ -5,8 +5,12 @@
 
 > Esse projeto é parte do repositório centralizador de atividades acadêmicas da graduação em Ciência da Computação na UFPA.
 
-**Professor:** Josivaldo de Souza Araujo  
-**Semestre:** 2025.2
+**Instituição:** Universidade Federal do Pará (UFPA)
+**Curso:** Bacharelado em Ciência da Computação
+**Disciplina:** Linguagens Formais e Autômatos
+**Semestre:** 3º Semestre (2025.2)
+**Professor:** Josivaldo de Souza Araujo
+**Aluno:** Alessandro Reali Lopes Silva
 
 ## 📖 Sobre o Projeto
 
@@ -81,6 +85,15 @@ tradutor-genetico/
     ```
 
 - **Implementação:** O autômato de pilha (`Automato_Pilha`) utiliza sua pilha para "construir" a cadeia de aminoácidos. Ao ler um códon válido, ele empilha o nome do aminoácido correspondente. Se um gene é concluído com sucesso (encontra um `StopCodon`), o conteúdo da pilha é processado. Se a fita termina antes de um `StopCodon`, a gramática não é satisfeita e a proteína não é formada, refletindo a rigidez do modelo formal.
+
+## 🛠️ Ferramentas e Tecnologias
+
+- **Linguagem:** Python 3.9+
+- **Ambiente de Execução:** Terminal / CLI
+- **Bibliotecas:** `pytest` (testes automatizados); demais módulos da stdlib Python (`argparse`, `logging`, `pathlib`, `re`, `random`)
+- **Gerenciamento de Dependências:** pip / `requirements.txt`
+- **Testes:** pytest
+- **Controle de Versão:** Git
 
 ## 🚀 Como Executar o Projeto
 
