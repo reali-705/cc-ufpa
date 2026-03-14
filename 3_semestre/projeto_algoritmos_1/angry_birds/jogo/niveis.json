@@ -1,0 +1,26 @@
+[
+    {
+        "dificuldade": "aleatoria",
+        "porcos": null,
+        "passaros": null,
+        "pontuacao": []
+    },
+    {
+        "dificuldade": "facil",
+        "porcos": 5,
+        "passaros": 7,
+        "pontuacao": []
+    },
+    {
+        "dificuldade": "medio",
+        "porcos": 8,
+        "passaros": 8,
+        "pontuacao": []
+    },
+    {
+        "dificuldade": "dificil",
+        "porcos": 10,
+        "passaros": 10,
+        "pontuacao": []
+    }
+]

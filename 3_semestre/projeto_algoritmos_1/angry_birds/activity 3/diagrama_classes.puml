@@ -1,0 +1,35 @@
+@startuml Diagrama de Classes Angrys Birds
+
+class Personagem {
+  - tamanho: string
+  - raio: number
+  - posicao: object
+  - vivo: boolean
+  --
+  + constructor(tamanho: string, x: number, y: number)
+  + verificar_colisao(outro_personagem: Personagem): boolean
+}
+
+class Porco {
+  - vida: number
+  - pontos: number
+  --
+  + receber_dano(dano: number): void
+  + derrotar(): void
+}
+
+class Passaro {
+  - dano: number
+  - gravidade: number
+  - velocidade: object
+  - voando: boolean
+  --
+  + lancar(velocidade_inicial: number, angulo: number): void
+  + voar(tempo: number): void
+  + acertar(alvo: Personagem): void
+}
+
+Personagem <|-- Porco
+Personagem <|-- Passaro
+
+@enduml

@@ -1,0 +1,108 @@
+@startuml Classes Angrys Birds
+
+' <<========================================================================>>
+' <<                              ENUNS                                     >>
+' <<========================================================================>>
+
+enum Tamanho {
+    PEQUENO
+    MEDIO
+    GRANDE
+}
+
+enum Dificuldade {
+    FACIL
+    MEDIO
+    DIFICIL
+}
+
+' <<========================================================================>>
+' <<                             INTERFACES                                 >>
+' <<========================================================================>>
+
+' Interface para representar coordenadas X e Y
+interface Position {
+    x: number
+    y: number
+}
+
+interface LevelConfig {
+    dificuldade: Dificuldade;
+    porcos: number | null;
+    passaros: number | null;
+}
+
+' <<========================================================================>>
+' <<                             CLASSES                                    >>
+' <<========================================================================>>
+
+class Level {
+    - posicaoEstilingue: Position
+    - gravidade: number
+    - vetorVelocidadeMax: number
+    - maxRaioPersonagem: number
+    - maxInimigos: number
+    + tela: Position
+    + dificuldade: Dificuldade
+    + pontuacaoAtual: number
+    + passarosDisponiveis: Passaro[]
+    + porcosNoNivel: Porco[]
+    --
+    + Level(nivel: LevelConfig)
+    + pegarProximoPassaro(): Passaro
+    + lancarPassaro(passaro: Passaro, angulo: number, velocidade: number): void
+    + voarPassaro(passaro: Passaro, deltaTime: number): void
+    + verificarColisoes(passaro: Passaro): void
+    - colidir(passaro: Passaro, porco: porco): void
+}
+
+class Personagem {
+    + tamanho: Tamanho
+    + raio: number
+    + posicao: Position
+    + vivo: boolean
+    # vida: number
+    --
+    + Personagem(tamanho: Tamanho, posicao: Position)
+}
+
+class Porco {
+    - pontos: number
+    --
+    + receberDano(dano: number): number
+}
+
+class Passaro {
+    - dano: number
+    - velocidade: Position
+    + voando: boolean
+    --
+    + lancar(velocidadeInicial: number, angulo: number): void
+    + update(deltaTime: number): void
+    + causarDano(): number
+}
+
+' <<========================================================================>>
+' <<                           RELAÇÕES                                     >>
+' <<========================================================================>>
+
+' Heranças
+Personagem <|-- Porco
+Personagem <|-- Passaro
+
+' Relações de Uso (Associações) - Indicam que uma classe usa o ENUM como tipo
+Personagem -- Tamanho : usa
+Level -- Dificuldade : usa
+LevelConfig -- Dificuldade: usa
+
+' Relações de Agregação/Composição (Level contem Porcos e Pássaros)
+Level o-- Porco : contem
+Level o-- Passaro : contem
+
+' Relações de Uso para a Interface Position
+Personagem -- Position : em posicao
+Passaro -- Position : em velocidade
+Level -- Position : em tela e em estilingue
+Level -- LevelConfig : em constructor
+
+@enduml
