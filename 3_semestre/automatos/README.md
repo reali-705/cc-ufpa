@@ -88,7 +88,7 @@ O script `run.py` é o ponto de entrada unificado para todas as operações.
 
 ### Pré-requisitos
 
-- Python 3.8 ou superior.
+- Python 3.9 ou superior.
 - (Opcional) Para executar a suíte de testes automatizada, é necessário o `pytest`:
 
   ```bash
