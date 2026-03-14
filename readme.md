@@ -47,11 +47,37 @@ Repositório centralizador de atividades, projetos e estudos realizados durante 
 
 ---
 
+## 🛠️ Como Executar os Projetos
+
+Cada diretório possui suas dependências específicas. Em geral:
+
+- **Python:** Recomenda-se o uso de `venv`. Documentação de dependências em `requirements.txt`.
+- **Java:** Projetos estruturados para execução via VS Code ou terminal (javac).
+- **Node/TS:** Utilize `npm install` e `npm run build` conforme descrito nos sub-readmes.
+
+## 📋 Estrutura do Repositório
+
+```bash
+.
+├── 3_semestre
+│       ├── automatos
+│       └── projeto_algoritmos_1
+├── 4_semestre
+│       ├── analise_algoritmos
+│       ├── matematica_computacional
+│       ├── programacao_2
+│       └── programacao_logica
+└── .gitignore
+```
+
 ## 🛠️ Configurações do Repositório
 
 - **Gitignore:** Centralizado na raiz para gerenciar múltiplas linguagens (Java, Python, C, Node.js) e evitar o rastreio de binários ou `node_modules`.
 - **Status dos Projetos:** Projetos marcados como "Concluídos" representam entregas acadêmicas. Versões refatoradas para portfólio (Clean Architecture/TDD) são mantidas em repositórios independentes.
 - **Documentação:** Cada projeto possui um README específico detalhando o contexto, tecnologias utilizadas e instruções de execução.
-- **Licença:** Código aberto para fins educacionais, com atribuição de autoria e proibição de uso comercial sem consentimento.
+
+---
+
+> **Aviso de Integridade:** Este repositório foi criado para fins de registro histórico, portfólio e consulta acadêmica. O conteúdo aqui presente é de minha autoria. O plágio viola as políticas das instituições de ensino e o uso indevido deste material em avaliações é de responsabilidade do usuário.
 
 ---
