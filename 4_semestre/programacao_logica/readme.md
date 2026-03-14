@@ -69,4 +69,4 @@ Sistema especialista para recomendação de hardware, aplicando regras de compat
 
 ---
 
-> 🔙 [Voltar para o Repositório Central (CC-UFPA)](../../README.md)
+> 🔙 [Voltar para o Repositório Central (CC-UFPA)](https://github.com/reali-705/cc-ufpa)

@@ -26,4 +26,4 @@ O projeto final da disciplina, focado na implementação **do zero** de estrutur
 
 ---
 
-> 🔙 [Voltar para o Repositório Central (CC-UFPA)](../../README.md)
+> 🔙 [Voltar para o Repositório Central (CC-UFPA)](https://github.com/reali-705/cc-ufpa)

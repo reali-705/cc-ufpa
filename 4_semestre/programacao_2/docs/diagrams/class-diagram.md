@@ -1,6 +1,6 @@
 # Diagrama de Classes - Plants vs Zombies
 
-[🏠 README](../../README.md)
+[🏠 README](https://github.com/reali-705/cc-ufpa/tree/main/4_semestre/programacao_2)
 
 ## Visão Geral
 
@@ -247,5 +247,5 @@ classDiagram
 
 ---
 
-| [⬆️ Voltar ao topo](#diagrama-de-classes---plants-vs-zombies) | [🏠 README](../../README.md) | [➡️ Próximo: Arquitetura](architecture.md) |
+| [⬆️ Voltar ao topo](#diagrama-de-classes---plants-vs-zombies) | [🏠 README](https://github.com/reali-705/cc-ufpa/tree/main/4_semestre/programacao_2) | [➡️ Próximo: Arquitetura](architecture.md) |
 | --- | --- | --- |

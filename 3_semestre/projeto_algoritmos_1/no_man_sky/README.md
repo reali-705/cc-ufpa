@@ -47,36 +47,46 @@ Siga estas instruções para compilar e executar o projeto em sua máquina local
 Você precisará ter o Node.js e o npm (Node Package Manager) instalados.
 
 * **Node.js** (versão 18.x ou superior recomendada)
-    * [Link para download do Node.js](https://nodejs.org/)
+  * [Link para download do Node.js](https://nodejs.org/)
 
 ### Instalação e Execução
 
-1.  **Clone o repositório:**
+1. **Clone o repositório:**
+
     ```sh
     git clone https://github.com/reali-705/NoManSky.git
     ```
-2.  **Navegue até o diretório do projeto:**
+
+2. **Navegue até o diretório do projeto:**
+
     ```sh
     cd NoManSky
     ```
-3.  **Instale as dependências:**
+
+3. **Instale as dependências:**
+
     ```sh
     npm install
     ```
-4.  **Compile o código TypeScript para JavaScript:**
+
+4. **Compile o código TypeScript para JavaScript:**
+
     ```sh
     npm run b   # Para Windows
     npm run bl  # Para Linux
     ```
+
     *Este comando irá transpilar todos os arquivos da pasta `Typescript/` para a pasta `Javascript/`.*
 
-5.  **Inicie o servidor local:**
+5. **Inicie o servidor local:**
+
     ```sh
     npm run start
     ```
-    *O terminal deve exibir a mensagem "Servidor rodando em http://localhost:3000".*
 
-6.  **Abra o jogo:** Abra seu navegador e acesse a URL `http://localhost:3000`.
+    *O terminal deve exibir a mensagem "Servidor rodando em <http://localhost:3000>".*
+
+6. **Abra o jogo:** Abra seu navegador e acesse a URL `http://localhost:3000`.
 
 ## 📂 Estrutura de Arquivos
 
@@ -113,4 +123,4 @@ A estrutura de arquivos do projeto, incluindo a documentação, está organizada
 
 ---
 
-> 🔙 [Voltar para o Repositório Central (CC-UFPA)](../../../README.md)
+> 🔙 [Voltar para o Repositório Central (CC-UFPA)](https://github.com/reali-705/cc-ufpa)

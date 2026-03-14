@@ -8,6 +8,7 @@
 ## 📋 Visão Geral
 
 Este projeto implementa e analisa dois algoritmos fundamentais para encontrar a **Árvore Geradora Mínima (AGM)** de um grafo não-direcionado ponderado:
+
 - **Algoritmo de Prim**: Utiliza uma estratégia gulosa baseada em heap
 - **Algoritmo de Kruskal**: Utiliza ordenação de arestas e Union-Find com path compression
 
@@ -17,7 +18,7 @@ O projeto inclui ferramentas de benchmark para comparar a performance dos algori
 
 ## 🏗️ Estrutura do Projeto
 
-```
+```bash
 atividade_2/
 ├── Grafo.py                    # Classe que representa um grafo
 ├── prim.py                     # Implementação do algoritmo de Prim
@@ -36,9 +37,11 @@ atividade_2/
 ## 📦 Componentes Principais
 
 ### 1. **Grafo.py**
+
 Define a classe `Grafo` que representa um grafo não-direcionado ponderado.
 
 **Métodos principais:**
+
 - `__init__()`: Inicializa o grafo com arestas, vértices e densidade
 - `add_aresta(vertice1, vertice2, peso)`: Adiciona uma aresta ao grafo
 - `gerar_grafo_aleatorio()`: Gera um grafo aleatório com número de vértices e densidade especificados
@@ -47,6 +50,7 @@ Define a classe `Grafo` que representa um grafo não-direcionado ponderado.
 - `grafo_esta_vazio()`: Verifica se o grafo está vazio
 
 **Características:**
+
 - Grafos representados internamente como pares não-direcionados (u,v) e (v,u)
 - Suporta cálculo automático de densidade
 - Permite gerar grafos com diferentes formas (cadeia, estrela, binária)
@@ -54,12 +58,15 @@ Define a classe `Grafo` que representa um grafo não-direcionado ponderado.
 ---
 
 ### 2. **Kruskal.py**
+
 Implementa o **Algoritmo de Kruskal** para AGM.
 
 **Método principal:**
+
 - `agm(arestas, verbose=False)`: Executa o algoritmo de Kruskal
 
 **Características:**
+
 - **Union-Find com otimizações:**
   - Path compression iterativo (evita overhead de recursão)
   - Union by rank para melhor balanceamento
@@ -72,18 +79,22 @@ Implementa o **Algoritmo de Kruskal** para AGM.
   - Tempo de ordenação
 
 **Complexidade:**
+
 - Tempo: O(E log E) para ordenação + O(E α(V)) para Union-Find
 - Espaço: O(V + E)
 
 ---
 
 ### 3. **Prim.py**
+
 Implementa o **Algoritmo de Prim** para AGM.
 
 **Método principal:**
+
 - `prim(arestas, verbose=False)`: Executa o algoritmo de Prim
 
 **Características:**
+
 - **Utiliza estrutura de dados Heap (min-heap)**
 - **Operações monitoradas:**
   - Heap push: Inserção de arestas candidatas
@@ -96,15 +107,18 @@ Implementa o **Algoritmo de Prim** para AGM.
   - Tempo total de execução
 
 **Complexidade:**
+
 - Tempo: O(E log V) com heap binário
 - Espaço: O(V + E)
 
 ---
 
 ### 4. **IOmodel.py**
+
 Define os modelos de dados usando **Pydantic** para validação robusta.
 
 **Classes:**
+
 - `Algoritmo` (Enum): Define algoritmos suportados (PRIM, KRUSKAL)
 - `Input` (BaseModel): Especifica entrada do experimento
   - `algoritmo`: Qual algoritmo executar
@@ -118,6 +132,7 @@ Define os modelos de dados usando **Pydantic** para validação robusta.
   - Resultado: num_arestas_mst, tempo_execucao_total
 
 **Validações:**
+
 - Validação automática de tipos
 - Verificação de consistência entre métricas
 - Limites de densidade [0.0, 1.0]
@@ -125,16 +140,20 @@ Define os modelos de dados usando **Pydantic** para validação robusta.
 ---
 
 ### 5. **Benchmark.py**
+
 Sistema de benchmarking para comparar algoritmos.
 
 **Classe principal:**
+
 - `Benchmark(tabela=None)`: Gerencia execução de múltiplos benchmarks
 
 **Métodos:**
+
 - `executar_bench(entrada: Input) -> Output`: Executa um experimento único
 - `simular(tamanhos_vertices, densidades, num_rodadas=5)`: Executa múltiplos experimentos
 
 **Funcionalidades:**
+
 - Executa ambos algoritmos com mesmo grafo
 - Coleta métricas detalhadas de performance
 - Armazena resultados em DataFrame Pandas
@@ -143,9 +162,11 @@ Sistema de benchmarking para comparar algoritmos.
 ---
 
 ### 6. **main.py**
+
 Arquivo principal de execução do projeto.
 
 **Exemplos de uso disponíveis:**
+
 - Execução de benchmarks parametrizados
 - Comparação lado-a-lado de algoritmos
 - Geração de gráficos de performance
@@ -155,9 +176,11 @@ Arquivo principal de execução do projeto.
 ## 🛠️ Requisitos do Sistema
 
 ### Python
+
 - **Versão:** Python 3.10 ou superior
 
 ### Dependências Externas
+
 ```
 pandas>=1.3.0          # Manipulação de dados e DataFrames
 pydantic>=2.0.0        # Validação de modelos de dados
@@ -187,7 +210,9 @@ pip install -r requirements.txt
 ```
 
 ### Arquivo requirements.txt
+
 Se não existir, crie com:
+
 ```
 pandas>=1.3.0
 pydantic>=2.0.0
@@ -305,11 +330,13 @@ O projeto testa os algoritmos em diferentes cenários:
 ### Métricas Coletadas
 
 **Kruskal:**
+
 - Tempo de ordenação (sort)
 - Número de chamadas find e union
 - Arestas analisadas antes de encontrar AGM
 
 **Prim:**
+
 - Operações de heap (push/pop)
 - Tempo total de operações heap
 - Arestas analisadas
@@ -327,6 +354,7 @@ heap_push,heap_pop,tempo_execucao_heap_ops
 ```
 
 O `dashboard.ipynb` fornece:
+
 - Gráficos comparativos de performance
 - Análise de escalabilidade
 - Visualizações por densidade
@@ -373,6 +401,7 @@ print(f"Tempo total: {tempo_total:.6f}s")
 ## 🐛 Troubleshooting
 
 ### Erro: "ModuleNotFoundError"
+
 **Solução:** Certifique-se de estar no diretório correto e que o ambiente virtual está ativado.
 
 ```bash
@@ -384,13 +413,17 @@ pip install -r requirements.txt
 ```
 
 ### Erro: "No module named 'pydantic'"
+
 **Solução:** Instale as dependências:
+
 ```bash
 pip install pydantic pandas jupyter
 ```
 
 ### Grafos Muito Grandes Causam Lentidão
+
 **Solução:** Reduza o número de vértices ou densidade:
+
 ```python
 grafo.gerar_grafo_aleatorio(
     num_vertices=100,      # Reduza de 1000
@@ -413,10 +446,10 @@ grafo.gerar_grafo_aleatorio(
 
 ## 👨‍💻 Autores
 
-* [Felipe Lisboa Brasil](https://github.com/FelipeBrasill)
-* [Leonardo Cunha Rocha](https://github.com/Leonardo08x)
-* [Alessandro Reali](https://github.com/reali-705)
+- [Felipe Lisboa Brasil](https://github.com/FelipeBrasill)
+- [Leonardo Cunha Rocha](https://github.com/Leonardo08x)
+- [Alessandro Reali](https://github.com/reali-705)
 
 ---
 
-> 🔙 [Voltar para o Repositório Central (CC-UFPA)](../../README.md)
+> 🔙 [Voltar para o Repositório Central (CC-UFPA)](https://github.com/reali-705/cc-ufpa)
