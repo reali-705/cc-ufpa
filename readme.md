@@ -6,6 +6,8 @@ Repositório centralizador de atividades, projetos e estudos realizados durante 
 
 > **Nota de Engenharia:** Este monorepo utiliza `git subtree` para consolidar projetos acadêmicos, preservando o histórico original de commits como registro de evolução técnica e maturidade de código.
 
+> **Aviso de Integridade:** Este repositório foi criado para fins de registro histórico, portfólio e consulta acadêmica. O conteúdo aqui presente é de minha autoria. O plágio viola as políticas das instituições de ensino e o uso indevido deste material em avaliações é de responsabilidade do usuário.
+
 ---
 
 ## 🏗️ Organização Acadêmica
@@ -22,14 +24,14 @@ Repositório centralizador de atividades, projetos e estudos realizados durante 
 
 ---
 
-### 📅 3º Semestre
+### 📅 3º Semestre: Projetos
 
 ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
 ![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
 
-### [Autômatos](./3_semestre/automatos/)
+#### [Autômatos](./3_semestre/automatos/)
 
 ![Pytest](https://img.shields.io/badge/Pytest-0A9EDC?style=flat-square&logo=pytest&logoColor=white)
 ![Regex](https://img.shields.io/badge/Regex-42b983?style=flat-square)
@@ -37,7 +39,7 @@ Repositório centralizador de atividades, projetos e estudos realizados durante 
 
 Pipeline bioinformático com **Teoria dos Autômatos**: **Transdutor Finito** (transcrição DNA → RNA) + **Autômato de Pilha** (tradução RNA → proteína via gramática livre de contexto). Inclui suíte de testes `pytest` e orquestrador de tarefas `run.py`.
 
-### [Projeto de Algoritmos 1](./3_semestre/projeto_algoritmos_1/)
+#### [Projeto de Algoritmos 1](./3_semestre/projeto_algoritmos_1/)
 
 ![Express](https://img.shields.io/badge/Express-000000?style=flat-square&logo=express&logoColor=white)
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)
@@ -46,16 +48,38 @@ Pipeline bioinformático com **Teoria dos Autômatos**: **Transdutor Finito** (t
 
 Dois mini-jogos em **TypeScript**: **Angry Birds Replica** (POO, herança, UML, algoritmos de ordenação para ranking) e **No Man's Sky** (implementação do zero de Tabela Hash, Heap/Fila de Prioridade e Pilhas com backend **Node.js/Express**).
 
+### 📈 3º Semestre: *Evolution Log*
+
+> Foco: Transição para Tipagem Forte, Testes Unitários e Modularização.
+
+Neste semestre, a complexidade dos projetos exigiu o abandono de práticas amadoras em favor de um rigor técnico mais próximo do mercado. Os principais marcos evolutivos foram:
+
+#### Rigor Matemático com Pytest
+
+A implementação do Tradutor Genético em Python revelou o desafio de traduzir gramáticas teóricas em código funcional. A necessidade de tratar casos de borda específicos levou à adoção autônoma do pytest, garantindo que a lógica de autômatos permanecesse robusta e livre de falhas invisíveis.
+
+#### O "Poder" da Tipagem (TypeScript)
+
+O contato com o TypeScript nos projetos de Algoritmos 1 foi o divisor de águas. A obrigatoriedade de definir contratos (interfaces/tipos) para entradas e saídas eliminou bugs silenciosos e me fez adotar práticas semelhantes em Python (Pylance/Typing), elevando a qualidade do estilo de código e facilitando a manutenção.
+
+#### Arquitetura Cliente-Servidor
+
+A implementação do backend em Node.js para o No Man's Sky foi o primeiro contato real com a separação de responsabilidades (Frontend vs. Backend). Mesmo diante da desorganização inicial e prazos acadêmicos agressivos, o desafio de estabelecer a comunicação entre sistemas independentes consolidou o interesse por sistemas distribuídos.
+
+#### Mentalidade de Engenharia
+
+O aprendizado autônomo de POO (Programação Orientada a Objetos) e boas práticas de modularização permitiu que projetos em rápido crescimento não se tornassem monolitos impossíveis de gerenciar. O foco mudou de "apenas fazer funcionar" para "criar sistemas escaláveis e prontos para o trabalho em equipe".
+
 ---
 
-### 📅 4º Semestre
+### 📅 4º Semestre: Projetos
 
 ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
 ![Prolog](https://img.shields.io/badge/Prolog-742858?style=for-the-badge&logo=prolog&logoColor=white)
 ![Jupyter](https://img.shields.io/badge/Jupyter-F37626?style=for-the-badge&logo=jupyter&logoColor=white)
 
-### [Análise de Algoritmos](./4_semestre/analise_algoritmos/)
+#### [Análise de Algoritmos](./4_semestre/analise_algoritmos/)
 
 ![Pandas](https://img.shields.io/badge/Pandas-150458?style=flat-square&logo=pandas&logoColor=white)
 ![NumPy](https://img.shields.io/badge/NumPy-013243?style=flat-square&logo=numpy&logoColor=white)
@@ -65,7 +89,7 @@ Dois mini-jogos em **TypeScript**: **Angry Birds Replica** (POO, herança, UML, 
 
 Análise empírica de algoritmos em **Python**: **Atividade 1** (Insertion Sort, Heap Sort, AVL Sort — análise de complexidade comparativa) e **Atividade 2** (algoritmos de **Prim** e **Kruskal** para Árvore Geradora Mínima, com benchmarking, modelos `Pydantic` e dashboard Jupyter).
 
-### [Matemática Computacional](./4_semestre/matematica_computacional/)
+#### [Matemática Computacional](./4_semestre/matematica_computacional/)
 
 ![SciPy](https://img.shields.io/badge/SciPy-8CAAE6?style=flat-square&logo=scipy&logoColor=white)
 ![Matplotlib](https://img.shields.io/badge/Matplotlib-ffffff?style=flat-square&logo=matplotlib&logoColor=black)
@@ -74,7 +98,7 @@ Análise empírica de algoritmos em **Python**: **Atividade 1** (Insertion Sort,
 
 Notebooks em **Python/Jupyter**: transformações lineares, composição matricial, gradiente descendente (BGD/SGD/Mini-Batch), redes neurais com backpropagation, métodos numéricos (Bisseção, Newton, Secante, fatoração LU, Gauss-Jacobi/Seidel) e estatística aplicada (regressão linear, p-value, intervalos de confiança, bootstrapping).
 
-### [Programação 2](./4_semestre/programacao_2/)
+#### [Programação 2](./4_semestre/programacao_2/)
 
 ![JUnit5](https://img.shields.io/badge/JUnit5-25A162?style=flat-square&logo=junit5&logoColor=white)
 ![Maven](https://img.shields.io/badge/Maven-C71A36?style=flat-square&logo=apachemaven&logoColor=white)
@@ -82,20 +106,46 @@ Notebooks em **Python/Jupyter**: transformações lineares, composição matrici
 
 Clone didático de *Plants vs Zombies* em **Java**: POO completo (abstração, herança, polimorfismo, encapsulamento), padrões Template Method, Strategy e Game Loop, **TDD** com JUnit 5 e arquitetura MVC com interface **Swing/AWT**.
 
-### [Programação Lógica](./4_semestre/programacao_logica/)
+#### [Programação Lógica](./4_semestre/programacao_logica/)
 
 ![SWI-Prolog](https://img.shields.io/badge/SWI--Prolog-742858?style=flat-square&logo=prolog&logoColor=white)
 ![Logic_Programming](https://img.shields.io/badge/Paradigm-Logical-blue?style=flat-square)
 
 Paradigma lógico em **SWI-Prolog**: predicados, recursividade, Merge Sort; dois sistemas especialistas — **robô doméstico** (regras de inferência sobre tarefas domésticas) e **recomendação de hardware** (filtragem por compatibilidade, orçamento e perfil de uso).
 
-### [Projeto de Algoritmos 2](./4_semestre/projeto_algoritmos_2/)
+#### [Projeto de Algoritmos 2](./4_semestre/projeto_algoritmos_2/)
 
 ![Graphviz](https://img.shields.io/badge/Graphviz-10253F?style=flat-square&logo=graphviz&logoColor=white)
 ![Faker](https://img.shields.io/badge/Faker-FF69B4?style=flat-square)
 ![Algorithms](https://img.shields.io/badge/Focus-Heaps_%26_Graphs-success?style=flat-square)
 
 Três atividades em **Python**: **Atividade 1** (BST, AVL, Rubro-Negra com inserção/remoção/percursos), **Atividade 2** (Jesse and Cookies com heap, No Prefix Set com trie) e **Atividade 3** (**Shift-And Aproximado** para busca com `k` erros, com visualização `graphviz` em Jupyter).
+
+### 📈 4º Semestre: *Evolution Log*
+
+> Foco: Análise de Eficiência, Contratos de Dados e Robustez com POO.
+
+Neste período, o foco migrou da funcionalidade para a sustentabilidade e performance. O aprendizado foi marcado por experimentos de benchmark e o desafio de coordenar fluxos de dados complexos:
+
+#### Desmitificação da IA e Matemática Pura
+
+A implementação de Redes Neurais e Gradiente Descendente em Matemática Computacional revelou a natureza estatística e probabilística da IA. Embora o rigor matemático tenha se mostrado um desafio exaustivo, a experiência serviu para aterrar conceitos abstratos em lógica computacional palpável.
+
+#### Custo de Performance e Benchmarking
+
+Em Análise de Algoritmos, a prática de medir Prim vs. Kruskal evidenciou que a eficiência teórica ($O$) enfrenta variáveis do mundo real, como o overhead de bibliotecas e a implementação base em C do Python. Perceber que a "melhor solução" é dependente do cenário (densidade do grafo/prazos de entrega) foi um marco de maturidade técnica.
+
+#### Contratos e Colaboração (Pydantic)
+
+A tentativa de implementar contratos de dados com Pydantic em equipe, embora turbulenta, consolidou a visão de que a engenharia de software é um esforço humano. A luta contra o "código Frankenstein" reforçou a importância de interfaces claras para que o trabalho coletivo seja fluido e escalável.
+
+#### Escalabilidade com POO e TDD (Java)
+
+O desenvolvimento do motor de jogo estilo PvZ provou que o investimento inicial em classes abstratas e interfaces se paga rapidamente. A mentalidade de TDD (Test-Driven Development), mesmo que parcial, criou um fluxo de desenvolvimento onde bugs eram tratados antes mesmo de existirem, tornando a verbosidade do Java um custo marginal diante da facilidade de manutenção.
+
+#### Paradigma Lógico e Visão de Futuro
+
+O contato com o Prolog e a lógica consultiva abriu novas perspectivas sobre sistemas especialistas e robótica. A transição da lógica imperativa para a declarativa permitiu enxergar problemas como bases de conhecimento, vislumbrando aplicações em automação e decisão inteligente.
 
 ---
 
@@ -163,14 +213,6 @@ Três atividades em **Python**: **Atividade 1** (BST, AVL, Rubro-Negra com inser
 
 ---
 
-## 🚀 Como Executar os Projetos
-
-Cada diretório possui suas dependências específicas. Em geral:
-
-- **Python:** Recomenda-se o uso de `venv`. Documentação de dependências em `requirements.txt`.
-- **Java:** Projetos estruturados para execução via VS Code ou terminal (javac).
-- **Node/TS:** Utilize `npm install` e `npm run build` conforme descrito nos sub-readmes.
-
 ## 📋 Estrutura do Repositório
 
 ```bash
@@ -195,6 +237,29 @@ Cada diretório possui suas dependências específicas. Em geral:
 
 ---
 
-> **Aviso de Integridade:** Este repositório foi criado para fins de registro histórico, portfólio e consulta acadêmica. O conteúdo aqui presente é de minha autoria. O plágio viola as políticas das instituições de ensino e o uso indevido deste material em avaliações é de responsabilidade do usuário.
+## 🚀 Como Executar os Projetos
+
+Cada diretório possui suas dependências específicas. Em geral:
+
+- **Python:** Recomenda-se o uso de `venv`. Documentação de dependências em `requirements.txt`.
+- **Java:** Projetos estruturados para execução via VS Code ou terminal (javac).
+- **Node/TS:** Utilize `npm install` e `npm run build` conforme descrito nos sub-readmes.
+
+### Execução Rápida por Stack
+
+```bash
+# Python
+python -m venv .venv
+# Windows PowerShell
+.\.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+
+# Java (Maven)
+mvn clean test
+
+# Node.js / TypeScript
+npm install
+npm run build
+```
 
 ---
